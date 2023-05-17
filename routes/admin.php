@@ -25,11 +25,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard/admin', [App\Http\Controllers\HomeController::class, 'admin'])
         ->name('admin')->middleware('is_admin');
 
-    // Route::resource('userGroup', UserGroupController::class);
-
-    // Route::resource('department', DepartmentController::class);
-
-
     Route::post('admin/userGroup/filter/', [UserGroupController::class, 'filter']);
     Route::get('admin/userGroup', [UserGroupController::class, 'index'])->name('userGroup.index');
     Route::get('admin/userGroup/create', [UserGroupController::class, 'create'])->name('userGroup.create');
@@ -56,19 +51,14 @@ Route::group(['middleware' => ['auth']], function () {
 
 
     // :::::::: Start User Route ::::::::::::::
-    Route::post('admin/users/cpself/', [UsersController::class, 'cpself']);
-    Route::get('admin/users/cpself/', function () {
-        return View::make('admin/users/change_password_self');
-    });
+
     Route::get('admin/users/profile/', function () {
-        return View::make('users/user_profile');
+        return View::make('admin/users/user_profile');
     });
     Route::post('admin/users/editProfile/', [UsersController::class, 'editProfile']);
     Route::resource('admin/users', UsersController::class, ['except' => ['show']]);
     Route::get('admin/users/activate/{id}/{param?}', [UsersController::class, 'active']);
-    Route::post('admin/users/pup/', [UsersController::class, 'pup']);
-    Route::post('admin/users/filter/', [UsersController::class, 'filter']);
-    Route::get('admin/users/cp/{id}/{param?}', [UsersController::class, 'change_pass']);
+
         // :::::::: End User Route ::::::::::::::
 
 });

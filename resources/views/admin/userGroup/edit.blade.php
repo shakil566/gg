@@ -24,18 +24,18 @@
 
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">@lang('english.NAME')</label>
+                                <label for="name">@lang('english.NAME')<span class="text-danger"> *</span></label>
                                 {{ Form::text('name', Request::get('name'), ['id' => 'name', 'class' => 'form-control', 'placeholder' => 'Enter User Group Name']) }}
                                 <span class="help-block text-danger"> {{ $errors->first('name') }}</span>
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">@lang('english.INFO')</label>
+                                <label for="info">@lang('english.INFO')</label>
                                 {{ Form::text('info', Request::get('info'), ['id' => 'info', 'class' => 'form-control', 'placeholder' => 'Enter User Group Info']) }}
                                 <span class="help-block text-danger"> {{ $errors->first('info') }}</span>
                             </div>
 
                             <div class="form-group">
-                                <label for="exampleInputEmail1">@lang('english.STATUS')</label>
+                                <label for="order">@lang('english.ORDER')</label>
                                 {!! Form::select('order', $orderList, null, [
                                 'class' => 'form-control select2',
                                 'id' => 'order',
@@ -44,7 +44,7 @@
                                 <span class="help-block text-danger"> {{ $errors->first('order') }}</span>
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">@lang('english.STATUS')</label>
+                                <label for="statusId">@lang('english.STATUS')</label>
                                 {!! Form::select('status', ['1' => __('english.ACTIVE'), '2' => __('english.INACTIVE')], Request::get('status'), [
                                 'class' => 'form-control select2',
                                 'id' => 'statusId',

@@ -42,7 +42,7 @@
                                     <thead>
                                         <tr class="text-center">
                                             <th>@lang('english.SL_NO')</th>
-                                            <th>@lang('english.TITLE')</th>
+                                            <th>@lang('english.NAME')</th>
                                             <th>@lang('english.ORDER')</th>
                                             <th>@lang('english.STATUS')</th>
                                             <th>@lang('english.ACTION')</th>

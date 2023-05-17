@@ -12,16 +12,17 @@
 }
 
 img.img-circle.user-icon {
-    margin-top: -5px;
-    margin-right: 5px;
-    height: 29px;
+    margin-top: -8px;
+    margin-right: 10px;
+    height: 40px;
     display: inline-block;
+    width: 40px;
 }
 
 .nav-username {
     display: inline-block;
-    font-size: 13px;
-    font-weight: 300;
+    font-size: 16px;
+    font-weight: 500;
 }
 
 .admin-nav li.nav-item {
@@ -52,7 +53,13 @@ img.img-circle.user-icon {
     background-color: #112b46 !important;
     border-color: #112b46 !important;
 }
-
+.card {
+    background-color:#ebebeb !important;
+}
+footer.main-footer {
+    background: #151f28 !important;
+    margin-bottom: -5px;
+}
 
 
 /* mobile-css */

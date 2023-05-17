@@ -1,126 +1,88 @@
-@extends('layouts.default')
-@section('content')
-<!-- BEGIN CONTENT BODY -->
-<div class="page-content">
+@extends('layouts.admin.master')
+@section('admin_content')
+    <!-- BEGIN CONTENT BODY -->
+    <div class="content-wrapper">
 
-    <!-- BEGIN PORTLET-->
-    @include('includes.flash')
-    <!-- END PORTLET-->
-    <div class="row">
-        <div class="col-md-12">
-            <div class="portlet box green">
-                <div class="portlet-title">
-                    <div class="caption">
-                        <i class="fa fa-user"></i>{{trans('english.UPDATE_USER_PROFILE')}} </div>
-                    <div class="tools">
-                        <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
-                        <a href="#portlet-config" data-toggle="modal" class="config" data-original-title="" title=""> </a>
-                        <a href="javascript:;" class="reload" data-original-title="" title=""> </a>
-                        <a href="javascript:;" class="remove" data-original-title="" title=""> </a>
-                    </div>
-                </div>
-                <div class="portlet-body form">
-                    <!-- BEGIN FORM-->
-                    {{ Form::open(array('role' => 'form', 'url' => 'users/editProfile', 'files'=> true, 'class' => 'form-horizontal', 'id' => 'edit-profile')) }}
-                    <div class="form-body">
-                        <div class="row">
-                            <div class="col-md-7">
+        <!-- BEGIN PORTLET-->
+        @include('layouts.admin.flash')
+        <!-- END PORTLET-->
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <!-- left column -->
+                    <div class="col-md-8 margin-top-10">
+                        <!-- general form elements -->
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">@lang('english.UPDATE_USER_PROFILE')</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <!-- form start -->
+                            {{ Form::open(array('role' => 'form', 'url' => 'admin/users/editProfile', 'files'=> true, 'class' => 'form-horizontal', 'id' => 'edit-profile')) }}
+
+                            <div class="card-body">
+
 
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label">{{trans('english.FIRST_NAME')}} :<span class="required"> *</span></label>
-                                    <div class="col-md-8">
-                                        {{ Form::text('first_name',Auth::user()->first_name, array('id'=> 'UserFirstName', 'class' => 'form-control', 'placeholder' => 'Enter First Name')) }}
-                                        <span class="help-block text-danger"> {{ $errors->first('first_name') }}</span>
-                                    </div>
+                                    <label for="UserFirstName">@lang('english.FIRST_NAME')<span class="text-danger"> *</span></label>
+                                    {{ Form::text('first_name', Auth::user()->first_name, ['id' => 'UserFirstName', 'class' => 'form-control', 'placeholder' => 'Enter First Name']) }}
+                                    <span class="help-block text-danger"> {{ $errors->first('first_name') }}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label">{{trans('english.LAST_NAME')}} :<span class="required"> *</span></label>
-                                    <div class="col-md-8">
-                                        {{ Form::text('last_name',Auth::user()->last_name, array('id'=> 'UserLastName', 'class' => 'form-control', 'placeholder' => 'Enter Last Name', 'required' => 'true')) }}
-                                        <span class="help-block text-danger"> {{ $errors->first('last_name') }}</span>
-                                    </div>
+                                    <label for="UserLastName">@lang('english.LAST_NAME')<span class="text-danger"> *</span></label>
+                                    {{ Form::text('last_name', Auth::user()->last_name, ['id' => 'UserLastName', 'class' => 'form-control', 'placeholder' => 'Enter Last Name']) }}
+                                    <span class="help-block text-danger"> {{ $errors->first('last_name') }}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label">{{trans('english.OFFICIAL_NAME')}} :<span class="required"> *</span></label>
-                                    <div class="col-md-8">
-                                        {{ Form::text('official_name',Auth::user()->official_name, array('id'=> 'userOfficialName', 'class' => 'form-control', 'placeholder' => 'Enter Official Name', 'required' => 'true')) }}
-                                        <span class="help-block text-danger"> {{ $errors->first('official_name') }}</span>
-                                    </div>
+                                    <label for="userOfficialName">@lang('english.OFFICIAL_NAME')<span class="text-danger"> *</span></label>
+                                    {{ Form::text('official_name', Auth::user()->official_name, ['id' => 'userOfficialName', 'class' => 'form-control', 'placeholder' => 'Enter Official Name']) }}
+                                    <span class="help-block text-danger"> {{ $errors->first('official_name') }}</span>
                                 </div>
 
-                                <!--<div class="form-group">
-                                    <label class="col-md-4 control-label">{{trans('english.EMAIL')}} :<span class="required"> *</span></label>
-                                    <div class="col-md-8">
-                                        <div class="input-group">
-                                            <span class="input-group-addon">
-                                                <i class="fa fa-envelope"></i>
-                                            </span>
-                                            {{ Form::email('email',Auth::user()->email, array('id'=> 'UserEmail', 'placeholder' => 'Email Address', 'class' => 'form-control')) }}
-                                        </div>
-                                        <span class="help-block text-danger"> {{ $errors->first('email') }}</span>
-                                    </div>
-                                </div>-->
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label">{{trans('english.PHONE_NUMBER')}} :</label>
-                                    <div class="col-md-8">
-                                        <div class="input-icon">
-                                            <i class="fa fa-mobile-phone"></i>
-                                            {{ Form::text('phone_no',Auth::user()->phone_no, array('id'=> 'userPhoneNumber', 'class' => 'form-control', 'placeholder' => 'Enter Phone Number')) }}
-                                        </div>
-                                        <span class="help-block text-danger"> {{ $errors->first('phone_no') }}</span>
+                                    <label for="userPhoneNumber">@lang('english.PHONE_NUMBER')</label>
+                                    {{ Form::text('phone_no', Auth::user()->phone_no, ['id' => 'userPhoneNumber', 'class' => 'form-control', 'placeholder' => 'Enter Phone Number']) }}
+                                    <span class="help-block text-danger"> {{ $errors->first('phone_no') }}</span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="photo">@lang('english.PHOTO')</label><br>
+                                    @if (!empty(Auth::user()->photo))
+                                        <img width="100" height="100" src="{{ URL::to('/') }}/public/uploads/user/{{Auth::user()->photo}}"
+                                            alt="{{Auth::user()->official_name}}">
+                                    @else
+                                        <img width="100" height="100" src="{{ URL::to('/') }}/public/img/no_image.png" alt="">
+                                    @endif
+                                    {{ Form::file('photo', Request::get('photo'), ['class' => 'form-control', 'id' => 'photo', 'files' => 'true']) }}
+
+                                    <span class="help-block text-danger">{{ $errors->first('photo') }}</span>
+                                    <div class="clearfix margin-top-10">
+                                        <span class="label label-danger">{{ trans('english.NOTE') }}</span>
+                                        {{ trans('english.USER_AND_STUDENT_IMAGE_FOR_IMAGE_DESCRIPTION') }}
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-5">
-                                <div class="form-group last">
-                                    <label class="control-label col-md-3"> {{trans('english.PHOTO')}}: </label>
-                                    <div class="col-md-9">
-                                        <div class="fileinput fileinput-new" data-provides="fileinput">
-                                            <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
-                                                @if(isset(Auth::user()->photo))
-                                                    <img src="{{URL::to('/')}}/public/uploads/user/{{Auth::user()->photo}}" alt="{{ Auth::user()->official_name }}">
-                                                @else
-                                                    <img src="{{URL::to('/')}}/public/img/no-image.png" alt="{{ Auth::user()->official_name }}">
-                                                @endif
-                                            </div>
-                                            <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
-                                            <div>
-                                                <span class="btn default btn-file">
-                                                    <span class="fileinput-new"> Select image </span>
-                                                    <span class="fileinput-exists"> Change </span>
-                                                    {{Form::file('photo', array('id' => 'sortpicture'))}}
-                                                </span>
-                                                <span class="help-block text-danger">{{ $errors->first('photo') }}</span>
-                                                <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> {{trans('english.REMOVE')}} </a>
-                                            </div>
-                                        </div>
-                                        <div class="clearfix margin-top-10">
-                                            <span class="label label-danger">{{trans('english.NOTE')}}</span> {{trans('english.USER_AND_STUDENT_IMAGE_FOR_IMAGE_DESCRIPTION')}}
-                                        </div>
-                                    </div>
-                                </div>
+                            <!-- /.card-body -->
+
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary">@lang('english.SUBMIT')</button>
+                                <a href="{{ URL::to('/dashboard/admin') }}" class="btn btn-default">@lang('english.CANCEL')</a>
                             </div>
+                            {{ Form::close() }}
                         </div>
+                        <!-- /.card -->
+
                     </div>
-                    <div class="form-actions">
-                        <div class="row">
-                            <div class="col-md-offset-3 col-md-9">
-                                <button type="submit" class="btn btn-circle green">{{trans('english.SUBMIT')}}</button>
-                                <a href="{{URL::to('dashboard')}}">
-                                    <button type="button" class="btn btn-circle grey-salsa btn-outline">{{trans('english.CANCEL')}}</button>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    {{ Form::close() }}
-                    <!-- END FORM-->
+                    <!-- /.row -->
                 </div>
-            </div>
-        </div>
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
     </div>
-</div>
-<!-- END CONTENT BODY -->
-<!-- BEGIN PAGE LEVEL SCRIPTS -->
- <script src="{{asset('public/assets/pages/uses_script/form-user.js')}}" type="text/javascript"></script>
-<!-- END PAGE LEVEL SCRIPTS -->
+    <!-- END CONTENT BODY -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+
 @stop

@@ -24,13 +24,13 @@
 
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">@lang('english.NAME')</label>
+                                    <label for="name">@lang('english.NAME')<span class="text-danger"> *</span></label>
                                     {{ Form::text('name', Request::get('name'), ['id' => 'name', 'class' => 'form-control', 'placeholder' => 'Enter Department Name']) }}
                                     <span class="help-block text-danger"> {{ $errors->first('name') }}</span>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">@lang('english.STATUS')</label>
+                                    <label for="order">@lang('english.ORDER')</label>
                                     {!! Form::select('order', $orderList, $lastOrderNumber, [
                                         'class' => 'form-control select2',
                                         'id' => 'order',
@@ -39,7 +39,7 @@
                                     <span class="help-block text-danger"> {{ $errors->first('order') }}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">@lang('english.STATUS')</label>
+                                    <label for="statusId">@lang('english.STATUS')</label>
                                     {!! Form::select('status', ['1' => __('english.ACTIVE'), '2' => __('english.INACTIVE')], '1', [
                                         'class' => 'form-control select2',
                                         'id' => 'statusId',

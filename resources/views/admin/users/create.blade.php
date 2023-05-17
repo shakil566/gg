@@ -25,43 +25,43 @@
                         <div class="card-body">
 
                             <div class="form-group">
-                                <label for="userGroupId">@lang('english.SELECT_GROUP')</label>
+                                <label for="userGroupId">@lang('english.SELECT_GROUP')<span class="text-danger"> *</span></label>
                                 {{ Form::select('group_id', $groupList, Request::old('group_id'), array('class' => 'form-control select2', 'id' => 'userGroupId')) }}
                                 <span class="help-block text-danger">{{ $errors->first('group_id') }}</span>
                             </div>
                             <div class="form-group">
-                                <label for="userDesignationId">@lang('english.SELECT_DESIGNATION')</label>
+                                <label for="userDesignationId">@lang('english.SELECT_DESIGNATION')<span class="text-danger"> *</span></label>
                                 {{Form::select('designation_id', $designationList, Request::old('designation_id'), array('class' => 'form-control select2', 'id' => 'userDesignationId'))}}
                                 <span class="help-block text-danger">{{ $errors->first('designation_id') }}</span>
                             </div>
                             <div class="form-group">
-                                <label for="userDepartmentId">@lang('english.SELECT_DEPARTMENT')</label>
+                                <label for="userDepartmentId">@lang('english.SELECT_DEPARTMENT')<span class="text-danger"> *</span></label>
                                 {{ Form::select('department_id', $departmentList, Request::old('department_id'), array('class' => 'form-control select2', 'id' => 'userDepartmentId')) }}
                                 <span class="help-block text-danger">{{ $errors->first('department_id') }}</span>
                             </div>
 
                             <div class="form-group">
-                                <label for="UserFirstName">@lang('english.FIRST_NAME')</label>
+                                <label for="UserFirstName">@lang('english.FIRST_NAME')<span class="text-danger"> *</span></label>
                                 {{ Form::text('first_name', Request::old('first_name'), array('id'=> 'UserFirstName', 'class' => 'form-control', 'placeholder' => 'Enter First Name')) }}
                                 <span class="help-block text-danger"> {{ $errors->first('first_name') }}</span>
                             </div>
                             <div class="form-group">
-                                <label for="UserLastName">@lang('english.LAST_NAME')</label>
+                                <label for="UserLastName">@lang('english.LAST_NAME')<span class="text-danger"> *</span></label>
                                 {{ Form::text('last_name', Request::old('last_name'), array('id'=> 'UserLastName', 'class' => 'form-control', 'placeholder' => 'Enter Last Name')) }}
                                 <span class="help-block text-danger"> {{ $errors->first('last_name') }}</span>
                             </div>
                             <div class="form-group">
-                                <label for="userOfficialName">@lang('english.OFFICIAL_NAME')</label>
+                                <label for="userOfficialName">@lang('english.OFFICIAL_NAME')<span class="text-danger"> *</span></label>
                                 {{ Form::text('official_name', Request::old('official_name'), array('id'=> 'userOfficialName', 'class' => 'form-control', 'placeholder' => 'Enter Official Name')) }}
                                 <span class="help-block text-danger"> {{ $errors->first('official_name') }}</span>
                             </div>
                             <div class="form-group">
-                                <label for="userOfficialName">@lang('english.USERNAME')</label>
+                                <label for="userOfficialName">@lang('english.USERNAME')<span class="text-danger"> *</span></label>
                                 {{ Form::text('username', Request::old('username'), array('id'=> 'username', 'placeholder' => 'Enter Username', 'class' => 'form-control')) }}
                                 <span class="help-block text-danger"> {{ $errors->first('username') }}</span>
                             </div>
                             <div class="form-group">
-                                <label for="UserPassword">@lang('english.PASSWORD')</label>
+                                <label for="UserPassword">@lang('english.PASSWORD')<span class="text-danger"> *</span></label>
                                 {{ Form::password('password', array('id'=> 'UserPassword', 'class' => 'form-control', 'placeholder' => 'Password')) }}
                                 <span class="input-group-addon">
                                     <i class="fa fa-key"></i>
@@ -71,7 +71,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="UserPassword">@lang('english.CONFIRM_PASSWORD')</label>
+                                <label for="UserPassword">@lang('english.CONFIRM_PASSWORD')<span class="text-danger"> *</span></label>
                                 {{ Form::password('password_confirmation', array('id'=> 'UserConfirmPassword', 'class' => 'form-control', 'placeholder' => 'Confirm Password')) }}
                                 <span class="input-group-addon">
                                     <i class="fa fa-key"></i>
@@ -81,7 +81,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="UserEmail">@lang('english.EMAIL')</label>
+                                <label for="UserEmail">@lang('english.EMAIL')<span class="text-danger"> *</span></label>
 
                                 {{ Form::email('email', Request::old('email'), array('id'=> 'UserEmail', 'placeholder' => 'Email Address', 'class' => 'form-control')) }}
 

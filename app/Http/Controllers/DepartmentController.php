@@ -30,9 +30,7 @@ class DepartmentController extends Controller
     {
 
         $departmentArr = Department::select('department.*')
-            ->orderBy('order', 'asc');
-
-        $departmentArr = $departmentArr->get();
+            ->orderBy('order', 'asc')->get();
 
         return view('admin.department.index')->with(compact('departmentArr'));
     }
@@ -100,8 +98,7 @@ class DepartmentController extends Controller
     {
 
         $target = Department::find($id);
-        $qpArr = $request->all();
-        //        $pageNumber = $qpArr['filter'];
+
         $rules = [
             // 'order' => 'required',
             'name' => 'required',

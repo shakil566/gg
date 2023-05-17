@@ -17,21 +17,8 @@ class   DesignationController extends Controller {
     private $controller = "Designation";
     public function index(Request $request) {
 
-         $designationArr = Designation::orderBy('order','asc');
-         //start filter
-         $searchText = $request->fil_search;
-
-         if (!empty($searchText)) {
-             $designationArr->where(function ($query) use ($searchText) {
-                 $query->where('title', 'LIKE', '%' . $searchText . '%');
-             });
-         }
-
-
-        //end filter
-
-        $designationArr = $designationArr->get();
-
+         $designationArr = Designation::orderBy('order','asc')->get();
+         
         // load the view and pass the designation index
         return view('admin.designation.index')->with(compact('designationArr'));
     }

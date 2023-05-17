@@ -45,6 +45,7 @@
                                         <th>@lang('english.DESIGNATION')</th>
                                         <th>@lang('english.DEPARTMENT')</th>
                                         <th>@lang('english.USERNAME')</th>
+                                        <th>@lang('english.EMAIL')</th>
                                         <th>@lang('english.NAME')</th>
                                         <th>@lang('english.PHOTO')</th>
                                         <th>@lang('english.STATUS')</th>
@@ -63,6 +64,7 @@
                                         <td>{{(!empty($value->designation->title) ? $value->designation->title : '')}}</td>
                                         <td>{{$value->department->name ?? ''}}</td>
                                         <td>{{ $value->username }}</td>
+                                        <td>{{ $value->email }}</td>
                                         <td>{{ $value->first_name }} {{ $value->last_name }}</td>
                                         <td class="text-center">
                                             @if(isset($value->photo))
