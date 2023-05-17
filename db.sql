@@ -52,24 +52,7 @@ CREATE TABLE IF NOT EXISTS `designation` (
 -- Dumping data for table syncrise.designation: ~1 rows (approximately)
 DELETE FROM `designation`;
 INSERT INTO `designation` (`id`, `title`, `order`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-	(1, 'Executive Director', 1, '1', '2022-05-22 13:44:55', 170, '2023-05-17 10:23:23', 170);
-
--- Dumping structure for table syncrise.designations
-DROP TABLE IF EXISTS `designations`;
-CREATE TABLE IF NOT EXISTS `designations` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `order` int(11) DEFAULT NULL,
-  `status` enum('0','1') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_by` int(11) DEFAULT NULL,
-  `updated_by` int(11) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- Dumping data for table syncrise.designations: ~0 rows (approximately)
-DELETE FROM `designations`;
+	(1, 'Manager', 1, '1', '2022-05-22 13:44:55', 170, '2023-05-17 19:07:16', 1);
 
 -- Dumping structure for table syncrise.failed_jobs
 DROP TABLE IF EXISTS `failed_jobs`;
@@ -168,13 +151,14 @@ CREATE TABLE IF NOT EXISTS `users` (
   KEY `group_id` (`group_id`),
   KEY `rank_id` (`designation_id`) USING BTREE,
   KEY `appointment_id` (`department_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Dumping data for table syncrise.users: ~2 rows (approximately)
 DELETE FROM `users`;
 INSERT INTO `users` (`id`, `group_id`, `designation_id`, `department_id`, `first_name`, `last_name`, `official_name`, `email`, `phone_no`, `username`, `password`, `photo`, `status`, `is_admin`, `recovery_attempt`, `recovery_link`, `remember_token`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-	(1, 1, 1, 1, 'Shakil', 'Hossen', 'Shakil', 'admin@gmail.com', NULL, 'admin', '$2y$10$VkgcWvPpY5cAJBTwNuv9duGIkkYk.sv66BeFWuErmeroijMTdhUY.', '64650628c67d5cd 1-137816 copy.JPG', 'active', '1', NULL, NULL, NULL, '2023-05-16 04:32:57', NULL, '2023-05-17 10:51:52', 1),
-	(6, 1, 1, 1, 'Muhtasim', 'Riyon', 'Riyon', 'riyon@gmail.com', '016355267383', 'riyon', '$2y$10$cXSUyqG7OqREs81mJXJ29uvqFzpmJ/Qqys6zUDIuUAoEb2OU/GYtC', '6465060b12f65God_of_war-39edc965-bb6e-4b5b-85e5-0e6dccc25f26.jpg', 'active', '1', NULL, NULL, NULL, '2023-05-17 10:51:23', 1, '2023-05-17 10:51:23', 1);
+	(1, 1, 1, 1, 'Shakil', 'Hossen', 'Shakil', 'admin@gmail.com', '0176546363', 'admin', '$2y$10$ckZrosUF5vilpF2kmySD0e0UKurRQTW7W/hRF7SRGLTbVG19mSY6S', '64651f6e04d4ashakil.jpg', 'active', '1', NULL, NULL, NULL, '2023-05-16 04:32:57', NULL, '2023-05-17 12:40:42', 1),
+	(6, 1, 1, 1, 'Muhtasim', 'Riyon', 'Riyon', 'riyon@gmail.com', '016355267383', 'riyon', '$2y$10$cXSUyqG7OqREs81mJXJ29uvqFzpmJ/Qqys6zUDIuUAoEb2OU/GYtC', '64652725bbf47avatar5.png', 'active', '1', NULL, NULL, NULL, '2023-05-17 10:51:23', 1, '2023-05-17 13:12:37', 1),
+	(7, 1, 1, 1, 'Sajjad', 'Ashik', 'Sajjad', 'sajjad@gmail.com', '0173645721', 'sajjad', '$2y$10$lu5vwkIm9OCxJyfitThLEO2hqI/bebYONGZIyJ8Zqxw57bBJK03Li', '6465270a025a0avatar5.png', 'active', '1', NULL, NULL, NULL, '2023-05-17 13:10:37', 1, '2023-05-17 13:12:18', 1);
 
 -- Dumping structure for table syncrise.user_group
 DROP TABLE IF EXISTS `user_group`;
