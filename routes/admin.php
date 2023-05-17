@@ -56,19 +56,19 @@ Route::group(['middleware' => ['auth']], function () {
 
 
     // :::::::: Start User Route ::::::::::::::
-    Route::post('users/cpself/', [UsersController::class, 'cpself']);
-    Route::get('users/cpself/', function () {
-        return View::make('users/change_password_self');
+    Route::post('admin/users/cpself/', [UsersController::class, 'cpself']);
+    Route::get('admin/users/cpself/', function () {
+        return View::make('admin/users/change_password_self');
     });
-    Route::get('users/profile/', function () {
+    Route::get('admin/users/profile/', function () {
         return View::make('users/user_profile');
     });
-    Route::post('users/editProfile/', [UsersController::class, 'editProfile']);
-    Route::resource('users', UsersController::class, ['except' => ['show']]);
-    Route::get('users/activate/{id}/{param?}', [UsersController::class, 'active']);
-    Route::post('users/pup/', [UsersController::class, 'pup']);
-    Route::post('users/filter/', [UsersController::class, 'filter']);
-    Route::get('users/cp/{id}/{param?}', [UsersController::class, 'change_pass']);
+    Route::post('admin/users/editProfile/', [UsersController::class, 'editProfile']);
+    Route::resource('admin/users', UsersController::class, ['except' => ['show']]);
+    Route::get('admin/users/activate/{id}/{param?}', [UsersController::class, 'active']);
+    Route::post('admin/users/pup/', [UsersController::class, 'pup']);
+    Route::post('admin/users/filter/', [UsersController::class, 'filter']);
+    Route::get('admin/users/cp/{id}/{param?}', [UsersController::class, 'change_pass']);
         // :::::::: End User Route ::::::::::::::
 
 });

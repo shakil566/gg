@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
+use UserGroup;
 
 class User extends Authenticatable
 {
@@ -60,6 +61,6 @@ class User extends Authenticatable
     }
 
     public function UserGroup() {
-        return $this->belongsTo('App\Model\UserGroup', 'group_id');
+        return $this->belongsTo('App\Models\UserGroup', 'group_id');
     }
 }

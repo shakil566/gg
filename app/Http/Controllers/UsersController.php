@@ -21,6 +21,7 @@ use Hash;
 use Mail;
 
 class UsersController extends Controller {
+    private $controller = 'users';
 
     public function __construct() {
 
@@ -69,40 +70,11 @@ class UsersController extends Controller {
             });
         }
 
-        $usersArr = $usersArr->orderBy('group_id')->orderBy('username')->paginate(trans('english.PAGINATION_COUNT'));
+        $usersArr = $usersArr->orderBy('group_id')->orderBy('username')->get();
 
-        //Get user group list
-        if (Auth::user()->group_id == 1) {
-            $userGroup = UserGroup::where('id', '<>', 5)->orderBy('id')->pluck('name', 'id')->toArray();
-        } elseif (Auth::user()->group_id == 2) {
-            $userGroup = UserGroup::whereIn('id', [2, 3, 4])->orderBy('id')->pluck('name', 'id')->toArray();
-        } else {
-            $userGroup = UserGroup::whereIn('id', [3, 4])->orderBy('id')->pluck('name', 'id')->toArray();
-        }
-
-        $data['groupList'] = array('' => '--Select User Group--') + $userGroup;
-
-        //Get designation list
-        $designationList = DB::table('designation')->where('status', '=', '1')->orderBy('order')->pluck('title', 'id')->toArray();
-        $data['designationList'] = array('' => '--Select Designation--') + $designationList;
-
-        // echo '<pre>';
-        // print_r($data['designationList']);
-        // exit;
-
-        //Get Department list
-        $departmentList = DB::table('department')->where('status', '=', '1')->orderBy('order')->pluck('name', 'id')->toArray();
-        $data['departmentList'] = array('' => '--Select Department--') + $departmentList;
-
-
-        $data['usersArr'] = $usersArr;
-
-        // echo '<pre>';
-        // print_r($data);
-        // exit;
 
         // load the view and pass the user index
-        return view('users.index', $data);
+        return view('admin.users.index', $usersArr);
     }
 
     public function filter(Request $request) {
