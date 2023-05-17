@@ -1,0 +1,67 @@
+<?php
+
+return [
+
+    /*
+    |--------------------------------------------------------------------------
+    |  Language Lines
+    |--------------------------------------------------------------------------
+    */
+
+    'ADMIN_LOGGED_IN' => 'Admin logged in!',
+    'YOU_ARE_NOT_ADMIN' => 'You are not admin',
+    'INVALID_EMAIL_OR_PASSWORD' => 'Invalid email or password',
+    'SHOP_NAME' => 'Demo Shop',
+    'VERSION' => 'Version',
+    'VERSION_DIGIT' => '1.0.0',
+    'LOGIN' => 'Login',
+    'REMEMBER_ME' => 'Remember Me',
+    'ADMIN_LOGIN' => 'Admin Login',
+    'DASHBOARD' => 'Dashboard',
+    'LOGOUT' => 'Logout',
+    'PROFILE' => 'Profile',
+    'ADMIN_SETUP' => 'Admin Setup',
+    'USER' => 'User',
+    'USER_GROUP' => 'User Group',
+    'DEPARTMENT' => 'Department',
+    'ADMIN' => 'Admin',
+    'DESIGNATION' => 'Designation',
+    'DESIGNATION_DETAILS' => 'Designation details',
+    'PRODUCT_SETUP' => 'Product Setup',
+    'PRODUCT_CATEGORY' => 'Product Category',
+    'PRODUCT' => 'Product',
+    'HOME' => 'Home',
+    'REGISTRATION' => 'Registration',
+    'PAGINATION_COUNT' => '10',
+    'PAGINATION_COUNT_50' => '50',
+    'CREATE_NEW' => 'Create New',
+    'CREATE_NEW_DESIGNATION' => 'Create New Designation',
+    'UPDATE_DESIGNATION' => 'Update Designation',
+    'EDIT' => 'Edit',
+    'DELETE' => 'Delete',
+    'UPDATE' => 'Update',
+    'SL_NO' => 'Ser No',
+    'NAME' => 'Name',
+    'TITLE' => 'Title',
+    'STATUS' => 'Status',
+    'ORDER' => 'Order',
+    'ACTION' => 'Action',
+    'EMPTY_DATA' => 'Empty Data',
+    'ACTIVE' => 'Active',
+    'INACTIVE' => 'Inactive',
+    'SELECT_ORDER_OPT' => '--Select Order--',
+    'HAS_BEEN_CREATED_SUCCESSFULLY' => ' has been created successfully.',
+    'COULD_NOT_BE_CREATED_SUCCESSFULLY' => ' could not be created successfully.',
+    'HAS_BEEN_UPDATED_SUCCESSFULLY' => ' has been updated successfully.',
+    'COULD_NOT_BE_UPDATED' => ' could not be updated',
+    'HAS_BEEN_DELETED_SUCCESSFULLY' => ' has been deleted successfully.',
+    'COULD_NOT_BE_DELETED' => ' could not be deleted',
+    'INVALID_DATA_ID' => 'Invalid data id!',
+    'SUBMIT' => 'Submit',
+    'CANCEL' => 'Cancel',
+    '' => '',
+    '' => '',
+    '' => '',
+    '' => '',
+
+];

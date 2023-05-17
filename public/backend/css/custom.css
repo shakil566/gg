@@ -1,0 +1,47 @@
+/* basic-css */
+.margin-top-10 {
+    margin-top: 10px;
+}
+
+.margin-bottom-10 {
+    margin-top: 10px;
+}
+
+.layout-navbar-fixed.layout-fixed .wrapper .sidebar {
+    margin-top: 0px !important;
+}
+
+img.img-circle.user-icon {
+    float: left;
+    margin-top: -5px;
+    margin-right: 5px;
+    height: 29px;
+    display: inline-block;
+}
+
+.nav-username {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 300;
+}
+
+.admin-nav li.nav-item {
+    margin-left: 20px;
+    font-size: 15px;
+}
+.nav-item .nav .nav-item.act a {
+    background: #3c5a7a;
+}
+.nav-item.parent.act a.parent-link {
+    background: #3c5a7a;
+}
+
+
+/* mobile-css */
+@media screen and (min-width: 320px) and (max-width: 767px) {}
+
+/* tab-css */
+@media screen and (min-width: 768px) and (max-width: 1024px) {}
+
+/* laptop-css */
+@media screen and (min-width: 1025px) {}
