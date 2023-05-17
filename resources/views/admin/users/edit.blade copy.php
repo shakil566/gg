@@ -16,11 +16,11 @@
                     <!-- general form elements -->
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">@lang('english.CREATE_NEW_USER')</h3>
+                            <h3 class="card-title">@lang('english.EDIT_USER')</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        {{ Form::open(['role' => 'form', 'url' => 'admin/users', 'class' => 'form-horizontal', 'id' => 'createUsers', 'files' => true,]) }}
+                        {{ Form::model($user, array('route' => array('users.update', $user->id), 'method' => 'PUT', 'files'=> true, 'class' => 'form-horizontal', 'id' => 'userId')) }}
 
                         <div class="card-body">
 
@@ -102,6 +102,11 @@
 
                             <div class="form-group">
                                 <label for="photo">@lang('english.PHOTO')</label>
+                                @if(isset($user->photo))
+                                                    <img src="{{URL::to('/')}}/public/uploads/user/{{$user->photo}}" alt="{{ $user->official_name }}">
+                                                @else
+                                                    <img src="{{URL::to('/')}}/public/img/no-image.png" alt="">
+                                                @endif
                                 {{Form::file('photo',Request::old('photo'), array('class' => 'form-control','id' => 'photo', 'files'=>'true'))}}
 
                                         <span class="help-block text-danger">{{ $errors->first('photo') }}</span>

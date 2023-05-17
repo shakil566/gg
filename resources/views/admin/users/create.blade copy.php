@@ -20,7 +20,7 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        {{ Form::open(['role' => 'form', 'url' => 'admin/users', 'class' => 'form-horizontal', 'id' => 'createUsers', 'files' => true,]) }}
+                        {{ Form::open(['role' => 'form', 'url' => 'admin/users', 'class' => 'form-horizontal', 'id' => 'createUsers']) }}
 
                         <div class="card-body">
 
@@ -47,12 +47,12 @@
                             </div>
                             <div class="form-group">
                                 <label for="UserLastName">@lang('english.LAST_NAME')</label>
-                                {{ Form::text('last_name', Request::old('last_name'), array('id'=> 'UserLastName', 'class' => 'form-control', 'placeholder' => 'Enter Last Name')) }}
+                                {{ Form::text('last_name', Request::old('last_name'), array('id'=> 'UserLastName', 'class' => 'form-control', 'placeholder' => 'Enter Last Name', 'required' => 'true')) }}
                                 <span class="help-block text-danger"> {{ $errors->first('last_name') }}</span>
                             </div>
                             <div class="form-group">
                                 <label for="userOfficialName">@lang('english.OFFICIAL_NAME')</label>
-                                {{ Form::text('official_name', Request::old('official_name'), array('id'=> 'userOfficialName', 'class' => 'form-control', 'placeholder' => 'Enter Official Name')) }}
+                                {{ Form::text('official_name', Request::old('official_name'), array('id'=> 'userOfficialName', 'class' => 'form-control', 'placeholder' => 'Enter Official Name', 'required' => 'true')) }}
                                 <span class="help-block text-danger"> {{ $errors->first('official_name') }}</span>
                             </div>
                             <div class="form-group">
@@ -62,7 +62,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="UserPassword">@lang('english.PASSWORD')</label>
-                                {{ Form::password('password', array('id'=> 'UserPassword', 'class' => 'form-control', 'placeholder' => 'Password')) }}
+                                {{ Form::password('password', array('id'=> 'UserPassword', 'class' => 'form-control', 'placeholder' => 'Password', 'required' => 'true')) }}
                                 <span class="input-group-addon">
                                     <i class="fa fa-key"></i>
                                 </span>
@@ -72,7 +72,7 @@
 
                             <div class="form-group">
                                 <label for="UserPassword">@lang('english.CONFIRM_PASSWORD')</label>
-                                {{ Form::password('password_confirmation', array('id'=> 'UserConfirmPassword', 'class' => 'form-control', 'placeholder' => 'Confirm Password')) }}
+                                {{ Form::password('password_confirmation', array('id'=> 'UserConfirmPassword', 'class' => 'form-control', 'placeholder' => 'Confirm Password', 'required' => 'true')) }}
                                 <span class="input-group-addon">
                                     <i class="fa fa-key"></i>
                                 </span>
@@ -82,9 +82,7 @@
 
                             <div class="form-group">
                                 <label for="UserEmail">@lang('english.EMAIL')</label>
-
                                 {{ Form::email('email', Request::old('email'), array('id'=> 'UserEmail', 'placeholder' => 'Email Address', 'class' => 'form-control')) }}
-
                                 <span class="help-block text-danger"> {{ $errors->first('email') }}</span>
                             </div>
 
@@ -101,10 +99,22 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="photo">@lang('english.PHOTO')</label>
-                                {{Form::file('photo',Request::old('photo'), array('class' => 'form-control','id' => 'photo', 'files'=>'true'))}}
-
+                                <label for="userStatus">@lang('english.PHOTO')</label>
+                                <div class="fileinput fileinput-new" data-provides="fileinput">
+                                    <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+                                        <img src="{{URL::to('/')}}/public/img/no-image.png" alt="">
+                                    </div>
+                                    <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
+                                    <div>
+                                        <span class="btn default btn-file">
+                                            <span class="fileinput-new"> Select image </span>
+                                            <span class="fileinput-exists"> Change </span>
+                                            {{Form::file('photo', array('id' => 'sortpicture'))}}
+                                        </span>
                                         <span class="help-block text-danger">{{ $errors->first('photo') }}</span>
+                                        <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> {{trans('english.REMOVE')}} </a>
+                                    </div>
+                                </div>
                                 <div class="clearfix margin-top-10">
                                     <span class="label label-danger">{{trans('english.NOTE')}}</span> {{trans('english.USER_AND_STUDENT_IMAGE_FOR_IMAGE_DESCRIPTION')}}
                                 </div>

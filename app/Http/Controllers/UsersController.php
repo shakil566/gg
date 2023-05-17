@@ -20,12 +20,14 @@ use File;
 use Hash;
 use Mail;
 
-class UsersController extends Controller {
+class UsersController extends Controller
+{
     private $controller = 'users';
 
-    public function __construct() {
+    public function __construct()
+    {
 
-        Validator::extend('complexPassword', function($attribute, $value, $parameters) {
+        Validator::extend('complexPassword', function ($attribute, $value, $parameters) {
 
             $password = $parameters[1];
             if (preg_match('/^\S*(?=\S{8,})(?=\S*[A-Z])(?=\S*[a-z])(?=\S*[0-9])(?=\S*[`~!?@#$%^&*()\-_=+{}|;:,<.>])(?=\S*[\d])\S*$/', $password)) {
@@ -38,7 +40,8 @@ class UsersController extends Controller {
         //Get program from session
     }
 
-    public function index(Request $request) {
+    public function index(Request $request)
+    {
 
         $groupId = $request->group_id;
         $designationId = $request->designation_id;
@@ -47,45 +50,24 @@ class UsersController extends Controller {
 
         $usersArr = User::with(array('UserGroup'));
 
-        if (!empty($groupId)) {
-            $usersArr = $usersArr->where('group_id', '=', $groupId);
-        }
-
-        if (!empty($designationId)) {
-            $usersArr = $usersArr->where('designation_id', '=', $designationId);
-        }
-
-        if (!empty($departmentIid)) {
-            $usersArr = $usersArr->where('department_id', '=', $departmentIid);
-        }
-
-
-
-        if (!empty($searchText)) {
-            $usersArr->where(function ($query) use ($searchText) {
-                $query->where('users.username', 'LIKE', '%' . $searchText . '%')
-                        ->orWhere('users.first_name', 'LIKE', '%' . $searchText . '%')
-                        ->orWhere('users.last_name', 'LIKE', '%' . $searchText . '%')
-                        ->orWhere('users.official_name', 'LIKE', '%' . $searchText . '%');
-            });
-        }
 
         $usersArr = $usersArr->orderBy('group_id')->orderBy('username')->get();
 
-
         // load the view and pass the user index
-        return view('admin.users.index', $usersArr);
+        return view('admin.users.index')->with(compact('usersArr'));
     }
 
-    public function filter(Request $request) {
+    public function filter(Request $request)
+    {
         $groupId = $request->group_id;
         $designationId = $request->designation_id;
         $departmentIid = $request->department_id;
         $searchText = $request->search_text;
-        return Redirect::to('users?group_id=' . $groupId . '&designation_id=' . $designationId . '&department_id=' . $departmentIid . '&search_text=' . $searchText);
+        return Redirect::to('admin/users?group_id=' . $groupId . '&designation_id=' . $designationId . '&department_id=' . $departmentIid . '&search_text=' . $searchText);
     }
 
-    public function create() {
+    public function create()
+    {
 
 
         //get user group list
@@ -112,10 +94,13 @@ class UsersController extends Controller {
 
 
         $data['status'] = array('active' => 'Active', 'inactive' => 'Inactive');
-        return view('users.create', $data);
+        return view('admin.users.create', $data);
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
+
+        // return $request;
         $rules = array(
             'group_id' => 'required',
             'designation_id' => 'required',
@@ -147,18 +132,20 @@ class UsersController extends Controller {
         $validator = Validator::make($request->all(), $rules, $message);
 
         if ($validator->fails()) {
-            return Redirect::to('users/create')
-                            ->withErrors($validator)
-                            ->withInput($request->except(array('password', 'photo', 'password_confirmation')));
+            return Redirect::to('admin/users/create')
+                ->withErrors($validator)
+                ->withInput($request->except(array('password', 'photo', 'password_confirmation')));
         }
 
         //User photo upload
+
         $imageUpload = TRUE;
         $imageName = FALSE;
         if ($request->file('photo')) {
             $file = $request->file('photo');
             $destinationPath = public_path() . '/uploads/user/';
             $filename = uniqid() . $file->getClientOriginalName();
+
             $uploadSuccess = $request->file('photo')->move($destinationPath, $filename);
             if ($uploadSuccess) {
                 $imageName = TRUE;
@@ -166,23 +153,15 @@ class UsersController extends Controller {
                 $imageUpload = FALSE;
             }
 
-            //Create More Small Thumbnails :::::::::::: Resize Image
-            $this->load(public_path() . '/uploads/user/' . $filename);
-            $this->resize(100, 100);
-            $this->save(public_path() . '/uploads/thumbnail/' . $filename);
 
-            //delete original image
-            //unlink(public_path() . '/uploads/user' . $filename);
         }
 
         if ($imageUpload === FALSE) {
-            Session::flash('error', 'Image Coul\'d not be uploaded');
-            return Redirect::to('users/create')
-                            ->withInput($request->except(array('photo', 'password', 'password_confirmation')));
+            Session::flash('error', 'Image Could not be uploaded');
+            return Redirect::to('admin/users/create')
+                ->withInput($request->except(array('photo', 'password', 'password_confirmation')));
         }
 
-        $allData = $request->all();
-        $groupId = $request->group_id;
 
         $user = new User;
         $user->group_id = $request->group_id;
@@ -198,75 +177,31 @@ class UsersController extends Controller {
         $user->username = $request->username;
         $user->password = Hash::make($request->password);
 
-        if ($groupId <= '3') {
-            $user->password_changed = 1;
-        }
-
         $user->email = $request->email;
         if ($imageName !== FALSE) {
             $user->photo = $filename;
         }
         $user->status = $request->status;
+        $user->is_admin = '1'; //for admin
 
         if ($user->save()) {
-            DB::beginTransaction();
-            try {
-                //Send mail for DS
-                //Get From mail
-                // $configurationInfoObjArr = Configuration::first();
-                // $fromMail = !empty($configurationInfoObjArr->admin_email) ? $configurationInfoObjArr->admin_email : trans('english.FROM_MAIL');
-                // if ($groupId == '4') {
-                //     // note, to use $subject within your closure below you have to pass it along in the "use (...)" clause.
-                //     $subject = trans('english.YOUE_ACCOUNT_CREDENTIALS');
-                //     $message = Mail::send('emails.send_mail', $allData, function($message) use ($allData, $subject, $fromMail) {
-                //                 // note: if you don't set this, it will use the defaults from config/mail.php
-                //                 $message->from($fromMail, trans('english.HSIA'));
-                //                 $message->to($allData['email'], $allData['official_name'])
-                //                         ->subject($subject);
-                //             });
-                // }
-
-                DB::commit();
-                if ($groupId == '4') {
-                    Session::flash('success', trans('english.USER_CREATED_AND_EMAIL_SENT_SUCCESSFULLY'));
-                } else {
-                    Session::flash('success', $request->username . trans('english.HAS_BEEN_CREATED_SUCESSFULLY'));
-                }
-                return Redirect::to('users');
-                // all good
-            } catch (\Exception $e) {
-                DB::rollback();
-                Session::flash('success', trans('english.USER_CREATED_BUT_EMAIL_NOT_SENT'));
-                return Redirect::to('users');
-            }
+            Session::flash('success', $request->username . trans('english.HAS_BEEN_CREATED_SUCCESSFULLY'));
+            return Redirect::to('admin/users');
         } else {
-            Session::flash('error', $request->username . trans('english.COULD_NOT_BE_CREATED_SUCESSFULLY'));
-            return Redirect::to('users');
+            Session::flash('error', $request->username . trans('english.COULD_NOT_BE_CREATED_SUCCESSFULLY'));
+            return Redirect::to('admin/users');
         }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit(Request $request, $id) {
+
+    public function edit(Request $request, $id)
+    {
         // get the user
         $user = User::find($id);
         $data['user'] = $user;
         //get user group list
-        if (Auth::user()->group_id == 1) {
-            $userGroup = UserGroup::where('id', '<>', 5)->orderBy('id')->pluck('name', 'id')->toArray();
-        } elseif (Auth::user()->group_id == 2) {
-            $userGroup = UserGroup::whereIn('id', [2, 3, 4])->orderBy('id')->pluck('name', 'id')->toArray();
-        } elseif (Auth::user()->group_id == 6) {
-            $userGroup = UserGroup::whereIn('id', [3, 4])->orderBy('id')->pluck('name', 'id')->toArray();
-        } elseif (Auth::user()->group_id == 3) {
-            $userGroup = UserGroup::whereIn('id', [3, 4])->orderBy('id')->pluck('name', 'id')->toArray();
-        } else {
-            $userGroup = UserGroup::whereIn('id', [4])->orderBy('id')->pluck('name', 'id')->toArray();
-        }
+
+        $userGroup = UserGroup::orderBy('id')->pluck('name', 'id')->toArray();
         $data['groupList'] = array('' => 'Select User Group') + $userGroup;
 
         //Get designation List
@@ -281,10 +216,11 @@ class UsersController extends Controller {
         $data['status'] = array('active' => 'Active', 'inactive' => 'Inactive');
 
         // show the edit form and pass the usere
-        return view('users.edit', $data);
+        return view('admin.users.edit', $data);
     }
 
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
 
         // validate
         $rules = array(
@@ -322,9 +258,9 @@ class UsersController extends Controller {
 
         // process the login
         if ($validator->fails()) {
-            return Redirect::to('users/' . $id . '/edit')
-                            ->withErrors($validator)
-                            ->withInput($request->except('password', 'password_confirmation', 'photo'));
+            return Redirect::to('admin/users/' . $id . '/edit')
+                ->withErrors($validator)
+                ->withInput($request->except('password', 'password_confirmation', 'photo'));
         }
 
         //User photo upload
@@ -341,16 +277,12 @@ class UsersController extends Controller {
                 $imageUpload = FALSE;
             }
 
-            //Create More Small Thumbnails :::::::::::: Resize Image
-            $this->load(public_path() . '/uploads/user/' . $filename);
-            $this->resize(100, 100);
-            $this->save(public_path() . '/uploads/thumbnail/' . $filename);
         }
 
         if ($imageUpload === FALSE) {
-            Session::flash('error', 'Image Coul\'d not be uploaded');
-            return Redirect::to('users/' . $id . '/edit')
-                            ->withInput($request->except(array('photo', 'password', 'password_confirmation')));
+            Session::flash('error', 'Image Could not be uploaded');
+            return Redirect::to('admin/users/' . $id . '/edit')
+                ->withInput($request->except(array('photo', 'password', 'password_confirmation')));
         }
 
         $password = $request->password;
@@ -361,13 +293,9 @@ class UsersController extends Controller {
             $userExistsOrginalFile = public_path() . '/uploads/user/' . $user->photo;
             if (file_exists($userExistsOrginalFile)) {
                 File::delete($userExistsOrginalFile);
-            }//if user uploaded success
+            } //if user uploaded success
 
-            $userExistsThumbnailFile = public_path() . '/uploads/thumbnail/' . $user->photo;
-            if (file_exists($userExistsThumbnailFile)) {
-                File::delete($userExistsThumbnailFile);
-            }//if user uploaded success
-        }//if file uploaded success
+        } //if file uploaded success
 
 
         $user->group_id = $request->group_id;
@@ -392,15 +320,16 @@ class UsersController extends Controller {
 
         if ($user->save()) {
             Session::flash('success', $request->username . trans('english.HAS_BEEN_UPDATED_SUCCESSFULLY'));
-            return Redirect::to('users');
+            return Redirect::to('admin/users');
         } else {
-            Session::flash('error', $request->username . trans('english.COUD_NOT_BE_UPDATED'));
-            return Redirect::to('users/' . $id . '/edit');
+            Session::flash('error', $request->username . trans('english.COULD_NOT_BE_UPDATED'));
+            return Redirect::to('admin/users/' . $id . '/edit');
         }
     }
 
     //User Active/Inactive Function
-    public function active($id, $param = null) {
+    public function active($id, $param = null)
+    {
         if ($param !== null) {
             $url = 'users?' . $param;
         } else {
@@ -427,38 +356,28 @@ class UsersController extends Controller {
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id) {
-
-
-        $hasRelationDepartment = Department::where('created_at', $id)->first();
-
-        if (!empty($hasRelationDepartment)) {
-            Session::flash('error', trans('english.THIS_USER_CANNOT_BE_DELETED'));
-            return Redirect::to('users');
-        }
+    public function destroy($id)
+    {
 
         // delete user table
         $user = User::where('id', '=', $id)->first();
         $userExistsOrginalFile = public_path() . '/uploads/user/' . $user->photo;
         if (file_exists($userExistsOrginalFile)) {
             File::delete($userExistsOrginalFile);
-        }//if user uploaded success
+        } //if user uploaded success
 
-        $userExistsThumbnailFile = public_path() . '/uploads/thumbnail/' . $user->photo;
-        if (file_exists($userExistsThumbnailFile)) {
-            File::delete($userExistsThumbnailFile);
-        }//if user uploaded success
 
         if ($user->delete()) {
-            Session::flash('success', $user->username . trans('english.HAS_BEEN_DELETED_SUCCESSFULLY'));
-            return Redirect::to('users');
+            Session::flash('error', $user->username . trans('english.HAS_BEEN_DELETED_SUCCESSFULLY'));
+            return Redirect::to('admin/users');
         } else {
             Session::flash('error', $user->username . trans('english.COULD_NOT_BE_DELETED'));
-            return Redirect::to('users');
+            return Redirect::to('admin/users');
         }
     }
 
-    public function change_pass($id, $param = null) {
+    public function change_pass($id, $param = null)
+    {
         if ($param !== null) {
             $url = 'users?' . $param;
         } else {
@@ -466,11 +385,11 @@ class UsersController extends Controller {
         }
 
         $userInfo = User::join('user_group', 'user_group.id', '=', 'users.group_id', 'inner')
-                ->join('designation', 'designation.id', '=', 'users.designation_id', 'left')
-                ->join('department', 'department.id', '=', 'users.department_id', 'left')
-                ->where('users.id', $id)
-                ->select('users.*', 'designation.title', 'department.name as department_title')
-                ->first();
+            ->join('designation', 'designation.id', '=', 'users.designation_id', 'left')
+            ->join('department', 'department.id', '=', 'users.department_id', 'left')
+            ->where('users.id', $id)
+            ->select('users.*', 'designation.title', 'department.name as department_title')
+            ->first();
 
         $data['userInfo'] = $userInfo;
 
@@ -479,7 +398,8 @@ class UsersController extends Controller {
         return view('users/change_password', $data);
     }
 
-    public function pup(Request $request) {
+    public function pup(Request $request)
+    {
 
         $next_url = $request->next_url;
 
@@ -496,8 +416,8 @@ class UsersController extends Controller {
 
         if ($validator->fails()) {
             return Redirect::to('users/cp/' . $request->user_id)
-                            ->withErrors($validator)
-                            ->withInput($request->all());
+                ->withErrors($validator)
+                ->withInput($request->all());
         } else {
             $user = User::find($request->user_id);
 
@@ -512,43 +432,45 @@ class UsersController extends Controller {
         }
     }
 
-    public function cpself(Request $request) {
+    public function cpself(Request $request)
+    {
 
         // if (Request::isMethod('post')) {
 
-            $rules = array(
-                'oldPassword' => 'Required',
-                'password' => 'Required|min:8|Confirmed|complex_password:,' . $request->password,
-                'password_confirmation' => 'Required',
-            );
+        $rules = array(
+            'oldPassword' => 'Required',
+            'password' => 'Required|min:8|Confirmed|complex_password:,' . $request->password,
+            'password_confirmation' => 'Required',
+        );
 
-            $messages = array(
-                'password.complex_password' => trans('english.WEAK_PASSWORD_FOLLOW_PASSWORD_INSTRUCTION'),
-            );
+        $messages = array(
+            'password.complex_password' => trans('english.WEAK_PASSWORD_FOLLOW_PASSWORD_INSTRUCTION'),
+        );
 
-            $validator = Validator::make($request->all(), $rules, $messages);
+        $validator = Validator::make($request->all(), $rules, $messages);
 
-            if ($validator->fails()) {
-                return Redirect::to('users/cpself')
-                                ->withErrors($validator)
-                                ->withInput($request->all());
+        if ($validator->fails()) {
+            return Redirect::to('users/cpself')
+                ->withErrors($validator)
+                ->withInput($request->all());
+        } else {
+
+            $user = User::find(Auth::user()->id);
+            if (Hash::check($request->oldPassword, $user->password)) {
+                $user->password = Hash::make($request->password);
+                $user->save();
+                Session::flash('success', $user->username . ' ' . trans('english.PASSWORD_CHANGE_SUCCESSFUL'));
+                return Redirect::to('users/cpself');
             } else {
-
-                $user = User::find(Auth::user()->id);
-                if (Hash::check($request->oldPassword, $user->password)) {
-                    $user->password = Hash::make($request->password);
-                    $user->save();
-                    Session::flash('success', $user->username . ' ' . trans('english.PASSWORD_CHANGE_SUCCESSFUL'));
-                    return Redirect::to('users/cpself');
-                } else {
-                    Session::flash('error', trans('Your current password doesn\'t match'));
-                    return Redirect::to('users/cpself');
-                }
+                Session::flash('error', trans('Your current password doesn\'t match'));
+                return Redirect::to('users/cpself');
             }
+        }
         // }
     }
 
-    public function editProfile(Request $request) {
+    public function editProfile(Request $request)
+    {
 
         // validate
         $user = User::find(Auth::user()->id);
@@ -577,8 +499,8 @@ class UsersController extends Controller {
         // process the login
         if ($validator->fails()) {
             return Redirect::to('users/profile')
-                            ->withErrors($validator)
-                            ->withInput($request->except('photo'));
+                ->withErrors($validator)
+                ->withInput($request->except('photo'));
         } else {
             //User photo upload
             $imageUpload = TRUE;
@@ -601,14 +523,14 @@ class UsersController extends Controller {
                 //delete original image
                 if (!empty($user->photo)) {
                     File::delete('public/uploads/user/' . $user->photo);
-                   File::delete('public/uploads/thumbnail/' . $user->photo);
+                    File::delete('public/uploads/thumbnail/' . $user->photo);
                 }
             }
 
             if ($imageUpload === FALSE) {
                 Session::flash('error', 'Image Coul\'d not be uploaded');
                 return Redirect::to('users/profile')
-                                ->withInput($request->except(array('photo')));
+                    ->withInput($request->except(array('photo')));
             }
 
             // store
@@ -624,12 +546,12 @@ class UsersController extends Controller {
                 $userExistsOrginalFile = public_path() . '/uploads/user/' . $userExistFile;
                 if (file_exists($userExistsOrginalFile)) {
                     File::delete($userExistsOrginalFile);
-                }//if user uploaded success
+                } //if user uploaded success
 
                 $userExistsThumbnailFile = public_path() . '/uploads/thumbnail/' . $userExistFile;
                 if (file_exists($userExistsThumbnailFile)) {
                     File::delete($userExistsThumbnailFile);
-                }//if user uploaded success
+                } //if user uploaded success
             }
 
             if ($user->save()) {
@@ -643,7 +565,8 @@ class UsersController extends Controller {
     }
 
     //***************************************  Thumbnails Generating Functions :: Start *****************************
-    public function load($filename) {
+    public function load($filename)
+    {
         $image_info = getimagesize($filename);
         $this->image_type = $image_info[2];
         if ($this->image_type == IMAGETYPE_JPEG) {
@@ -655,7 +578,8 @@ class UsersController extends Controller {
         }
     }
 
-    public function save($filename, $image_type = IMAGETYPE_JPEG, $compression = 75, $permissions = null) {
+    public function save($filename, $image_type = IMAGETYPE_JPEG, $compression = 75, $permissions = null)
+    {
         if ($image_type == IMAGETYPE_JPEG) {
             imagejpeg($this->image, $filename, $compression);
         } elseif ($image_type == IMAGETYPE_GIF) {
@@ -668,7 +592,8 @@ class UsersController extends Controller {
         }
     }
 
-    public function output($image_type = IMAGETYPE_JPEG) {
+    public function output($image_type = IMAGETYPE_JPEG)
+    {
         if ($image_type == IMAGETYPE_JPEG) {
             imagejpeg($this->image);
         } elseif ($image_type == IMAGETYPE_GIF) {
@@ -678,32 +603,38 @@ class UsersController extends Controller {
         }
     }
 
-    public function getWidth() {
+    public function getWidth()
+    {
         return imagesx($this->image);
     }
 
-    public function getHeight() {
+    public function getHeight()
+    {
         return imagesy($this->image);
     }
 
-    public function resizeToHeight($height) {
+    public function resizeToHeight($height)
+    {
         $ratio = $height / $this->getHeight();
         $width = $this->getWidth() * $ratio;
         $this->resize($width, $height);
     }
 
-    public function scale($scale) {
+    public function scale($scale)
+    {
         $width = $this->getWidth() * $scale / 100;
         $height = $this->getheight() * $scale / 100;
         $this->resize($width, $height);
     }
 
-    public function resize($width, $height) {
+    public function resize($width, $height)
+    {
         $new_image = imagecreatetruecolor($width, $height);
         imagecopyresampled($new_image, $this->image, 0, 0, 0, 0, $width, $height, $this->getWidth(), $this->getHeight());
         $this->image = $new_image;
     }
-        public function setRecordPerPage(Request $request) {
+    public function setRecordPerPage(Request $request)
+    {
 
         $referrerArr = explode('?', URL::previous());
         $queryStr = '';

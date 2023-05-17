@@ -47,28 +47,26 @@
                                         <th>@lang('english.USERNAME')</th>
                                         <th>@lang('english.NAME')</th>
                                         <th>@lang('english.PHOTO')</th>
-                                        <th>@lang('english.ORDER')</th>
                                         <th>@lang('english.STATUS')</th>
                                         <th>@lang('english.ACTION')</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-
-                                    @if (!empty($departmentArr))
+                                    @if (!empty($usersArr))
                                     <?php
                                     $sl = 0;
                                     ?>
-                                    @foreach ($departmentArr as $value)
+                                    @foreach ($usersArr as $value)
                                     <tr class="text-center">
                                         <td>{{ ++$sl }}</td>
                                         <td>{{$value->UserGroup->name}}</td>
                                         <td>{{(!empty($value->designation->title) ? $value->designation->title : '')}}</td>
-                                        <td>{{$value->department->name}}</td>
-                                        <td>{{ $value->first_name }} {{ $value->last_name }}</td>
+                                        <td>{{$value->department->name ?? ''}}</td>
                                         <td>{{ $value->username }}</td>
+                                        <td>{{ $value->first_name }} {{ $value->last_name }}</td>
                                         <td class="text-center">
                                             @if(isset($value->photo))
-                                            <img width="100" height="100" src="{{URL::to('/')}}/public/uploads/thumbnail/{{$value->photo}}" alt="{{ $value->first_name.' '.$value->last_name }}">
+                                            <img width="100" height="100" src="{{URL::to('/')}}/public/uploads/user/{{$value->photo}}" alt="{{ $value->first_name.' '.$value->last_name }}">
                                             @else
                                             <img width="100" height="100" src="{{URL::to('/')}}/public/img/unknown.png" alt="{{ $value->first_name.' '.$value->last_name }}">
                                             @endif
@@ -76,9 +74,9 @@
 
                                         <td>
                                             @if ($value->status == 'active')
-                                            <span class="label label-success">{{ $value->status }}</span>
+                                            <span class="label label-success">@lang('english.ACTIVE')</span>
                                             @else
-                                            <span class="label label-warning">{{ $value->status }}</span>
+                                            <span class="label label-warning">@lang('english.INACTIVE')</span>
                                             @endif
                                         </td>
 
@@ -102,26 +100,22 @@
                                                 } //foreach
                                             }
                                             ?>
-                                            <a class='btn btn-info btn-xs tooltips' href="{{ URL::to('users/activate/' . $value->id ) }}@if(isset($param)){{'/'.$param }} @endif" data-rel="tooltip" title="@if($value->status == 'active') Inactivate @else Activate @endif" data-container="body" data-trigger="hover" data-placement="top">
+                                            <a class='btn btn-info btn-xs tooltips' href="{{ URL::to('admin/users/activate/' . $value->id ) }}@if(isset($param)){{'/'.$param }} @endif" data-rel="tooltip" title="@if($value->status == 'active') Inactivate @else Activate @endif" data-container="body" data-trigger="hover" data-placement="top">
                                                 @if($value->status == 'active')
-                                                <i class='fa fa-remove'></i>
+                                                <i class='fa fa-times'></i>
                                                 @else
                                                 <i class='fa fa-check-circle'></i>
                                                 @endif
                                             </a>
-                                            <a class='btn btn-primary btn-xs tooltips' href="{{ URL::to('users/' . $value->id . '/edit') }}" title="Edit User" data-container="body" data-trigger="hover" data-placement="top">
+                                            <a class='btn btn-primary btn-xs tooltips' href="{{ URL::to('admin/users/' . $value->id . '/edit') }}" title="Edit User" data-container="body" data-trigger="hover" data-placement="top">
                                                 <i class='fa fa-edit'></i>
                                             </a>
-                                            <a class="tooltips" href="{{ URL::to('users/cp/' . $value->id) }}@if(isset($param)){{'/'.$param }} @endif" data-original-title="Change Password">
+                                            <a class="tooltips" href="{{ URL::to('admin/users/cp/' . $value->id) }}@if(isset($param)){{'/'.$param }} @endif" data-original-title="Change Password">
                                                 <span class="btn btn-success btn-xs">
                                                     <i class="fa fa-key"></i>
                                                 </span>
                                             </a>
-                                            {{-- <a class="tooltips" data-toggle="modal" data-target="#view-modal" data-id="{{$value->id}}" href="#view-modal" id="getStudentInfo" title="Details User Information" data-container="body" data-trigger="hover" data-placement="top">
-                                            <span class="btn btn-success btn-xs">
-                                                &nbsp;<i class='fa fa-info'></i>&nbsp;
-                                            </span>
-                                            </a> --}}
+
                                             <button class="btn btn-danger btn-xs tooltips" type="submit" title="Delete" data-placement="top" data-rel="tooltip" data-original-title="Delete">
                                                 <i class='fa fa-trash'></i>
                                             </button>

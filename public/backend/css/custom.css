@@ -12,7 +12,6 @@
 }
 
 img.img-circle.user-icon {
-    float: left;
     margin-top: -5px;
     margin-right: 5px;
     height: 29px;
@@ -35,6 +34,25 @@ img.img-circle.user-icon {
 .nav-item.parent.act a.parent-link {
     background: #3c5a7a;
 }
+.sidebar-dark-primary .nav-sidebar > .nav-item > .nav-link.active, .sidebar-light-primary .nav-sidebar > .nav-item > .nav-link.active {
+    background-color: #164a4a !important;
+}
+.page-item.active .page-link {
+    background-color: #343a40 !important;
+    border-color: #343a40 !important;
+}
+.card-primary:not(.card-outline) > .card-header {
+    background-color: #3c5a7a !important;
+}
+.btn-primary {
+    background-color: #1f4e7d !important;
+    border-color: #1f4e7d !important;
+}
+.btn-primary:hover {
+    background-color: #112b46 !important;
+    border-color: #112b46 !important;
+}
+
 
 
 /* mobile-css */

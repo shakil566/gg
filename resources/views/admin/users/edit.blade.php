@@ -1,220 +1,142 @@
-@extends('layouts.default')
-@section('content')
-<!-- BEGIN CONTENT BODY -->
-<div class="page-content">
+@extends('layouts.admin.master')
+@section('admin_content')
+    <!-- BEGIN CONTENT BODY -->
+    <div class="content-wrapper">
 
-    <!-- BEGIN PORTLET-->
-    @include('includes.flash')
-    <!-- END PORTLET-->
-    <div class="row">
-        <div class="col-md-12">
-            <div class="portlet box green">
-                <div class="portlet-title">
-                    <div class="caption">
-                        <i class="fa fa-user"></i>{{trans('english.UPDATE_A_USER')}} </div>
-                    <div class="tools">
-                        <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
-                        <a href="#portlet-config" data-toggle="modal" class="config" data-original-title="" title=""> </a>
-                        <a href="javascript:;" class="reload" data-original-title="" title=""> </a>
-                        <a href="javascript:;" class="remove" data-original-title="" title=""> </a>
-                    </div>
-                </div>
-                <div class="portlet-body form">
-                    <!-- BEGIN FORM-->
-                    {{ Form::model($user, array('route' => array('users.update', $user->id), 'method' => 'PUT', 'files'=> true, 'class' => 'form-horizontal', 'id' => 'userId')) }}
-                    <div class="form-body">
-                        <div class="row">
-                            <div class="col-md-7">
+        <!-- BEGIN PORTLET-->
+        @include('layouts.admin.flash')
+        <!-- END PORTLET-->
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <!-- left column -->
+                    <div class="col-md-8 margin-top-10">
+                        <!-- general form elements -->
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">@lang('english.EDIT_USER')</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <!-- form start -->
+                            {{ Form::model($user, ['route' => ['users.update', $user->id], 'method' => 'PUT', 'files' => true, 'class' => 'form-horizontal', 'id' => 'userId']) }}
+
+                            <div class="card-body">
+
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label">{{trans('english.SELECT_GROUP')}} :<span class="required"> *</span></label>
-                                    <div class="col-md-8">
-                                        {{Form::select('group_id', $groupList, Request::get('group_id'), array('class' => 'form-control dopdownselect', 'id' => 'userGroupId'))}}
-                                        <span class="help-block text-danger">{{ $errors->first('group_id') }}</span>
-                                    </div>
+                                    <label for="userGroupId">@lang('english.SELECT_GROUP')</label>
+                                    {{ Form::select('group_id', $groupList, Request::get('group_id'), ['class' => 'form-control select2', 'id' => 'userGroupId']) }}
+                                    <span class="help-block text-danger">{{ $errors->first('group_id') }}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label">{{trans('english.SELECT_RANK')}} :<span class="required"> *</span></label>
-                                    <div class="col-md-8">
-                                        {{Form::select('designation_id', $designationList, Request::get('designation_id'), array('class' => 'form-control dopdownselect', 'id' => 'userDesignationId'))}}
-                                        <span class="help-block text-danger">{{ $errors->first('designation_id') }}</span>
-                                    </div>
+                                    <label for="userDesignationId">@lang('english.SELECT_DESIGNATION')</label>
+                                    {{ Form::select('designation_id', $designationList, Request::get('designation_id'), ['class' => 'form-control select2', 'id' => 'userDesignationId']) }}
+                                    <span class="help-block text-danger">{{ $errors->first('designation_id') }}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label">{{trans('english.SELECT_DEPARTMENT')}} :<span class="required"> *</span></label>
-                                    <div class="col-md-8">
-                                        {{Form::select('department_id', $departmentList, Request::get('department_id'), array('class' => 'form-control dopdownselect', 'id' => 'userDepartmentId'))}}
-                                        <span class="help-block text-danger">{{ $errors->first('department_id') }}</span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-4 control-label">{{trans('english.FIRST_NAME')}} :<span class="required"> *</span></label>
-                                    <div class="col-md-8">
-                                        {{ Form::text('first_name', Request::get('first_name'), array('id'=> 'UserFirstName', 'class' => 'form-control', 'placehgeter' => 'Enter First Name')) }}
-                                        <span class="help-block text-danger"> {{ $errors->first('first_name') }}</span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-4 control-label">{{trans('english.LAST_NAME')}} :<span class="required"> *</span></label>
-                                    <div class="col-md-8">
-                                        {{ Form::text('last_name', Request::get('last_name'), array('id'=> 'UserLastName', 'class' => 'form-control', 'placehgeter' => 'Enter Last Name', 'required' => 'true')) }}
-                                        <span class="help-block text-danger"> {{ $errors->first('last_name') }}</span>
-                                    </div>
+                                    <label for="userDepartmentId">@lang('english.SELECT_DEPARTMENT')</label>
+                                    {{ Form::select('department_id', $departmentList, Request::get('department_id'), ['class' => 'form-control select2', 'id' => 'userDepartmentId']) }}
+                                    <span class="help-block text-danger">{{ $errors->first('department_id') }}</span>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label">{{trans('english.OFFICIAL_NAME')}} :<span class="required"> *</span></label>
-                                    <div class="col-md-8">
-                                        {{ Form::text('official_name', Request::get('official_name'), array('id'=> 'userOfficialName', 'class' => 'form-control', 'placehgeter' => 'Enter Official Name', 'required' => 'true')) }}
-                                        <span class="help-block text-danger"> {{ $errors->first('official_name') }}</span>
-                                    </div>
+                                    <label for="UserFirstName">@lang('english.FIRST_NAME')</label>
+                                    {{ Form::text('first_name', Request::get('first_name'), ['id' => 'UserFirstName', 'class' => 'form-control', 'placeholder' => 'Enter First Name']) }}
+                                    <span class="help-block text-danger"> {{ $errors->first('first_name') }}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label">{{trans('english.USERNAME')}} :<span class="required"> *</span></label>
-                                    <div class="col-md-8">
-                                        <div class="input-group">
-                                            <span class="input-group-addon">
-                                                <i class="fa fa-user"></i>
-                                            </span>
-                                            {{ Form::text('username', Request::get('username'), array('id'=> 'username', 'placehgeter' => 'Enter Username', 'class' => 'form-control')) }}
-                                        </div>
-                                        <span class="help-block text-danger"> {{ $errors->first('username') }}</span>
-                                    </div>
+                                    <label for="UserLastName">@lang('english.LAST_NAME')</label>
+                                    {{ Form::text('last_name', Request::get('last_name'), ['id' => 'UserLastName', 'class' => 'form-control', 'placeholder' => 'Enter Last Name']) }}
+                                    <span class="help-block text-danger"> {{ $errors->first('last_name') }}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label">{{trans('english.PASSWORD')}} :</label>
-                                    <div class="col-md-8">
-                                        <div class="input-group">
-                                            {{ Form::password('password', array('id'=> 'UserPassword', 'class' => 'form-control', 'placehgeter' => 'Password')) }}
-                                            <span class="input-group-addon">
-                                                <i class="fa fa-key"></i>
-                                            </span>
-                                        </div>
-                                        <span class="help-block">{{ trans('english.COMPLEX_PASSWORD_INSTRUCTION') }}</span>
-                                        <span class="help-block text-danger"> {{ $errors->first('password') }}</span>
-                                    </div>
+                                    <label for="userOfficialName">@lang('english.OFFICIAL_NAME')</label>
+                                    {{ Form::text('official_name', Request::get('official_name'), ['id' => 'userOfficialName', 'class' => 'form-control', 'placeholder' => 'Enter Official Name']) }}
+                                    <span class="help-block text-danger"> {{ $errors->first('official_name') }}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label">{{trans('english.CONFIRM_PASSWORD')}} :</label>
-                                    <div class="col-md-8">
-                                        <div class="input-group">
-                                            {{ Form::password('password_confirmation', array('id'=> 'UserConfirmPassword', 'class' => 'form-control', 'placehgeter' => 'Confirm Password')) }}
-                                            <span class="input-group-addon">
-                                                <i class="fa fa-key"></i>
-                                            </span>
-                                        </div>
-                                        <span class="help-block text-danger"> {{ $errors->first('password_confirmation') }}</span>
-                                    </div>
+                                    <label for="userOfficialName">@lang('english.USERNAME')</label>
+                                    {{ Form::text('username', Request::get('username'), ['id' => 'username', 'placeholder' => 'Enter Username', 'class' => 'form-control']) }}
+                                    <span class="help-block text-danger"> {{ $errors->first('username') }}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label">{{trans('english.EMAIL')}} :<span class="required"> *</span></label>
-                                    <div class="col-md-8">
-                                        <div class="input-group">
-                                            <span class="input-group-addon">
-                                                <i class="fa fa-envelope"></i>
-                                            </span>
-                                            {{ Form::email('email', Request::get('email'), array('id'=> 'UserEmail', 'placehgeter' => 'Email Address', 'class' => 'form-control')) }}
-                                        </div>
-                                        <span class="help-block text-danger"> {{ $errors->first('email') }}</span>
-                                    </div>
+                                    <label for="UserPassword">@lang('english.PASSWORD')</label>
+                                    {{ Form::password('password', ['id' => 'UserPassword', 'class' => 'form-control', 'placeholder' => 'Password']) }}
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-key"></i>
+                                    </span>
+                                    <span class="help-block">{{ trans('english.COMPLEX_PASSWORD_INSTRUCTION') }}</span>
+                                    <span class="help-block text-danger"> {{ $errors->first('password') }}</span>
                                 </div>
+
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label">{{trans('english.PHONE_NUMBER')}} :</label>
-                                    <div class="col-md-8">
-                                        <div class="input-icon">
-                                            <i class="fa fa-mobile-phone"></i>
-                                            {{ Form::text('phone_no',Request::get('service_no'), array('id'=> 'userPhoneNumber', 'class' => 'form-control', 'placehgeter' => 'Enter Phone Number')) }}
-                                        </div>
-                                        <span class="help-block text-danger"> {{ $errors->first('phone_no') }}</span>
-                                    </div>
+                                    <label for="UserPassword">@lang('english.CONFIRM_PASSWORD')</label>
+                                    {{ Form::password('password_confirmation', ['id' => 'UserConfirmPassword', 'class' => 'form-control', 'placeholder' => 'Confirm Password']) }}
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-key"></i>
+                                    </span>
+                                    <span class="help-block text-danger">
+                                        {{ $errors->first('password_confirmation') }}</span>
+
                                 </div>
+
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label">{{trans('english.STATUS')}} :<span class="required"> *</span></label>
-                                    <div class="col-md-8">
-                                        {{Form::select('status', $status, Request::get('status'), array('class' => 'form-control dopdownselect-hidden-search', 'id' => 'userStatus'))}}
-                                        <span class="help-block text-danger">{{ $errors->first('status') }}</span>
+                                    <label for="UserEmail">@lang('english.EMAIL')</label>
+
+                                    {{ Form::email('email', Request::get('email'), ['id' => 'UserEmail', 'placeholder' => 'Email Address', 'class' => 'form-control']) }}
+
+                                    <span class="help-block text-danger"> {{ $errors->first('email') }}</span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="userPhoneNumber">@lang('english.PHONE_NUMBER')</label>
+                                    {{ Form::text('phone_no', Request::get('phone_no'), ['id' => 'userPhoneNumber', 'class' => 'form-control', 'placeholder' => 'Enter Phone Number']) }}
+                                    <span class="help-block text-danger"> {{ $errors->first('phone_no') }}</span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="userStatus">@lang('english.STATUS')</label>
+                                    {{ Form::select('status', $status, Request::get('status'), ['class' => 'form-control select2', 'id' => 'userStatus']) }}
+                                    <span class="help-block text-danger">{{ $errors->first('status') }}</span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="photo">@lang('english.PHOTO')</label><br>
+                                    @if (!empty($user->photo))
+                                        <img width="100" height="100" src="{{ URL::to('/') }}/public/uploads/user/{{ $user->photo }}"
+                                            alt="{{ $user->official_name }}">
+                                    @else
+                                        <img width="100" height="100" src="{{ URL::to('/') }}/public/img/no_image.png" alt="">
+                                    @endif
+                                    {{ Form::file('photo', Request::get('photo'), ['class' => 'form-control', 'id' => 'photo', 'files' => 'true']) }}
+
+                                    <span class="help-block text-danger">{{ $errors->first('photo') }}</span>
+                                    <div class="clearfix margin-top-10">
+                                        <span class="label label-danger">{{ trans('english.NOTE') }}</span>
+                                        {{ trans('english.USER_AND_STUDENT_IMAGE_FOR_IMAGE_DESCRIPTION') }}
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-5">
-                                <div class="form-group last">
-                                    <label class="control-label col-md-3"> Photo: </label>
-                                    <div class="col-md-9">
-                                        <div class="fileinput fileinput-new" data-provides="fileinput">
-                                            <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
-                                                @if(isset($user->photo))
-                                                    <img src="{{URL::to('/')}}/public/uploads/user/{{$user->photo}}" alt="{{ $user->official_name }}">
-                                                @else
-                                                    <img src="{{URL::to('/')}}/public/img/no-image.png" alt="">
-                                                @endif
-                                            </div>
-                                            <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
-                                            <div>
-                                                <span class="btn default btn-file">
-                                                    <span class="fileinput-new"> Select image </span>
-                                                    <span class="fileinput-exists"> Change </span>
-                                                    {{Form::file('photo', array('id' => 'sortpicture'))}}
-                                                </span>
-                                                <span class="help-block text-danger">{{ $errors->first('photo') }}</span>
-                                                <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> {{trans('english.REMOVE')}} </a>
-                                            </div>
-                                        </div>
-                                        <div class="clearfix margin-top-10">
-                                            <span class="label label-danger">{{trans('english.NOTE')}}</span> {{trans('english.USER_AND_STUDENT_IMAGE_FOR_IMAGE_DESCRIPTION')}}
-                                        </div>
-                                    </div>
-                                </div>
+                            <!-- /.card-body -->
+
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary">@lang('english.SUBMIT')</button>
+                                <a href="{{ URL::to('/admin/users') }}" class="btn btn-default">@lang('english.CANCEL')</a>
                             </div>
+                            {{ Form::close() }}
                         </div>
+                        <!-- /.card -->
+
                     </div>
-                    <div class="form-actions">
-                        <div class="row">
-                            <div class="col-md-offset-3 col-md-9">
-                                <button type="submit" class="btn btn-circle green">{{trans('english.SUBMIT')}}</button>
-                                <a href="{{URL::to('users')}}">
-                                    <button type="button" class="btn btn-circle grey-salsa btn-outline">{{trans('english.CANCEL')}}</button>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    {{ Form::close() }}
-                    <!-- END FORM-->
+                    <!-- /.row -->
                 </div>
-            </div>
-        </div>
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
     </div>
-</div>
-<!-- END CONTENT BODY -->
-<!-- BEGIN PAGE LEVEL SCRIPTS -->
-<script src="{{asset('public/assets/pages/uses_script/form-user.js')}}" type="text/javascript"></script>
-<!-- END PAGE LEVEL SCRIPTS -->
-<script type="text/javascript">
-	 $(document).on("submit", '#userId', function (e) {
-        //This function use for sweetalert confirm message
-		e.preventDefault();
-		var form = this;
-        swal({
-            title: 'Are you sure you want to Submit?',
-            text: '<strong></strong>',
-            type: 'warning',
-            html: true,
-            allowOutsideClick: true,
-            showConfirmButton: true,
-            showCancelButton: true,
-            confirmButtonClass: 'btn-info',
-            cancelButtonClass: 'btn-danger',
-            confirmButtonText: 'Yes, I agree',
-            cancelButtonText: 'No, I do not agree',
-        },
-        function (isConfirm) {
-			if (isConfirm) {
-				toastr.info("Loading...", "Please Wait.", {"closeButton": true});
-				 form.submit();
-			} else {
-				//swal(sa_popupTitleCancel, sa_popupMessageCancel, "error");
+    <!-- END CONTENT BODY -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
-			}
-        });
-    });
-</script>
+
 @stop
-
