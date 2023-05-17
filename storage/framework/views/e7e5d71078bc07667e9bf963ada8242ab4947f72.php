@@ -51,8 +51,8 @@ $action = Route::currentRouteAction();
                         </p>
                     </a>
                     <ul class="nav nav-treeview admin-nav">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
+                        <li class="nav-item <?php echo $currentControllerName == 'userGroup' ? 'strt act opn' : ''; ?>">
+                            <a href="<?php echo e(URL::to('admin/userGroup')); ?>" class="nav-link">
                                 <i class="fas fa-users nav-icon"></i>
                                 <p><?php echo app('translator')->get('english.USER_GROUP'); ?></p>
                             </a>
@@ -63,14 +63,14 @@ $action = Route::currentRouteAction();
                                 <p><?php echo app('translator')->get('english.DESIGNATION'); ?></p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
+                        <li class="nav-item <?php echo $currentControllerName == 'department' ? 'strt act opn' : ''; ?>">
+                            <a href="<?php echo e(URL::to('admin/department')); ?>" class="nav-link">
                                 <i class="fas fa-building nav-icon"></i>
                                 <p><?php echo app('translator')->get('english.DEPARTMENT'); ?></p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
+                        <li class="nav-item <?php echo $currentControllerName == 'users' ? 'strt act opn' : ''; ?>">
+                            <a href="<?php echo e(URL::to('admin/users')); ?>" class="nav-link">
                                 <i class="nav-icon fas fa-user"></i>
                                 <p><?php echo app('translator')->get('english.USER'); ?></p>
                             </a>

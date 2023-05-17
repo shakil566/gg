@@ -1,158 +1,157 @@
-@extends('layouts.default')
-@section('content')
+@extends('layouts.admin.master')
+@section('admin_content')
+    <!-- BEGIN CONTENT BODY -->
+    <div class="content-wrapper">
 
-<div class="page-content">
-    @include('includes.flash')
-    <div class="row">
-        <div class="col-md-12">
-            <div class="portlet box green">
-                <div class="portlet-title">
-                    <div class="caption">
-                        <i class="fa fa-cubes"></i>{{trans('english.DEPARTMENT_LIST')}}
+        <!-- BEGIN PORTLET-->
+        @include('layouts.admin.flash')
+        <!-- END PORTLET-->
+
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>@lang('english.DEPARTMENT')</h1>
                     </div>
-                    <div class="actions">
-                        <a href="{{ URL::to('department/create') }}" class="btn btn-default btn-sm">
-                            <i class="fa fa-plus"></i> {{trans('english.CREATE_NEW_DEPARTMENT')}} </a>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="{{ url('/dashboard/admin') }}">@lang('english.HOME')</a></li>
+                            <li class="breadcrumb-item active">@lang('english.DEPARTMENT')</li>
+                        </ol>
                     </div>
                 </div>
-                <div class="portlet-body">
-                    <div class="row">
-                        {!! Form::open(['group' => 'form', 'url' => 'department/filter', 'class' => 'form-horizontal']) !!}
-                        {!! Form::hidden('filter', Helper::queryPageStr($qpArr)) !!}
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label class="control-label col-md-4" for="search">@lang('english.SEARCH')</label>
-                                <div class="col-md-8">
-                                    {!! Form::text('fil_search', Request::get('fil_search'), [
-                                        'class' => 'form-control tooltips',
-                                        'title' => 'Title',
-                                        'placeholder' => 'Name',
-                                        'list' => 'Title',
-                                        'autocomplete' => 'off',
-                                    ]) !!}
+            </div><!-- /.container-fluid -->
+        </section>
 
-                                    <datalist id="Title">
-                                        @if (!$nameArr->isEmpty())
-                                            @foreach ($nameArr as $item)
-                                                <option value="{{ $item->name }}" />
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">@lang('english.DEPARTMENT_DETAILS')</h3>
+                                <a href="{{ url('admin/department/create') }}"
+                                    class="btn btn-sm btn-info float-right">@lang('english.CREATE_NEW')</a>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <table id="dataTable" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr class="text-center">
+                                            <th>@lang('english.SL_NO')</th>
+                                            <th>@lang('english.TITLE')</th>
+                                            <th>@lang('english.ORDER')</th>
+                                            <th>@lang('english.STATUS')</th>
+                                            <th>@lang('english.ACTION')</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        @if (!empty($departmentArr))
+                                            <?php
+                                            $sl = 0;
+                                            ?>
+                                            @foreach ($departmentArr as $value)
+                                                <tr class="text-center">
+                                                    <td>{{ ++$sl }}</td>
+                                                    <td>{{ $value->name ?? '' }}
+                                                    </td>
+                                                    <td>{{ $value->order ?? '' }}</td>
+                                                    <td>
+                                                        @if ($value->status == '1')
+                                                            <span class="badge badge-success">@lang('english.ACTIVE')</span>
+                                                        @else
+                                                            <span class="badge badge-danger">@lang('english.INACTIVE')</span>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        {{ Form::open(['url' => 'admin/department/' . $value->id, 'id' => 'delete']) }}
+                                                        {{ Form::hidden('_method', 'DELETE') }}
+                                                        <a class='btn btn-primary btn-xs'
+                                                            href="{{ URL::to('admin/department/' . $value->id . '/edit') }}"
+                                                            title="{{ trans('english.EDIT') }}">
+                                                            <i class='fa fa-edit'></i>
+                                                        </a>
+                                                        <button class="btn btn-danger btn-xs" type="submit"
+                                                            title="{{ trans('english.DELETE') }}" data-placement="top"
+                                                            data-rel="tooltip" data-original-title="Delete">
+                                                            <i class='fa fa-trash'></i>
+                                                        </button>
+                                                        {{ Form::close() }}
+                                                    </td>
+                                                </tr>
                                             @endforeach
-                                        @endif
-                                    </datalist>
-
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                        <div class="col-md-2">
-                            <button type="submit" class="btn btn-md green btn-outline filter-submit margin-bottom-20">
-                                <i class="fa fa-search"></i> {{trans('english.FILTER')}}
-                            </button>
-                        </div>
-                    </div>
-                    {{Form::close()}}
-                    <div class="table-responsive">
-                        <table class="table table-striped table-bordered table-hover">
-                            <thead>
-                                <tr>
-                                    <th>{{trans('english.SL_NO')}}</th>
-                                    <th>{{trans('english.NAME')}}</th>
-                                    <th class="text-center">{{trans('english.ORDER')}}</th>
-                                    <th class="text-center">{{trans('english.STATUS')}}</th>
-                                    <th class="text-center">{{trans('english.ACTION')}}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if (!$targetArr->isEmpty())
-                                <?php
-                                $page = Request::get('page');
-                                $page = empty($page) ? 1 : $page;
-                                $sl = ($page - 1) * trans('english.PAGINATION_COUNT');
-                                ?>
-                                @foreach($targetArr as $value)
-
-                                <tr class="contain-center">
-                                    <td>{{ ++$sl}}</td>
-                                    <td>{{ $value->name}}</td>
-                                    <td class="text-center">{{ $value->order }}</td>
-                                    <td class="text-center">
-                                        @if ($value->status == '1')
-                                        <span class="label label-success">{{ trans('english.ACTIVE') }}</span>
                                         @else
-                                        <span class="label label-warning">{{ trans('english.INACTIVE') }}</span>
+                                            <tr>
+                                                <td colspan="15">{{ __('english.EMPTY_DATA') }}</td>
+                                            </tr>
                                         @endif
-                                    </td>
 
-                                    <td class="action-center">
-                                        <div class='text-center'>
-                                            {{ Form::open(array('url' => 'department/' . $value->id, 'id' => 'delete')) }}
-                                            {{ Form::hidden('_method', 'DELETE') }}
+                                    </tbody>
+                                    {{-- <tfoot>
+                                        <tr>
 
-                                            <a class="btn btn-primary btn-xs" href="{{ URL::to('department/' . $value->id . '/edit') }}">
-                                                <i class="fa fa-edit"></i>
-                                            </a>
-                                            <button class="btn btn-danger btn-xs" type="submit" data-placement="top" data-rel="tooltip" data-original-title="Delete">
-                                                <i class="fa fa-trash"></i>
-                                            </button>
-                                            {{ Form::close() }}
-                                        </div>
-                                    </td>
-                                </tr>
-                                @endforeach
-                                @else
-                                <tr>
-                                    <td colspan="7">{{trans('english.EMPTY_DATA')}}</td>
-                                </tr>
-                                @endif
-                            </tbody>
-                        </table>
-
-                    </div>
-                    <div class="row">
-                        <div class="col-md-5 col-sm-5">
-                            <div class="dataTables_info" role="status" aria-live="polite">
-                                <?php
-                                $start = empty($targetArr->total()) ? 0 : (($targetArr->currentPage() - 1) * $targetArr->perPage() + 1);
-                                $end = ($targetArr->currentPage() * $targetArr->perPage() > $targetArr->total()) ? $targetArr->total() : ($targetArr->currentPage() * $targetArr->perPage());
-                                ?> <br />
-                                @lang('english.SHOWING') {{ $start }} @lang('english.TO') {{$end}} @lang('english.OF')  {{$targetArr->total()}} @lang('english.RECORDS')
-
+                                        </tr>
+                                    </tfoot> --}}
+                                </table>
                             </div>
+                            <!-- /.card-body -->
                         </div>
-                        <div class="col-md-7 col-sm-7">
-                            {{ $targetArr->appends(Request::all())->links()}}
-                        </div>
+                        <!-- /.card -->
                     </div>
+                    <!-- /.col -->
                 </div>
+                <!-- /.row -->
             </div>
-        </div>
-    </div>
-</div>
-<!-- END CONTENT BODY -->
-<script type="text/javascript">
-    $(document).on("submit", '#delete', function (e) {
-        //This function use for sweetalert confirm message
-        e.preventDefault();
-        var form = this;
-        swal({
-            title: 'Are you sure you want to Delete?',
-            text: '',
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Yes, delete",
-            closeOnConfirm: false
-        },
-                function (isConfirm) {
-                    if (isConfirm) {
-                        toastr.info("Loading...", "Please Wait.", {"closeButton": true});
-                        form.submit();
-                    } else {
-                        //swal(sa_popupTitleCancel, sa_popupMessageCancel, "error");
+            <!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
 
-                    }
-                });
-    });
-</script>
+    </div>
+    <!-- END CONTENT BODY -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+    <script type="text/javascript">
+        $(function() {
+            $("#dataTable").DataTable({
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#dataTable_wrapper .col-md-6:eq(0)');
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
+        });
+
+        $(document).on("submit", '#delete', function(e) {
+            //This function use for sweetalert confirm message
+            e.preventDefault();
+            var form = this;
+            Swal.fire({
+                title: 'Do you want to Delete?',
+                // showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: `DELETE`,
+                // denyButtonText: `Don't DELETE`,
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    // Swal.fire('Deleted!', '', 'success')
+                    form.submit();
+                } else if (result.isDenied) {
+                    // Swal.fire('Not Deleted', '', 'info')
+                }
+            })
+        });
+    </script>
 @stop

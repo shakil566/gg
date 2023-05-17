@@ -25,8 +25,18 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard/admin', [App\Http\Controllers\HomeController::class, 'admin'])
         ->name('admin')->middleware('is_admin');
 
-    Route::resource('userGroup', UserGroupController::class);
+    // Route::resource('userGroup', UserGroupController::class);
 
+    // Route::resource('department', DepartmentController::class);
+
+
+    Route::post('admin/userGroup/filter/', [UserGroupController::class, 'filter']);
+    Route::get('admin/userGroup', [UserGroupController::class, 'index'])->name('userGroup.index');
+    Route::get('admin/userGroup/create', [UserGroupController::class, 'create'])->name('userGroup.create');
+    Route::post('admin/userGroup', [UserGroupController::class, 'store'])->name('userGroup.store');
+    Route::get('admin/userGroup/{id}/edit', [UserGroupController::class, 'edit'])->name('userGroup.edit');
+    Route::patch('admin/userGroup/{id}', [UserGroupController::class, 'update'])->name('userGroup.update');
+    Route::delete('admin/userGroup/{id}', [UserGroupController::class, 'destroy'])->name('userGroup.destroy');
 
     Route::post('admin/designation/filter/', [DesignationController::class, 'filter']);
     Route::get('admin/designation', [DesignationController::class, 'index'])->name('designation.index');
@@ -36,7 +46,14 @@ Route::group(['middleware' => ['auth']], function () {
     Route::patch('admin/designation/{id}', [DesignationController::class, 'update'])->name('designation.update');
     Route::delete('admin/designation/{id}', [DesignationController::class, 'destroy'])->name('designation.destroy');
 
-    Route::resource('department', DepartmentController::class);
+    Route::post('admin/department/filter/', [DepartmentController::class, 'filter']);
+    Route::get('admin/department', [DepartmentController::class, 'index'])->name('department.index');
+    Route::get('admin/department/create', [DepartmentController::class, 'create'])->name('department.create');
+    Route::post('admin/department', [DepartmentController::class, 'store'])->name('department.store');
+    Route::get('admin/department/{id}/edit', [DepartmentController::class, 'edit'])->name('department.edit');
+    Route::patch('admin/department/{id}', [DepartmentController::class, 'update'])->name('department.update');
+    Route::delete('admin/department/{id}', [DepartmentController::class, 'destroy'])->name('department.destroy');
+
 
     // :::::::: Start User Route ::::::::::::::
     Route::post('users/cpself/', [UsersController::class, 'cpself']);

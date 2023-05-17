@@ -20,51 +20,41 @@ use App\Models\User;
 use App\Models\Department;
 
 use Illuminate\Support\Str;
-use App\PhaseToSubject;
 
-class DepartmentController extends Controller {
+class DepartmentController extends Controller
+{
 
     private $controller = 'Department';
 
-    public function index(Request $request) {
-        $nameArr = Department::select('name')->orderBy('id', 'asc')->get();
-        $qpArr = $request->all();
+    public function index(Request $request)
+    {
 
-//        $pageNumber = $qpArr['filter'];
+        $departmentArr = Department::select('department.*')
+            ->orderBy('order', 'asc');
 
-        $targetArr = Department::select('department.*' )
-                ->orderBy('order', 'asc');
-//        echo '<pre>';
-//        print_r($targetArr);
-//        exit;
+        $departmentArr = $departmentArr->get();
 
-        $searchText = $request->fil_search;
-        if (!empty($searchText)) {
-            $targetArr->where(function ($query) use ($searchText) {
-                $query->where('department.name', 'LIKE', '%' . $searchText . '%');
-            });
-        }
-
-        $targetArr = $targetArr->paginate(trans('english.PAGINATION_COUNT'));
-
-        return view('department.index')->with(compact('targetArr', 'nameArr', 'qpArr'));
+        return view('admin.department.index')->with(compact('departmentArr'));
     }
 
-    public function filter(Request $request) {
+    public function filter(Request $request)
+    {
         $url = 'fil_search=' . $request->fil_search;
-        return Redirect::to('department?' . $url);
+        return Redirect::to('admin/department?' . $url);
     }
 
-    public function create(Request $request) {
+    public function create(Request $request)
+    {
 
         $qpArr = $request->all();
 
         $orderList = array('0' => __('english.SELECT_ORDER_OPT')) + Helper::getOrderList($this->controller, 1);
         $lastOrderNumber = Helper::getLastOrder($this->controller, 1);
-        return view('department.create')->with(compact('qpArr', 'orderList', 'lastOrderNumber'));
+        return view('admin.department.create')->with(compact('qpArr', 'orderList', 'lastOrderNumber'));
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
 
         $rules = array(
             'name' => 'required|unique:department',
@@ -75,10 +65,9 @@ class DepartmentController extends Controller {
 
 
         if ($validator->fails()) {
-            //echo '<pre>'; print_r($validator);exit;
-            return Redirect::to('department/create')
-                            ->withErrors($validator)
-                            ->withInput($request->all());
+            return Redirect::to('admin/department/create')
+                ->withErrors($validator)
+                ->withInput($request->all());
         }
 
         $department = new Department;
@@ -86,32 +75,33 @@ class DepartmentController extends Controller {
         $department->order = $request->order;
         $department->status = $request->status;
         if ($department->save()) {
-
-            Helper :: insertOrder($this->controller, $request->order, $department->id);
-            Session::flash('success', trans('english.DEPARTMENT_CREATED_SUCESSFULLY'));
-            return Redirect::to('department');
+            Helper::insertOrder($this->controller, $request->order, $department->id);
+            Session::flash('success',   $request->name . trans('english.HAS_BEEN_CREATED_SUCCESSFULLY'));
+            return Redirect::to('admin/department');
         } else {
-            Session::flash('error', trans('english.DEPARTMENT_COULD_NOT_BE_CREATED'));
-            return Redirect::to('department/create');
+            Session::flash('error',   $request->name . trans('english.COULD_NOT_BE_CREATED_SUCCESSFULLY'));
+            return Redirect::to('admin/department/create');
         }
     }
 
-    public function edit(Request $request, $id) {
+    public function edit(Request $request, $id)
+    {
         $qpArr = $request->all();
-        $target = Department::find($id);
-        if (empty($target)) {
+        $department = Department::find($id);
+        if (empty($department)) {
             Session::flash('error', __('english.INVALID_DATA_ID'));
-            return redirect('department');
+            return redirect('admin/department');
         }
         $orderList = array('0' => __('english.SELECT_ORDER_OPT')) + Helper::getOrderList($this->controller, 2);
-        return view('department.edit')->with(compact('qpArr', 'target', 'orderList'));
+        return view('admin.department.edit')->with(compact('qpArr', 'department', 'orderList'));
     }
 
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
 
         $target = Department::find($id);
         $qpArr = $request->all();
-//        $pageNumber = $qpArr['filter'];
+        //        $pageNumber = $qpArr['filter'];
         $rules = [
             // 'order' => 'required',
             'name' => 'required',
@@ -125,9 +115,9 @@ class DepartmentController extends Controller {
 
         // process the login
         if ($validator->fails()) {
-            return Redirect::to('department/' . $id . '/edit')
-                            ->withErrors($validator)
-                            ->withInput($request->all());
+            return Redirect::to('admin/department/' . $id . '/edit')
+                ->withErrors($validator)
+                ->withInput($request->all());
         }
 
         $presentOrder = $target->order;
@@ -138,17 +128,18 @@ class DepartmentController extends Controller {
 
         if ($target->save()) {
             if ($request->order != $presentOrder) {
-                Helper :: updateOrder($this->controller, $request->order, $target->id, $presentOrder);
+                Helper::updateOrder($this->controller, $request->order, $target->id, $presentOrder);
             }
-            Session::flash('success', $request->name . __('english.HAS_BEEN_UPDATED_SUCESSFULLY'));
-            return redirect('department');
+            Session::flash('success', $request->name . __('english.HAS_BEEN_UPDATED_SUCCESSFULLY'));
+            return redirect('admin/department');
         } else {
-            Session::flash('error', $request->name . __('english.COULD_NOT_BE_UPDATED_SUCESSFULLY'));
-            return redirect('department/' . $id . '/edit');
+            Session::flash('error', $request->name . __('english.COULD_NOT_BE_UPDATED_SUCCESSFULLY'));
+            return redirect('admin/department/' . $id . '/edit');
         }
     }
 
-    public function destroy(Request $request, $id) {
+    public function destroy(Request $request, $id)
+    {
         $target = Department::find($id);
         $qpArr = $request->all();
         $pageNumber = !empty($qpArr['page']) ? '?page=' . $qpArr['page'] : '';
@@ -168,18 +159,17 @@ class DepartmentController extends Controller {
                 if (!empty($dependentData)) {
                     Session::flash('error', __('english.COULD_NOT_DELETE_DATA_HAS_RELATION_WITH_MODEL') . $model);
 
-                    return redirect('department' . $pageNumber);
+                    return redirect('admin/department' . $pageNumber);
                 }
             }
         }
 
         if ($target->delete()) {
-            Helper :: deleteOrder($this->controller, $target->order);
-            Session::flash('error', $target->name  . __('english.DEPARTMENT_HAS_BEEN_DELETED_SUCCESSFULLY'));
+            Helper::deleteOrder($this->controller, $target->order);
+            Session::flash('error', $target->name . trans('english.HAS_BEEN_DELETED_SUCCESSFULLY'));
         } else {
-            Session::flash('error', __('english.DEPARTMENT_COULD_NOT_BE_DELETED'));
+            Session::flash('error', $target->name . trans('english.COULD_NOT_BE_DELETED'));
         }
-        return redirect('department' . $pageNumber);
+        return redirect('admin/department' . $pageNumber);
     }
-
 }

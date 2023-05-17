@@ -16,22 +16,27 @@
                         <!-- general form elements -->
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h3 class="card-title">@lang('english.UPDATE_DESIGNATION')</h3>
+                                <h3 class="card-title">@lang('english.CREATE_NEW_USER_GROUP')</h3>
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            {{ Form::model($designation, array('route' => array('designation.update', $designation->id), 'method' => 'PATCH', 'class' => 'form-horizontal', 'id' => 'designationUpdate')) }}
+                            {{ Form::open(['role' => 'form', 'url' => 'admin/userGroup', 'class' => 'form-horizontal', 'id' => 'createuserGroup']) }}
 
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">@lang('english.TITLE')</label>
-                                    {{ Form::text('title', Request::get('title'), ['id' => 'desigName', 'class' => 'form-control', 'placeholder' => 'Enter Designation Name']) }}
-                                    <span class="help-block text-danger"> {{ $errors->first('title') }}</span>
+                                    <label for="exampleInputEmail1">@lang('english.NAME')</label>
+                                    {{ Form::text('name', Request::get('name'), ['id' => 'name', 'class' => 'form-control', 'placeholder' => 'Enter User Group Name']) }}
+                                    <span class="help-block text-danger"> {{ $errors->first('name') }}</span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">@lang('english.INFO')</label>
+                                    {{ Form::text('info', Request::get('info'), ['id' => 'info', 'class' => 'form-control', 'placeholder' => 'Enter User Group Info']) }}
+                                    <span class="help-block text-danger"> {{ $errors->first('info') }}</span>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">@lang('english.STATUS')</label>
-                                    {!! Form::select('order', $orderList, null, [
+                                    {!! Form::select('order', $orderList, $lastOrderNumber, [
                                         'class' => 'form-control select2',
                                         'id' => 'order',
                                     ]) !!}
@@ -40,7 +45,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">@lang('english.STATUS')</label>
-                                    {!! Form::select('status', ['1' => __('english.ACTIVE'), '2' => __('english.INACTIVE')], Request::get('status'), [
+                                    {!! Form::select('status', ['1' => __('english.ACTIVE'), '2' => __('english.INACTIVE')], '1', [
                                         'class' => 'form-control select2',
                                         'id' => 'statusId',
                                     ]) !!}
@@ -51,7 +56,7 @@
 
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-primary">@lang('english.SUBMIT')</button>
-                                <a href="{{ URL::to('/admin/designation') }}" class="btn btn-default">@lang('english.CANCEL')</a>
+                                <a href="{{ URL::to('/admin/userGroup') }}" class="btn btn-default">@lang('english.CANCEL')</a>
                             </div>
                             {{ Form::close() }}
                         </div>

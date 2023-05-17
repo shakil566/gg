@@ -159,7 +159,7 @@ class   DesignationController extends Controller {
 
         if ($desg->delete()) {
             Helper :: deleteOrder($this->controller, $desg->order);
-            Session::flash('success', $desg->title .trans('english.HAS_BEEN_DELETED_SUCCESSFULLY'));
+            Session::flash('error', $desg->title .trans('english.HAS_BEEN_DELETED_SUCCESSFULLY'));
             return Redirect::to('admin/designation');
         } else {
             Session::flash('error', $desg->title .trans('english.COULD_NOT_BE_DELETED'));

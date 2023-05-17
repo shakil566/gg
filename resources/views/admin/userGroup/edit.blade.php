@@ -1,83 +1,76 @@
-@extends('layouts.default')
-@section('content')
+@extends('layouts.admin.master')
+@section('admin_content')
 <!-- BEGIN CONTENT BODY -->
-<div class="page-content">
-    
+<div class="content-wrapper">
 
     <!-- BEGIN PORTLET-->
-    @include('includes.flash')
+    @include('layouts.admin.flash')
     <!-- END PORTLET-->
-    <div class="row">
-        <div class="col-md-12">
-            <div class="portlet light bordered">
-                <div class="portlet-title">
-                    <div class="caption">
-                        <i class="icon-settings font-dark"></i>
-                        <span class="caption-subject font-dark sbold uppercase">{{trans('english.EDIT_USER_GROUP')}}</span>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- left column -->
+                <div class="col-md-8 margin-top-10">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">@lang('english.UPDATE_USER_GROUP')</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                        {{ Form::model($userGroup, array('route' => array('userGroup.update', $userGroup->id), 'method' => 'PATCH', 'class' => 'form-horizontal', 'id' => 'userGroupEditForm')) }}
+
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">@lang('english.NAME')</label>
+                                {{ Form::text('name', Request::get('name'), ['id' => 'name', 'class' => 'form-control', 'placeholder' => 'Enter User Group Name']) }}
+                                <span class="help-block text-danger"> {{ $errors->first('name') }}</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">@lang('english.INFO')</label>
+                                {{ Form::text('info', Request::get('info'), ['id' => 'info', 'class' => 'form-control', 'placeholder' => 'Enter User Group Info']) }}
+                                <span class="help-block text-danger"> {{ $errors->first('info') }}</span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">@lang('english.STATUS')</label>
+                                {!! Form::select('order', $orderList, null, [
+                                'class' => 'form-control select2',
+                                'id' => 'order',
+                                ]) !!}
+
+                                <span class="help-block text-danger"> {{ $errors->first('order') }}</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">@lang('english.STATUS')</label>
+                                {!! Form::select('status', ['1' => __('english.ACTIVE'), '2' => __('english.INACTIVE')], Request::get('status'), [
+                                'class' => 'form-control select2',
+                                'id' => 'statusId',
+                                ]) !!}
+                                <span class="help-block text-danger">{{ $errors->first('status') }}</span>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">@lang('english.SUBMIT')</button>
+                            <a href="{{ URL::to('/admin/designation') }}" class="btn btn-default">@lang('english.CANCEL')</a>
+                        </div>
+                        {{ Form::close() }}
                     </div>
+                    <!-- /.card -->
+
                 </div>
-                <div class="portlet-body form">
-                    {{ Form::model($userGroup, array('route' => array('userGroup.update', $userGroup->id), 'method' => 'PUT', 'class' => 'form-horizontal', 'id' => 'userGroupEditForm')) }}
-                        <div class="form-body">
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">{{trans('english.NAME')}}  : </label>
-                                <div class="col-md-5">
-                                    {{ Form::text('name', $value = null, array('id'=> 'groupName', 'placeholder' => 'Type User Group Name', 'class' => 'form-control', 'data-rule-minlength' => '2', 'data-rule-required' => 'true')) }}
-                                    <span class="help-block text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">{{trans('english.INFO')}}  : </label>
-                                <div class="col-md-5">
-                                    {{ Form::text('info', $value = null, array('id'=> 'groupInfo', 'placeholder' => 'Type User Group Info', 'class' => 'form-control')) }}
-                                    <span class="help-block text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-actions">
-                            <div class="row">
-                                <div class="col-md-offset-3 col-md-9">
-                                    <button type="submit" class="btn green">Submit</button>
-                                    <a href="{{URL::to('userGroup')}}">
-                                        <button type="button" class="btn default">Cancel</button>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    {{ Form::close() }}
-                </div>
+                <!-- /.row -->
             </div>
-        </div>
-    </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
 </div>
 <!-- END CONTENT BODY -->
-<script type="text/javascript">
-	 $(document).on("submit", '#userGroupEditForm', function (e) {
-        //This function use for sweetalert confirm message
-		e.preventDefault();
-		var form = this;
-        swal({
-            title: 'Are you sure you want to Submit?',
-            text: '<strong></strong>',
-            type: 'warning',
-            html: true,
-            allowOutsideClick: true,
-            showConfirmButton: true,
-            showCancelButton: true,
-            confirmButtonClass: 'btn-info',
-            cancelButtonClass: 'btn-danger',
-            confirmButtonText: 'Yes, I agree',
-            cancelButtonText: 'No, I do not agree',
-        },
-        function (isConfirm) {
-			if (isConfirm) {
-				toastr.info("Loading...", "Please Wait.", {"closeButton": true});
-				 form.submit();
-			} else {
-				//swal(sa_popupTitleCancel, sa_popupMessageCancel, "error");
-				
-			}
-        });
-    });
-</script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+
 @stop
