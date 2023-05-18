@@ -19,6 +19,9 @@
     <link rel="stylesheet" href="{{ asset('public/backend') }}/css/custom.css">
 
 
+
+
+
     <!-- DataTables -->
     <link rel="stylesheet"
         href="{{ asset('public/backend') }}/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
@@ -43,6 +46,7 @@
     <link rel="stylesheet" href="{{ asset('public/backend') }}/dist/css/admin.css.map">
     <link rel="stylesheet" href="{{ asset('public/backend') }}/dist/css/admin.min.css.map">
 
+
     <link rel="shortcut icon" type="image/icon" href="{{ asset('public') }}/img/shortcut_icon.png" />
 </head>
 
@@ -56,8 +60,11 @@
 
                 <!-- Preloader -->
                 <div class="preloader flex-column justify-content-center align-items-center">
-                    <img class="animation__wobble" src="{{ asset('public/') }}/img/pre_loader.png" alt="Pre Loader Logo"
-                        {{-- height="220" width="380" --}} height="60" width="60">
+                    <img class="animation__wobble" src="{{ asset('public/') }}/img/pre_loader.png"
+                        alt="Pre Loader Logo"
+                        {{-- height="220" width="380" --}}
+                        height="60" width="60"
+                        >
                 </div>
 
                 <!-- Navbar -->
@@ -69,11 +76,7 @@
                 <!-- End Sidebar Container -->
             @endguest
             <!-- Content Wrapper. Contains page content -->
-
-            <!-- BEGIN CONTENT BODY -->
             @yield('admin_content')
-            <!-- END CONTENT BODY -->
-
             <!-- /.content-wrapper -->
 
             <!-- Control Sidebar -->
@@ -86,38 +89,34 @@
             @include('layouts.admin.footer')
 
         </div>
-        {{-- </div> --}}
-        <!-- ./wrapper -->
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    </div>
+    <!-- ./wrapper -->
 
-        <script src="{{ asset('public/js/app.js') }}"></script>
-        <!-- REQUIRED SCRIPTS -->
-        <!-- jQuery -->
+    <!-- REQUIRED SCRIPTS -->
+    <!-- jQuery -->
+    <script src="{{ asset('public/backend') }}/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="{{ asset('public/backend') }}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- overlayScrollbars -->
+    <script src="{{ asset('public/backend') }}/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <!-- Admin App -->
+    <script src="{{ asset('public/backend') }}/dist/js/admin.js"></script>
 
-        <script src="{{ asset('public/backend') }}/plugins/jquery/jquery.min.js"></script>
-        <!-- Bootstrap -->
-        <script src="{{ asset('public/backend') }}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <!-- overlayScrollbars -->
-        <script src="{{ asset('public/backend') }}/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-        <!-- Admin App -->
-        <script src="{{ asset('public/backend') }}/dist/js/admin.js"></script>
+    <!-- PAGE PLUGINS -->
+    <!-- jQuery Mapael -->
+    <script src="{{ asset('public/backend') }}/plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
+    <script src="{{ asset('public/backend') }}/plugins/raphael/raphael.min.js"></script>
+    <script src="{{ asset('public/backend') }}/plugins/jquery-mapael/jquery.mapael.min.js"></script>
+    <script src="{{ asset('public/backend') }}/plugins/jquery-mapael/maps/usa_states.min.js"></script>
+    <!-- ChartJS -->
+    <script src="{{ asset('public/backend') }}/plugins/chart.js/Chart.min.js"></script>
 
-        <!-- PAGE PLUGINS -->
-        <!-- jQuery Mapael -->
-        <script src="{{ asset('public/backend') }}/plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
-        <script src="{{ asset('public/backend') }}/plugins/raphael/raphael.min.js"></script>
-        <script src="{{ asset('public/backend') }}/plugins/jquery-mapael/jquery.mapael.min.js"></script>
-        <script src="{{ asset('public/backend') }}/plugins/jquery-mapael/maps/usa_states.min.js"></script>
-        <!-- ChartJS -->
-        <script src="{{ asset('public/backend') }}/plugins/chart.js/Chart.min.js"></script>
+    <!-- Admin for demo purposes -->
+    <script src="{{ asset('public/backend') }}/dist/js/demo.js"></script>
+    <!-- Admin dashboard demo (This is only for demo purposes) -->
+    <script src="{{ asset('public/backend') }}/dist/js/pages/dashboard2.js"></script>
 
-        <!-- Admin for demo purposes -->
-        <script src="{{ asset('public/backend') }}/dist/js/demo.js"></script>
-        <!-- Admin dashboard demo (This is only for demo purposes) -->
-        <script src="{{ asset('public/backend') }}/dist/js/pages/dashboard2.js"></script>
-
-
-        <!-- Select2 -->
+    <!-- Select2 -->
         <script src="{{ asset('public/backend') }}/plugins/select2/js/select2.full.min.js"></script>
         <script>
             $(function() {
@@ -129,6 +128,24 @@
                     theme: 'bootstrap4'
                 })
 
+            });
+        </script>
+        <script>
+            // main menu toggle of sub-menu
+            $(".menu-item-has-children > a").click(function(e) {
+                // check active
+                var isCurrentActive = $(this).next('.sub-menu').hasClass('visible')
+
+                // remove .visible from other .sub-menu
+                $(".sub-menu").removeClass('visible');
+
+                // if current menu deactive add visible
+                if (!isCurrentActive) {
+                    $(this).next(".sub-menu").addClass('visible');
+                }
+
+                // prevent the <a> from default behavior
+                e.preventDefault();
             });
         </script>
 
@@ -153,8 +170,6 @@
         <script src="{{ asset('public/backend') }}/plugins/sweetalert2/sweetalert2.min.js"></script>
         <!-- Toastr -->
         <script src="{{ asset('public/backend') }}/plugins/toastr/toastr.min.js"></script>
-        <!-- Admin App -->
-        <script src="{{ asset('public/backend') }}/dist/js/admin.min.js"></script>
 </body>
 
 </html>
