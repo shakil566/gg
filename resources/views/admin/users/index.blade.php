@@ -44,7 +44,7 @@
                                         <th>@lang('english.USER_GROUP')</th>
                                         <th>@lang('english.DESIGNATION')</th>
                                         <th>@lang('english.DEPARTMENT')</th>
-                                        <th>@lang('english.USERNAME')</th>
+                                        <th class="username">@lang('english.USERNAME')</th>
                                         <th>@lang('english.EMAIL')</th>
                                         <th>@lang('english.NAME')</th>
                                         <th>@lang('english.PHOTO')</th>

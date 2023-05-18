@@ -24,7 +24,7 @@
     {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
 </head>
 
-<body>
+<body class="home">
 
     @include('layouts.frontend.navbar')
     <div class="content">

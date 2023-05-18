@@ -96,7 +96,7 @@ return [
     'PROFILE_COULD_NOT_BE_UPDATED' => 'Profile could not be updated.',
     'UPDATE_USER_PROFILE' => 'Update User Profile',
     'MY_PROFILE' => 'My Profile',
-    '' => '',
+    'GO_TO_ADMIN_PANEL' => 'Go To Admin Panel',
     '' => '',
     '' => '',
     '' => '',

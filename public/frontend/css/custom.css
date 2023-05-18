@@ -1,6 +1,6 @@
 body {
     margin-top: 20px;
-    background: rgb(140 122 122) !important
+    background: url('../../../public/img/home-img-small.jpg') no-repeat center center #fff !important;
 }
 
 /* CONTACTS */
@@ -10,6 +10,7 @@ body {
     padding: 20px;
     margin-bottom: 20px;
 }
+
 .contact-box:hover {
     background-color: #1c7890;
     border: 1px solid #1c7890;
@@ -128,7 +129,7 @@ a {
 }
 
 .navbar-brand:hover {
-    color: rgb(187, 24, 24);
+    color: rgb(237, 185, 185);
     font-weight: bold;
 }
 
@@ -137,7 +138,7 @@ li .nav-link {
 }
 
 li .nav-link:hover {
-    color: rgb(187, 24, 24);
+    color: #facbcb;
 }
 
 .login {
@@ -151,6 +152,32 @@ li .nav-link:hover {
 strong.name {
     color: #eeffde;
 }
+
 .card {
     background-color: #c5ced0 !important;
+}
+
+nav.navbar {
+    opacity: 0.6;
+}
+
+.home-main {
+    margin: 0px auto;
+    text-align: center;
+    margin-top: 140px;
+}
+
+a.admin-btn {
+    font-size: 35px;
+    color: #356a75;
+    box-shadow: 0px 0px 10px #356a75;
+    border: 1px solid #fff;
+    border-radius: 10px !important;
+    padding: 10px;
+
+}
+
+a.admin-btn:hover {
+    color: #08a4b3;
+    box-shadow: 0px 0px 10px rgb(45, 37, 101);
 }
