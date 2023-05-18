@@ -1,10 +1,9 @@
-@extends('layouts.admin.master')
-@section('admin_content')
+<?php $__env->startSection('admin_content'); ?>
 <!-- BEGIN CONTENT BODY -->
 <div class="content-wrapper">
 
     <!-- BEGIN PORTLET-->
-    @include('layouts.admin.flash')
+    <?php echo $__env->make('layouts.admin.flash', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     <!-- END PORTLET-->
 
     <!-- Content Header (Page header) -->
@@ -12,12 +11,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>@lang('english.USER')</h1>
+                    <h1><?php echo app('translator')->get('english.USER'); ?></h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ url('/dashboard/admin') }}">@lang('english.HOME')</a></li>
-                        <li class="breadcrumb-item active">@lang('english.USER')</li>
+                        <li class="breadcrumb-item"><a href="<?php echo e(url('/dashboard/admin')); ?>"><?php echo app('translator')->get('english.HOME'); ?></a></li>
+                        <li class="breadcrumb-item active"><?php echo app('translator')->get('english.USER'); ?></li>
                     </ol>
                 </div>
             </div>
@@ -32,59 +31,61 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">@lang('english.USER_DETAILS')</h3>
-                            <a href="{{ url('admin/users/create') }}" class="btn btn-sm btn-info float-right">@lang('english.CREATE_NEW')</a>
+                            <h3 class="card-title"><?php echo app('translator')->get('english.USER_DETAILS'); ?></h3>
+                            <a href="<?php echo e(url('admin/users/create')); ?>" class="btn btn-sm btn-info float-right"><?php echo app('translator')->get('english.CREATE_NEW'); ?></a>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
                             <table id="dataTable" class="table table-bordered table-striped">
                                 <thead>
                                     <tr class="text-center">
-                                        <th>@lang('english.SL_NO')</th>
-                                        <th>@lang('english.USER_GROUP')</th>
-                                        <th>@lang('english.DESIGNATION')</th>
-                                        <th>@lang('english.DEPARTMENT')</th>
-                                        <th class="username">@lang('english.USERNAME')</th>
-                                        <th>@lang('english.EMAIL')</th>
-                                        <th>@lang('english.NAME')</th>
-                                        <th>@lang('english.PHOTO')</th>
-                                        <th>@lang('english.STATUS')</th>
-                                        <th>@lang('english.ACTION')</th>
+                                        <th><?php echo app('translator')->get('english.SL_NO'); ?></th>
+                                        <th><?php echo app('translator')->get('english.USER_GROUP'); ?></th>
+                                        <th><?php echo app('translator')->get('english.DESIGNATION'); ?></th>
+                                        <th><?php echo app('translator')->get('english.DEPARTMENT'); ?></th>
+                                        <th class="username"><?php echo app('translator')->get('english.USERNAME'); ?></th>
+                                        <th><?php echo app('translator')->get('english.EMAIL'); ?></th>
+                                        <th><?php echo app('translator')->get('english.NAME'); ?></th>
+                                        <th><?php echo app('translator')->get('english.PHOTO'); ?></th>
+                                        <th><?php echo app('translator')->get('english.STATUS'); ?></th>
+                                        <th><?php echo app('translator')->get('english.ACTION'); ?></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if (!empty($usersArr))
+                                    <?php if(!empty($usersArr)): ?>
                                     <?php
                                     $sl = 0;
                                     ?>
-                                    @foreach ($usersArr as $value)
+                                    <?php $__currentLoopData = $usersArr; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <tr class="text-center">
-                                        <td>{{ ++$sl }}</td>
-                                        <td>{{$value->UserGroup->name}}</td>
-                                        <td>{{(!empty($value->designation->title) ? $value->designation->title : '')}}</td>
-                                        <td>{{$value->department->name ?? ''}}</td>
-                                        <td>{{ $value->username }}</td>
-                                        <td>{{ $value->email }}</td>
-                                        <td>{{ $value->first_name }} {{ $value->last_name }}</td>
+                                        <td><?php echo e(++$sl); ?></td>
+                                        <td><?php echo e($value->UserGroup->name); ?></td>
+                                        <td><?php echo e((!empty($value->designation->title) ? $value->designation->title : '')); ?></td>
+                                        <td><?php echo e($value->department->name ?? ''); ?></td>
+                                        <td><?php echo e($value->username); ?></td>
+                                        <td><?php echo e($value->email); ?></td>
+                                        <td><?php echo e($value->first_name); ?> <?php echo e($value->last_name); ?></td>
                                         <td class="text-center">
-                                            @if(isset($value->photo))
-                                            <img width="100" height="100" src="{{URL::to('/')}}/public/uploads/user/{{$value->photo}}" alt="{{ $value->first_name.' '.$value->last_name }}">
-                                            @else
-                                            <img width="100" height="100" src="{{URL::to('/')}}/public/img/unknown.png" alt="{{ $value->first_name.' '.$value->last_name }}">
-                                            @endif
+                                            <?php if(isset($value->photo)): ?>
+                                            <img width="100" height="100" src="<?php echo e(URL::to('/')); ?>/public/uploads/user/<?php echo e($value->photo); ?>" alt="<?php echo e($value->first_name.' '.$value->last_name); ?>">
+                                            <?php else: ?>
+                                            <img width="100" height="100" src="<?php echo e(URL::to('/')); ?>/public/img/unknown.png" alt="<?php echo e($value->first_name.' '.$value->last_name); ?>">
+                                            <?php endif; ?>
                                         </td>
 
                                         <td>
-                                            @if ($value->status == 'active')
-                                            <span class="label label-success">@lang('english.ACTIVE')</span>
-                                            @else
-                                            <span class="label label-warning">@lang('english.INACTIVE')</span>
-                                            @endif
+                                            <?php if($value->status == 'active'): ?>
+                                            <span class="label label-success"><?php echo app('translator')->get('english.ACTIVE'); ?></span>
+                                            <?php else: ?>
+                                            <span class="label label-warning"><?php echo app('translator')->get('english.INACTIVE'); ?></span>
+                                            <?php endif; ?>
                                         </td>
 
                                         <td>
-                                            {{ Form::open(array('url' => 'admin/users/' . $value->id, 'id' => 'delete')) }}
-                                            {{ Form::hidden('_method', 'DELETE') }}
+                                            <?php echo e(Form::open(array('url' => 'admin/users/' . $value->id, 'id' => 'delete'))); ?>
+
+                                            <?php echo e(Form::hidden('_method', 'DELETE')); ?>
+
 
                                             <?php
                                             $dd = Request::query();
@@ -102,41 +103,34 @@
                                                 } //foreach
                                             }
                                             ?>
-                                            <a class='btn btn-info btn-xs tooltips' href="{{ URL::to('admin/users/activate/' . $value->id ) }}@if(isset($param)){{'/'.$param }} @endif" data-rel="tooltip" title="@if($value->status == 'active') Inactivate @else Activate @endif" data-container="body" data-trigger="hover" data-placement="top">
-                                                @if($value->status == 'active')
+                                            <a class='btn btn-info btn-xs tooltips' href="<?php echo e(URL::to('admin/users/activate/' . $value->id )); ?><?php if(isset($param)): ?><?php echo e('/'.$param); ?> <?php endif; ?>" data-rel="tooltip" title="<?php if($value->status == 'active'): ?> Inactivate <?php else: ?> Activate <?php endif; ?>" data-container="body" data-trigger="hover" data-placement="top">
+                                                <?php if($value->status == 'active'): ?>
                                                 <i class='fa fa-times'></i>
-                                                @else
+                                                <?php else: ?>
                                                 <i class='fa fa-check-circle'></i>
-                                                @endif
+                                                <?php endif; ?>
                                             </a>
-                                            <a class='btn btn-primary btn-xs tooltips' href="{{ URL::to('admin/users/' . $value->id . '/edit') }}" title="Edit User" data-container="body" data-trigger="hover" data-placement="top">
+                                            <a class='btn btn-primary btn-xs tooltips' href="<?php echo e(URL::to('admin/users/' . $value->id . '/edit')); ?>" title="Edit User" data-container="body" data-trigger="hover" data-placement="top">
                                                 <i class='fa fa-edit'></i>
                                             </a>
-                                            {{-- <a class="tooltips" href="{{ URL::to('admin/users/cp/' . $value->id) }}@if(isset($param)){{'/'.$param }} @endif" data-original-title="Change Password">
-                                                <span class="btn btn-success btn-xs">
-                                                    <i class="fa fa-key"></i>
-                                                </span>
-                                            </a> --}}
+                                            
 
                                             <button class="btn btn-danger btn-xs tooltips" type="submit" title="Delete" data-placement="top" data-rel="tooltip" data-original-title="Delete">
                                                 <i class='fa fa-trash'></i>
                                             </button>
-                                            {{ Form::close() }}
+                                            <?php echo e(Form::close()); ?>
+
                                         </td>
                                     </tr>
-                                    @endforeach
-                                    @else
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    <?php else: ?>
                                     <tr>
-                                        <td colspan="15">{{ __('english.EMPTY_DATA') }}</td>
+                                        <td colspan="15"><?php echo e(__('english.EMPTY_DATA')); ?></td>
                                     </tr>
-                                    @endif
+                                    <?php endif; ?>
 
                                 </tbody>
-                                {{-- <tfoot>
-                                        <tr>
-
-                                        </tr>
-                                    </tfoot> --}}
+                                
                             </table>
                         </div>
                         <!-- /.card-body -->
@@ -181,7 +175,7 @@
 
         $('#dynamic-content').html(''); // leave this div blank
         $.ajax({
-            url: "{{ URL::to('ajaxresponse/user-info') }}",
+            url: "<?php echo e(URL::to('ajaxresponse/user-info')); ?>",
             type: "GET",
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -223,4 +217,6 @@
         })
     });
 </script>
-@stop
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.admin.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH F:\xampp\htdocs\SyncriseShop\resources\views/admin/users/index.blade.php ENDPATH**/ ?>
