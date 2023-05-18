@@ -60,6 +60,9 @@ footer.main-footer {
     background: #151f28 !important;
     margin-bottom: -5px;
 }
+.main-footer {
+    position:initial !important;
+}
 
 
 /* mobile-css */
