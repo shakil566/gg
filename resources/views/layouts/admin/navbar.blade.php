@@ -36,7 +36,7 @@
                 </a>
 
                 <div class="dropdown-divider"></div>
-                <a class=" dropdown-item" href="{{ route('logout.perform') }}">
+                <a class=" dropdown-item" id="logout" href="{{ route('admin.logout') }}">
                     <i class="fas fa-sign-out-alt"></i> @lang('english.LOGOUT')
                 </a>
 
@@ -44,7 +44,7 @@
             </div>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('logout.perform') }}" title="{{ __('english.LOGOUT') }}">
+            <a class="nav-link" id="logout" href="{{ route('admin.logout') }}" title="{{ __('english.LOGOUT') }}">
                 <i class="fas fa-sign-out-alt"></i>
             </a>
 

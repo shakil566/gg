@@ -112,46 +112,5 @@
 
     </div>
     <!-- END CONTENT BODY -->
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-
-    <script type="text/javascript">
-        $(function() {
-            $("#dataTable").DataTable({
-                "responsive": true,
-                "lengthChange": false,
-                "autoWidth": false,
-                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            }).buttons().container().appendTo('#dataTable_wrapper .col-md-6:eq(0)');
-            $('#example2').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
-            });
-        });
-
-        $(document).on("submit", '#delete', function(e) {
-            //This function use for sweetalert confirm message
-            e.preventDefault();
-            var form = this;
-            Swal.fire({
-                title: 'Do you want to Delete?',
-                // showDenyButton: true,
-                showCancelButton: true,
-                confirmButtonText: `DELETE`,
-                // denyButtonText: `Don't DELETE`,
-            }).then((result) => {
-                /* Read more about isConfirmed, isDenied below */
-                if (result.isConfirmed) {
-                    // Swal.fire('Deleted!', '', 'success')
-                    form.submit();
-                } else if (result.isDenied) {
-                    // Swal.fire('Not Deleted', '', 'info')
-                }
-            })
-        });
-    </script>
+    
 @stop

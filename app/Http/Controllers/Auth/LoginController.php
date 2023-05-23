@@ -49,7 +49,8 @@ class LoginController extends Controller
         if (auth()->attempt(array('email' => $request->email, 'password' => $request->password))) {
 
             if (auth()->user()->is_admin == 1) {
-                return redirect()->route('admin');
+                $notification=array('messege' => 'You are logged in!', 'alert-type' => 'success');
+                return redirect()->route('admin')->with($notification);
             } else {
                 return redirect()->route('home');
                 //need a sweet alert with massage You are not admin and back to frontend homepage
@@ -62,6 +63,7 @@ class LoginController extends Controller
     //admin login page
     public function adminLogin()
     {
+
         return view('auth.adminLogin');
     }
 }

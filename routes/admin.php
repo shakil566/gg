@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\View;
 
 Route::get('/admin/login', [App\Http\Controllers\Auth\LoginController::class, 'adminLogin'])
     ->name('admin.login');
+Route::get('/admin/logout', [App\Http\Controllers\Auth\LogoutController::class, 'adminLogout'])
+    ->name('admin.logout');
 
 Route::get('/admin', function () {
     return redirect('/admin/login');

@@ -20,4 +20,12 @@ class LogoutController extends Controller
         Auth::logout();
         return redirect('admin/login');
     }
+
+    //admin custome logout
+    public function adminLogout()
+    {
+    	Auth::logout();
+    	$notification=array('messege' => 'You are logged out!', 'alert-type' => 'success');
+    	return redirect()->route('admin.login')->with($notification);
+    }
 }

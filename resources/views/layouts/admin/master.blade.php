@@ -36,7 +36,7 @@
         href="{{ asset('public/backend') }}/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 
     <!-- SweetAlert2 -->
-    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
+    {{-- <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'> --}}
     <link rel="stylesheet"
         href="{{ asset('public/backend') }}/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
     <!-- Toastr -->
@@ -60,11 +60,8 @@
 
                 <!-- Preloader -->
                 <div class="preloader flex-column justify-content-center align-items-center">
-                    <img class="animation__wobble" src="{{ asset('public/') }}/img/pre_loader.png"
-                        alt="Pre Loader Logo"
-                        {{-- height="220" width="380" --}}
-                        height="60" width="60"
-                        >
+                    <img class="animation__wobble" src="{{ asset('public/') }}/img/pre_loader.png" alt="Pre Loader Logo"
+                        {{-- height="220" width="380" --}} height="60" width="60">
                 </div>
 
                 <!-- Navbar -->
@@ -117,59 +114,154 @@
     <script src="{{ asset('public/backend') }}/dist/js/pages/dashboard2.js"></script>
 
     <!-- Select2 -->
-        <script src="{{ asset('public/backend') }}/plugins/select2/js/select2.full.min.js"></script>
-        <script>
-            $(function() {
-                //Initialize Select2 Elements
-                $('.select2').select2()
+    <script src="{{ asset('public/backend') }}/plugins/select2/js/select2.full.min.js"></script>
+    <script>
+        $(function() {
+            //Initialize Select2 Elements
+            $('.select2').select2()
 
-                //Initialize Select2 Elements
-                $('.select2bs4').select2({
-                    theme: 'bootstrap4'
-                })
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            })
 
+        });
+    </script>
+    <script>
+        // main menu toggle of sub-menu
+        $(".menu-item-has-children > a").click(function(e) {
+            // check active
+            var isCurrentActive = $(this).next('.sub-menu').hasClass('visible')
+
+            // remove .visible from other .sub-menu
+            $(".sub-menu").removeClass('visible');
+
+            // if current menu deactive add visible
+            if (!isCurrentActive) {
+                $(this).next(".sub-menu").addClass('visible');
+            }
+
+            // prevent the <a> from default behavior
+            e.preventDefault();
+        });
+    </script>
+
+    <!-- DataTables  & Plugins -->
+    <script src="{{ asset('public/backend') }}/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="{{ asset('public/backend') }}/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="{{ asset('public/backend') }}/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="{{ asset('public/backend') }}/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="{{ asset('public/backend') }}/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="{{ asset('public/backend') }}/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="{{ asset('public/backend') }}/plugins/jszip/jszip.min.js"></script>
+    <script src="{{ asset('public/backend') }}/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="{{ asset('public/backend') }}/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="{{ asset('public/backend') }}/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="{{ asset('public/backend') }}/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="{{ asset('public/backend') }}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+
+
+    <!-- SweetAlert2 -->
+    {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script> --}}
+    <script src="{{ asset('public/backend') }}/plugins/sweetalert2/sweetalert2.min.js"></script>
+    <!-- Toastr -->
+    <script src="{{ asset('public/backend') }}/plugins/toastr/toastr.min.js"></script>
+
+
+
+    <script type="text/javascript">
+        $(function() {
+            $("#dataTable").DataTable({
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
+                "buttons": ["pdf", "print"]
+                // "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#dataTable_wrapper .col-md-6:eq(0)');
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
             });
-        </script>
-        <script>
-            // main menu toggle of sub-menu
-            $(".menu-item-has-children > a").click(function(e) {
-                // check active
-                var isCurrentActive = $(this).next('.sub-menu').hasClass('visible')
+        });
 
-                // remove .visible from other .sub-menu
-                $(".sub-menu").removeClass('visible');
 
-                // if current menu deactive add visible
-                if (!isCurrentActive) {
-                    $(this).next(".sub-menu").addClass('visible');
+        $(document).on("submit", '#delete', function(e) {
+            //This function use for sweetalert confirm message
+            e.preventDefault();
+            var form = this;
+            Swal.fire({
+                title: 'Do you want to Delete?',
+                showDenyButton: true,
+                icon: "warning",
+                // showCancelButton: true,
+                confirmButtonText: `DELETE`,
+                denyButtonText: `Don't DELETE`,
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    // Swal.fire('Deleted!', '', 'success')
+                    form.submit();
+                } else if (result.isDenied) {
+                    // Swal.fire('Not Deleted!', '', 'info')
                 }
-
-                // prevent the <a> from default behavior
-                e.preventDefault();
-            });
-        </script>
-
-        <!-- DataTables  & Plugins -->
-        <script src="{{ asset('public/backend') }}/plugins/datatables/jquery.dataTables.min.js"></script>
-        <script src="{{ asset('public/backend') }}/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-        <script src="{{ asset('public/backend') }}/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-        <script src="{{ asset('public/backend') }}/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-        <script src="{{ asset('public/backend') }}/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
-        <script src="{{ asset('public/backend') }}/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-        <script src="{{ asset('public/backend') }}/plugins/jszip/jszip.min.js"></script>
-        <script src="{{ asset('public/backend') }}/plugins/pdfmake/pdfmake.min.js"></script>
-        <script src="{{ asset('public/backend') }}/plugins/pdfmake/vfs_fonts.js"></script>
-        <script src="{{ asset('public/backend') }}/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
-        <script src="{{ asset('public/backend') }}/plugins/datatables-buttons/js/buttons.print.min.js"></script>
-        <script src="{{ asset('public/backend') }}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+            })
+        });
+    </script>
 
 
+    {{-- before  logout showing alert message --}}
+    <script>
+        $(document).on("click", "#logout", function(e) {
 
-        <!-- SweetAlert2 -->
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script>
-        <script src="{{ asset('public/backend') }}/plugins/sweetalert2/sweetalert2.min.js"></script>
-        <!-- Toastr -->
-        <script src="{{ asset('public/backend') }}/plugins/toastr/toastr.min.js"></script>
+            //This function use for sweetalert confirm message
+            e.preventDefault();
+            var link = $(this).attr("href");
+            Swal.fire({
+                title: 'Are you Want to logout?',
+                showDenyButton: true,
+                // showCancelButton: true,
+                icon: "warning",
+                confirmButtonText: `Logout`,
+                denyButtonText: `Don't Logout!`,
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    // Swal.fire('Deleted!', '', 'success')
+                    window.location.href = link;
+                } else if (result.isDenied) {
+                    // Swal.fire('Not Logout!', '', 'info')
+                }
+            })
+        });
+    </script>
+
+
+    <script>
+        @if (Session::has('messege'))
+            var type = "{{ Session::get('alert-type', 'info') }}"
+            switch (type) {
+                case 'info':
+                    toastr.info("{{ Session::get('messege') }}");
+                    break;
+                case 'success':
+                    toastr.success("{{ Session::get('messege') }}");
+                    break;
+                case 'warning':
+                    toastr.warning("{{ Session::get('messege') }}");
+                    break;
+                case 'error':
+                    toastr.error("{{ Session::get('messege') }}");
+                    break;
+            }
+        @endif
+    </script>
+
 </body>
 
 </html>
