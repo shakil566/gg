@@ -46,7 +46,8 @@
     <link rel="stylesheet" href="{{ asset('public/backend') }}/dist/css/admin.css.map">
     <link rel="stylesheet" href="{{ asset('public/backend') }}/dist/css/admin.min.css.map">
 
-
+    <!-- summernote -->
+    <link rel="stylesheet" href="{{ asset('public/backend') }}/plugins/summernote/summernote-bs4.min.css">
     <link rel="shortcut icon" type="image/icon" href="{{ asset('public') }}/img/shortcut_icon.png" />
 </head>
 
@@ -115,36 +116,6 @@
 
     <!-- Select2 -->
     <script src="{{ asset('public/backend') }}/plugins/select2/js/select2.full.min.js"></script>
-    <script>
-        $(function() {
-            //Initialize Select2 Elements
-            $('.select2').select2()
-
-            //Initialize Select2 Elements
-            $('.select2bs4').select2({
-                theme: 'bootstrap4'
-            })
-
-        });
-    </script>
-    <script>
-        // main menu toggle of sub-menu
-        $(".menu-item-has-children > a").click(function(e) {
-            // check active
-            var isCurrentActive = $(this).next('.sub-menu').hasClass('visible')
-
-            // remove .visible from other .sub-menu
-            $(".sub-menu").removeClass('visible');
-
-            // if current menu deactive add visible
-            if (!isCurrentActive) {
-                $(this).next(".sub-menu").addClass('visible');
-            }
-
-            // prevent the <a> from default behavior
-            e.preventDefault();
-        });
-    </script>
 
     <!-- DataTables  & Plugins -->
     <script src="{{ asset('public/backend') }}/plugins/datatables/jquery.dataTables.min.js"></script>
@@ -161,16 +132,46 @@
     <script src="{{ asset('public/backend') }}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 
 
-
     <!-- SweetAlert2 -->
     {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script> --}}
     <script src="{{ asset('public/backend') }}/plugins/sweetalert2/sweetalert2.min.js"></script>
     <!-- Toastr -->
     <script src="{{ asset('public/backend') }}/plugins/toastr/toastr.min.js"></script>
 
+    <!-- Summernote -->
+    <script src="{{ asset('public/backend') }}/plugins/summernote/summernote-bs4.min.js"></script>
 
 
     <script type="text/javascript">
+        $(function() {
+            //Initialize Select2 Elements
+            $('.select2').select2()
+
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            })
+
+        });
+
+        // main menu toggle of sub-menu
+        $(".menu-item-has-children > a").click(function(e) {
+            // check active
+            var isCurrentActive = $(this).next('.sub-menu').hasClass('visible')
+
+            // remove .visible from other .sub-menu
+            $(".sub-menu").removeClass('visible');
+
+            // if current menu deactive add visible
+            if (!isCurrentActive) {
+                $(this).next(".sub-menu").addClass('visible');
+            }
+
+            // prevent the <a> from default behavior
+            e.preventDefault();
+        });
+
+
         $(function() {
             $("#dataTable").DataTable({
                 "responsive": true,
@@ -212,13 +213,12 @@
                 }
             })
         });
-    </script>
 
 
-    {{-- before  logout showing alert message --}}
-    <script>
+
         $(document).on("click", "#logout", function(e) {
 
+            // before  logout showing alert message
             //This function use for sweetalert confirm message
             e.preventDefault();
             var link = $(this).attr("href");
@@ -239,10 +239,8 @@
                 }
             })
         });
-    </script>
 
 
-    <script>
         @if (Session::has('messege'))
             var type = "{{ Session::get('alert-type', 'info') }}"
             switch (type) {
@@ -260,6 +258,12 @@
                     break;
             }
         @endif
+
+
+        $(function() {
+            // Summernote
+            $('#summernote').summernote()
+        })
     </script>
 
 </body>

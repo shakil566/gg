@@ -12,6 +12,7 @@ return [
     'YOU_ARE_NOT_ADMIN' => 'You are not admin',
     'INVALID_EMAIL_OR_PASSWORD' => 'Invalid email or password',
     'SHOP_NAME' => 'Demo Shop',
+    'DEVELOPER_COMPANY' => 'Oops',
     'VERSION' => 'Version',
     'VERSION_DIGIT' => '1.0.0',
     'LOGIN' => 'Login',

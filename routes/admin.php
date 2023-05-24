@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DesignationController;
+use App\Http\Controllers\SendMailController;
 use App\Http\Controllers\UserGroupController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
@@ -23,7 +24,11 @@ Route::get('/dashboard', function () {
 Route::get('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'perform'])->name('logout.perform');
 
 // <--- Admin access --->
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['auth','is_admin']], function () {
+
+    Route::get('admin/sendMail', [SendMailController::class, 'index'])->name('admin.sendMail');
+    Route::post('admin/sendMail/send', [SendMailController::class, 'send'])->name('admin.sendMail.send');
+
     Route::get('/dashboard/admin', [App\Http\Controllers\HomeController::class, 'admin'])
         ->name('admin')->middleware('is_admin');
 
