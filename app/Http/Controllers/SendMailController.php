@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Mail\SendMail;
 use Illuminate\Http\Request;
 use Auth;
 use DB;
@@ -13,7 +14,8 @@ use Validator;
 use Response;
 use Session;
 use App\Models\User;
-use App\Notifications\SendMail;
+// use App\Notifications\SendMail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 
 class SendMailController extends Controller
@@ -58,13 +60,19 @@ class SendMailController extends Controller
         try {
             $user = User::find($request->user_id, ['first_name', 'last_name', 'email']);
             $userName = $user->first_name . ' ' .  $user->last_name;
+            $userEmail = $user->email ?? '';
+// return $userEmail;
+            //send with Mail
+            Mail::to($userEmail)->send(new SendMail($subject, $body, $userName));
 
-            $user->notify(new SendMail($subject, $body, $userName)); //notify method
+            //send with Notification
+            // $user->notify(new SendMail($subject, $body, $userName)); //notify method
             // Notification::send($user, new SendMail($subject, $body, $userName)); //notify facades
+
             Session::flash('success',  'Mail send successfully to ' . $userName);
             return Redirect::to('admin/sendMail');
         } catch (\Exception $e) {
-            Session::flash('error',  'Mail not send');
+            Session::flash('error',  'Mail not send'.$e);
             return Redirect::to('admin/sendMail');
         }
     }
