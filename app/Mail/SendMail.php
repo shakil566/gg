@@ -27,18 +27,19 @@ class SendMail extends Mailable
 
     public function build() {
 
-        $subject = $this->subject;
-        $body = $this->body;
-        $userName = $this->userName;
+        // $subject = $this->subject;
+        // $body = $this->body;
+        // $userName = $this->userName;
 
-        return $this->subject($subject)->
-        view('admin.mailSend.mailTemplate', compact('body', 'subject', 'userName'));
+        // return $this->subject($subject)->
+        // view('admin.mailSend.mailTemplate', compact('body', 'subject', 'userName'));
     }
 
     public function envelope()
     {
+        $subject = $this->subject;
         return new Envelope(
-            subject: 'Send Mail',
+            subject: $subject,
         );
     }
 
@@ -49,8 +50,17 @@ class SendMail extends Mailable
      */
     public function content()
     {
+        $subject = $this->subject;
+        $body = $this->body;
+        $userName = $this->userName;
+
         return new Content(
-            // view: 'view.name',
+            view: 'admin.mailSend.mailTemplate',
+            with: [
+                'subject' => $this->subject,
+                'body' => $this->body,
+                'userName' => $this->userName,
+            ],
         );
 
     }
