@@ -14,7 +14,7 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
--- Dumping structure for table syncrise.department
+-- Dumping structure for table test.department
 DROP TABLE IF EXISTS `department`;
 CREATE TABLE IF NOT EXISTS `department` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -29,12 +29,12 @@ CREATE TABLE IF NOT EXISTS `department` (
   UNIQUE KEY `tiltle` (`name`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT;
 
--- Dumping data for table syncrise.department: ~1 rows (approximately)
+-- Dumping data for table test.department: ~1 rows (approximately)
 DELETE FROM `department`;
 INSERT INTO `department` (`id`, `name`, `order`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
 	(1, 'IT', 1, '1', '2023-01-18 18:08:21', 170, '2023-05-17 10:46:19', 170);
 
--- Dumping structure for table syncrise.designation
+-- Dumping structure for table test.designation
 DROP TABLE IF EXISTS `designation`;
 CREATE TABLE IF NOT EXISTS `designation` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -49,12 +49,12 @@ CREATE TABLE IF NOT EXISTS `designation` (
   UNIQUE KEY `tiltle` (`title`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT;
 
--- Dumping data for table syncrise.designation: ~1 rows (approximately)
+-- Dumping data for table test.designation: ~1 rows (approximately)
 DELETE FROM `designation`;
 INSERT INTO `designation` (`id`, `title`, `order`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
 	(1, 'Manager', 1, '1', '2022-05-22 13:44:55', 170, '2023-05-17 19:07:16', 1);
 
--- Dumping structure for table syncrise.failed_jobs
+-- Dumping structure for table test.failed_jobs
 DROP TABLE IF EXISTS `failed_jobs`;
 CREATE TABLE IF NOT EXISTS `failed_jobs` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -68,28 +68,48 @@ CREATE TABLE IF NOT EXISTS `failed_jobs` (
   UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table syncrise.failed_jobs: ~0 rows (approximately)
+-- Dumping data for table test.failed_jobs: ~0 rows (approximately)
 DELETE FROM `failed_jobs`;
 
--- Dumping structure for table syncrise.migrations
+-- Dumping structure for table test.jobs
+DROP TABLE IF EXISTS `jobs`;
+CREATE TABLE IF NOT EXISTS `jobs` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `queue` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `attempts` tinyint(3) unsigned NOT NULL,
+  `reserved_at` int(10) unsigned DEFAULT NULL,
+  `available_at` int(10) unsigned NOT NULL,
+  `created_at` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `jobs_queue_index` (`queue`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table test.jobs: ~2 rows (approximately)
+DELETE FROM `jobs`;
+INSERT INTO `jobs` (`id`, `queue`, `payload`, `attempts`, `reserved_at`, `available_at`, `created_at`) VALUES
+	(4, 'default', '{"uuid":"310865ae-7d26-4cc2-aee7-08111caf5d35","displayName":"App\\\\Mail\\\\SendMail","job":"Illuminate\\\\Queue\\\\CallQueuedHandler@call","maxTries":null,"maxExceptions":null,"failOnTimeout":false,"backoff":null,"timeout":null,"retryUntil":null,"data":{"commandName":"Illuminate\\\\Mail\\\\SendQueuedMailable","command":"O:34:\\"Illuminate\\\\Mail\\\\SendQueuedMailable\\":15:{s:8:\\"mailable\\";O:17:\\"App\\\\Mail\\\\SendMail\\":5:{s:7:\\"subject\\";s:8:\\"no queue\\";s:4:\\"body\\";s:11:\\"<p>no q<\\/p>\\";s:8:\\"userName\\";s:12:\\"Sajjad Ashik\\";s:2:\\"to\\";a:1:{i:0;a:2:{s:4:\\"name\\";N;s:7:\\"address\\";s:25:\\"shakilhossen566@gmail.com\\";}}s:6:\\"mailer\\";s:4:\\"smtp\\";}s:5:\\"tries\\";N;s:7:\\"timeout\\";N;s:13:\\"maxExceptions\\";N;s:17:\\"shouldBeEncrypted\\";b:0;s:10:\\"connection\\";N;s:5:\\"queue\\";N;s:15:\\"chainConnection\\";N;s:10:\\"chainQueue\\";N;s:19:\\"chainCatchCallbacks\\";N;s:5:\\"delay\\";N;s:11:\\"afterCommit\\";N;s:10:\\"middleware\\";a:0:{}s:7:\\"chained\\";a:0:{}s:3:\\"job\\";N;}"}}', 0, NULL, 1684936799, 1684936799);
+
+-- Dumping structure for table test.migrations
 DROP TABLE IF EXISTS `migrations`;
 CREATE TABLE IF NOT EXISTS `migrations` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table syncrise.migrations: ~5 rows (approximately)
+-- Dumping data for table test.migrations: ~6 rows (approximately)
 DELETE FROM `migrations`;
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 	(1, '2014_10_12_000000_create_users_table', 1),
 	(2, '2014_10_12_100000_create_password_resets_table', 1),
 	(3, '2019_08_19_000000_create_failed_jobs_table', 1),
 	(4, '2019_12_14_000001_create_personal_access_tokens_table', 1),
-	(5, '2023_05_09_143533_create_designations_table', 1);
+	(5, '2023_05_09_143533_create_designations_table', 1),
+	(6, '2023_05_24_062612_create_jobs_table', 2);
 
--- Dumping structure for table syncrise.password_resets
+-- Dumping structure for table test.password_resets
 DROP TABLE IF EXISTS `password_resets`;
 CREATE TABLE IF NOT EXISTS `password_resets` (
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -98,10 +118,10 @@ CREATE TABLE IF NOT EXISTS `password_resets` (
   KEY `password_resets_email_index` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table syncrise.password_resets: ~0 rows (approximately)
+-- Dumping data for table test.password_resets: ~0 rows (approximately)
 DELETE FROM `password_resets`;
 
--- Dumping structure for table syncrise.personal_access_tokens
+-- Dumping structure for table test.personal_access_tokens
 DROP TABLE IF EXISTS `personal_access_tokens`;
 CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -119,10 +139,10 @@ CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
   KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table syncrise.personal_access_tokens: ~0 rows (approximately)
+-- Dumping data for table test.personal_access_tokens: ~0 rows (approximately)
 DELETE FROM `personal_access_tokens`;
 
--- Dumping structure for table syncrise.users
+-- Dumping structure for table test.users
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -153,14 +173,14 @@ CREATE TABLE IF NOT EXISTS `users` (
   KEY `appointment_id` (`department_id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table syncrise.users: ~2 rows (approximately)
+-- Dumping data for table test.users: ~3 rows (approximately)
 DELETE FROM `users`;
 INSERT INTO `users` (`id`, `group_id`, `designation_id`, `department_id`, `first_name`, `last_name`, `official_name`, `email`, `phone_no`, `username`, `password`, `photo`, `status`, `is_admin`, `recovery_attempt`, `recovery_link`, `remember_token`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
 	(1, 1, 1, 1, 'Shakil', 'Hossen', 'Shakil', 'admin@gmail.com', '0176546363', 'admin', '$2y$10$ckZrosUF5vilpF2kmySD0e0UKurRQTW7W/hRF7SRGLTbVG19mSY6S', '64651f6e04d4ashakil.jpg', 'active', '1', NULL, NULL, NULL, '2023-05-16 04:32:57', NULL, '2023-05-17 12:40:42', 1),
-	(6, 1, 1, 1, 'Muhtasim', 'Riyon', 'Riyon', 'riyon@gmail.com', '016355267383', 'riyon', '$2y$10$cXSUyqG7OqREs81mJXJ29uvqFzpmJ/Qqys6zUDIuUAoEb2OU/GYtC', '64652725bbf47avatar5.png', 'active', '1', NULL, NULL, NULL, '2023-05-17 10:51:23', 1, '2023-05-17 13:12:37', 1),
-	(7, 1, 1, 1, 'Sajjad', 'Ashik', 'Sajjad', 'sajjad@gmail.com', '0173645721', 'sajjad', '$2y$10$lu5vwkIm9OCxJyfitThLEO2hqI/bebYONGZIyJ8Zqxw57bBJK03Li', '6465270a025a0avatar5.png', 'active', '1', NULL, NULL, NULL, '2023-05-17 13:10:37', 1, '2023-05-17 13:12:18', 1);
+	(6, 1, 1, 1, 'Muhtasim', 'Riyon', 'Riyon', 'shakils923@gmail.com', '016355267383', 'riyon', '$2y$10$cXSUyqG7OqREs81mJXJ29uvqFzpmJ/Qqys6zUDIuUAoEb2OU/GYtC', '64652725bbf47avatar5.png', 'active', '1', NULL, NULL, NULL, '2023-05-17 10:51:23', 1, '2023-05-24 13:28:10', 1),
+	(7, 1, 1, 1, 'Sajjad', 'Ashik', 'Sajjad', 'shakilhossen566@gmail.com', '0173645721', 'sajjad', '$2y$10$lu5vwkIm9OCxJyfitThLEO2hqI/bebYONGZIyJ8Zqxw57bBJK03Li', '6465270a025a0avatar5.png', 'active', '1', NULL, NULL, NULL, '2023-05-17 13:10:37', 1, '2023-05-24 13:28:18', 1);
 
--- Dumping structure for table syncrise.user_group
+-- Dumping structure for table test.user_group
 DROP TABLE IF EXISTS `user_group`;
 CREATE TABLE IF NOT EXISTS `user_group` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -175,7 +195,7 @@ CREATE TABLE IF NOT EXISTS `user_group` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table syncrise.user_group: ~1 rows (approximately)
+-- Dumping data for table test.user_group: ~1 rows (approximately)
 DELETE FROM `user_group`;
 INSERT INTO `user_group` (`id`, `name`, `info`, `order`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
 	(1, 'Administrator', 'Admin', 1, '1', '2023-05-17 10:07:40', 1, '2023-05-17 10:22:31', 1);

@@ -5,10 +5,12 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
+// class SendMail extends Mailable implements ShouldQueue //need to run [php artisan queue:work] for queue
 class SendMail extends Mailable
 {
     use Queueable, SerializesModels;
@@ -23,16 +25,6 @@ class SendMail extends Mailable
         $this->subject = $subject;
         $this->body = $body;
         $this->userName = $userName;
-    }
-
-    public function build() {
-
-        // $subject = $this->subject;
-        // $body = $this->body;
-        // $userName = $this->userName;
-
-        // return $this->subject($subject)->
-        // view('admin.mailSend.mailTemplate', compact('body', 'subject', 'userName'));
     }
 
     public function envelope()
@@ -72,6 +64,11 @@ class SendMail extends Mailable
      */
     public function attachments()
     {
-        return [];
+        //for file send
+        return [
+            Attachment::fromPath('public/uploads/manual/CV_Md_Shakil_Hossen.pdf')
+                ->as('CV_Md_Shakil_Hossen.pdf')
+                ->withMime('application/pdf'),
+        ];
     }
 }

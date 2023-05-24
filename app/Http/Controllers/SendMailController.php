@@ -61,7 +61,6 @@ class SendMailController extends Controller
             $user = User::find($request->user_id, ['first_name', 'last_name', 'email']);
             $userName = $user->first_name . ' ' .  $user->last_name;
             $userEmail = $user->email ?? '';
-// return $userEmail;
             //send with Mail
             Mail::to($userEmail)->send(new SendMail($subject, $body, $userName));
 
@@ -72,7 +71,7 @@ class SendMailController extends Controller
             Session::flash('success',  'Mail send successfully to ' . $userName);
             return Redirect::to('admin/sendMail');
         } catch (\Exception $e) {
-            Session::flash('error',  'Mail not send'.$e);
+            Session::flash('error',  'Mail not send'. $e);
             return Redirect::to('admin/sendMail');
         }
     }
