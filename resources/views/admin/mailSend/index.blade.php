@@ -35,11 +35,15 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="userId">USER</label>
-                                    {!! Form::select('user_id', $userArr, Request::old('user_id'), [
-                                        'class' => 'form-control select2',
-                                        'id' => 'user_id',
-                                    ]) !!}
+                                    <label for="userId">USER<span class="text-danger"> *</span></label><br>
+                                    <div>
+                                        {!! Form::select('user_id[]', $userArr, Request::old('user_id'), [
+                                            'class' => 'form-control',
+                                            'multiple' => 'multiple',
+                                            'id' => 'multiselect',
+                                        ]) !!}
+                                    </div>
+
 
                                     <span class="help-block text-danger"> {{ $errors->first('user_id') }}</span>
                                 </div>
@@ -63,6 +67,5 @@
         <!-- /.content -->
     </div>
     <!-- END CONTENT BODY -->
-
 
 @stop

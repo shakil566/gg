@@ -24,7 +24,7 @@ class SendMailController extends Controller
 
     public function index()
     {
-        $userArr = array('0' => '--Select User--') + User::select("id", DB::raw("CONCAT(first_name, ' ', last_name) as full_name"))->orderBy('id', 'asc')->pluck('full_name', 'id')->toArray();
+        $userArr = User::select("id", DB::raw("CONCAT(first_name, ' ', last_name) as full_name"))->orderBy('id', 'asc')->pluck('full_name', 'id')->toArray();
 
         // load the view and pass the nerds
         return view('admin.mailSend.index')->with(compact('userArr'));
@@ -36,13 +36,13 @@ class SendMailController extends Controller
         $rules = array(
             'subject' => 'required',
             'description' => 'required',
-            'user_id' => 'required|not_in:0'
+            'user_id' => 'required'
         );
 
         $message = array(
             'subject.required' => 'Please give the subject!',
             'description.required' => 'Please give description!',
-            'user_id|required' => 'Please select at least one user!',
+            'user_id.required' => 'Please select at least one user!',
         );
 
         $validator = Validator::make($request->all(), $rules, $message);
@@ -52,26 +52,32 @@ class SendMailController extends Controller
                 ->withErrors($validator)
                 ->withInput($request->all());
         }
-        // return $request;
         $subject = $request->subject ?? 'No Subject';
         $body = $request->description ?? '';
         $userName = '';
+        // $userArr = !empty($request->user_id) ? implode(',', $request->user_id) : ''; //show with comma
+        $userAll = !empty($request->user_id) ? $request->user_id : '[]';
 
         try {
-            $user = User::find($request->user_id, ['first_name', 'last_name', 'email']);
-            $userName = $user->first_name . ' ' .  $user->last_name;
-            $userEmail = $user->email ?? '';
-            //send with Mail
-            Mail::to($userEmail)->send(new SendMail($subject, $body, $userName));
+            $userArr = User::whereIn('id', $userAll)->select('id', 'first_name', 'last_name', 'email')->get();
+            if (!empty($userArr)) {
+                foreach ($userArr as $user) {
+                    $userName = $user->first_name . ' ' .  $user->last_name;
+                    $userEmail = $user->email ?? '';
 
-            //send with Notification
-            // $user->notify(new SendMail($subject, $body, $userName)); //notify method
-            // Notification::send($user, new SendMail($subject, $body, $userName)); //notify facades
+                    //send with Mail
+                    Mail::to($userEmail)->send(new SendMail($subject, $body, $userName));
 
-            Session::flash('success',  'Mail send successfully to ' . $userName);
+                    //send with Notification
+                    // $user->notify(new SendMail($subject, $body, $userName)); //notify method
+                    // Notification::send($user, new SendMail($subject, $body, $userName)); //notify facades
+                }
+            }
+
+            Session::flash('success',  'Mail send successfully');
             return Redirect::to('admin/sendMail');
         } catch (\Exception $e) {
-            Session::flash('error',  'Mail not send'. $e);
+            Session::flash('error',  'Mail not send');
             return Redirect::to('admin/sendMail');
         }
     }

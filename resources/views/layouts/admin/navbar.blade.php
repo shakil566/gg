@@ -4,6 +4,10 @@
         <li class="nav-item">
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#"> <i class="far fa-calendar-alt"></i> Today is <span
+                    class="font-blue-madison">{!! date('l, d F Y') !!}</span></a>
+        </li>
 
     </ul>
 
@@ -26,8 +30,9 @@
                 @else
                     <img class="img-circle user-icon" src="{{ URL::to('/') }}/public/img/unknown.png" alt="">
                 @endif
-                <span class="nav-username">{{ Auth::user()->first_name . ' ' . Auth::user()->last_name . ' ('. Auth::user()->UserGroup->info .')' }} <i
-                        class="fas fa-angle-down"></i></span>
+                <span
+                    class="nav-username">{{ Auth::user()->first_name . ' ' . Auth::user()->last_name . ' (' . Auth::user()->UserGroup->info . ')' }}
+                    <i class="fas fa-angle-down"></i></span>
             </a>
             <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
 

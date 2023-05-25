@@ -88,6 +88,16 @@ footer.main-footer {
 .nav-item.single-li.act a {
     background: #3c5a7a !important;
 }
+.label-danger {
+    background-color: #ed6b75;
+}
+.label {
+    text-shadow: none!important;
+    font-size: 14px;
+    font-weight: 300;
+    padding: 3px 6px;
+    color: #fff;
+}
 
 
 /* mobile-css */

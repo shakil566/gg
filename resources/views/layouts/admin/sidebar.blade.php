@@ -53,25 +53,25 @@ $action = Route::currentRouteAction();
                     <ul class="nav nav-treeview admin-nav sub-menu <?php echo in_array($currentControllerName, ['userGroup', 'users', 'designation', 'department']) ? 'visible' : ''; ?>">
                         <li class="nav-item <?php echo $currentControllerName == 'userGroup' ? 'act' : ''; ?>">
                             <a href="{{ URL::to('admin/userGroup') }}" class="nav-link">
-                                <i class="fas fa-users nav-icon"></i>
+                                <i class="fas fa-users"></i>
                                 <p>@lang('english.USER_GROUP')</p>
                             </a>
                         </li>
                         <li class="nav-item <?php echo $currentControllerName == 'designation' ? 'act' : ''; ?>">
                             <a href="{{ URL::to('admin/designation') }}" class="nav-link">
-                                <i class="fas fa-briefcase nav-icon"></i>
+                                <i class="fas fa-briefcase"></i>
                                 <p>@lang('english.DESIGNATION')</p>
                             </a>
                         </li>
                         <li class="nav-item <?php echo $currentControllerName == 'department' ? 'act' : ''; ?>">
                             <a href="{{ URL::to('admin/department') }}" class="nav-link">
-                                <i class="fas fa-building nav-icon"></i>
+                                <i class="fas fa-building"></i>
                                 <p>@lang('english.DEPARTMENT')</p>
                             </a>
                         </li>
                         <li class="nav-item <?php echo $currentControllerName == 'users' ? 'act' : ''; ?>">
                             <a href="{{ URL::to('admin/users') }}" class="nav-link">
-                                <i class="nav-icon fas fa-user"></i>
+                                <i class="fas fa-user"></i>
                                 <p>@lang('english.USER')</p>
                             </a>
                         </li>
@@ -80,7 +80,7 @@ $action = Route::currentRouteAction();
 
 
 
-                <li class="nav-item parent menu-item-has-children <?php echo in_array($currentControllerName, ['product','productCategory']) ? 'act' : ''; ?>">
+                <li class="nav-item parent menu-item-has-children <?php echo in_array($currentControllerName, ['product', 'productCategory', 'brand', 'unit']) ? 'act' : ''; ?>">
                     <a href="#" class="nav-link parent-link">
                         <i class="nav-icon fa fa-shopping-bag"></i>
                         <p>
@@ -88,16 +88,28 @@ $action = Route::currentRouteAction();
                             <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
-                    <ul class="nav nav-treeview admin-nav sub-menu <?php echo in_array($currentControllerName, ['product','productCategory']) ? 'visible' : ''; ?>">
+                    <ul class="nav nav-treeview admin-nav sub-menu <?php echo in_array($currentControllerName, ['product', 'productCategory', 'brand', 'unit']) ? 'visible' : ''; ?>">
                         <li class="nav-item <?php echo $currentControllerName == 'productCategory' ? 'act' : ''; ?>">
-                            <a href="#" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
+                            <a href="{{ url('admin/productCategory') }}" class="nav-link">
+                                <i class="fa fa-list-alt"></i>
                                 <p>@lang('english.PRODUCT_CATEGORY')</p>
                             </a>
                         </li>
+                        <li class="nav-item <?php echo $currentControllerName == 'brand' ? 'act' : ''; ?>">
+                            <a href="{{ url('admin/brand') }}" class="nav-link">
+                                <i class="fas fa-award"></i>
+                                <p>@lang('english.BRAND')</p>
+                            </a>
+                        </li>
+                        <li class="nav-item <?php echo $currentControllerName == 'unit' ? 'act' : ''; ?>">
+                            <a href="{{ url('admin/unit') }}" class="nav-link">
+                                <i class="fa fa-balance-scale"></i>
+                                <p>@lang('english.UNIT')</p>
+                            </a>
+                        </li>
                         <li class="nav-item <?php echo $currentControllerName == 'product' ? 'act' : ''; ?>">
-                            <a href="#" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
+                            <a href="{{ url('admin/product') }}" class="nav-link">
+                                <i class="fa fa-shopping-bag"></i>
                                 <p>@lang('english.PRODUCT')</p>
                             </a>
                         </li>
@@ -105,13 +117,29 @@ $action = Route::currentRouteAction();
                     </ul>
                 </li>
 
-                <li class="nav-item menu-open single-li <?php echo $currentControllerName == 'sendMail' ? 'act' : ''; ?>">
-                    <a href="{{ url('admin/sendMail') }}" class="nav-link">
-                        <i class="nav-icon fa fa-mail"></i>
+                <li class="nav-item parent menu-item-has-children <?php echo in_array($currentControllerName, ['sendMail', 'test']) ? 'act' : ''; ?>">
+                    <a href="#" class="nav-link parent-link">
+                        <i class="nav-icon fas fa-plus"></i>
                         <p>
-                            Send Mail
+                            @lang('english.EXTRA')
+                            <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
+                    <ul class="nav nav-treeview admin-nav sub-menu <?php echo in_array($currentControllerName, ['sendMail', 'test']) ? 'visible' : ''; ?>">
+                        <li class="nav-item <?php echo $currentControllerName == 'sendMail' ? 'act' : ''; ?>">
+                            <a href="{{ url('admin/sendMail') }}" class="nav-link">
+                                <i class="fas fa-envelope"></i>
+                                <p>@lang('english.SEND_MAIL')</p>
+                            </a>
+                        </li>
+                        {{-- <li class="nav-item <?php echo $currentControllerName == 'test' ? 'act' : ''; ?>">
+                            <a href="{{ url('admin/test') }}" class="nav-link">
+                                <i class="nav-icon far fa-calendar-alt"></i>
+                                <p>@lang('english.CALENDER')</p>
+                            </a>
+                        </li> --}}
+
+                    </ul>
                 </li>
 
             </ul>

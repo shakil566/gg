@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\BrandController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DesignationController;
 use App\Http\Controllers\SendMailController;
+use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserGroupController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
@@ -24,13 +26,21 @@ Route::get('/dashboard', function () {
 Route::get('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'perform'])->name('logout.perform');
 
 // <--- Admin access --->
-Route::group(['middleware' => ['auth','is_admin']], function () {
+Route::group(['middleware' => ['auth', 'is_admin']], function () {
 
+    // Route::get('admin/view', function () {
+    //     return view('admin.folder.file', ['view' => 'No Data']);
+    // });
+
+    //mail sending
     Route::get('admin/sendMail', [SendMailController::class, 'index'])->name('admin.sendMail');
     Route::post('admin/sendMail/send', [SendMailController::class, 'send'])->name('admin.sendMail.send');
 
+    //dashboard
     Route::get('/dashboard/admin', [App\Http\Controllers\HomeController::class, 'admin'])
         ->name('admin')->middleware('is_admin');
+
+    // :::::::: Start User Route ::::::::::::::
 
     Route::post('admin/userGroup/filter/', [UserGroupController::class, 'filter']);
     Route::get('admin/userGroup', [UserGroupController::class, 'index'])->name('userGroup.index');
@@ -57,8 +67,6 @@ Route::group(['middleware' => ['auth','is_admin']], function () {
     Route::delete('admin/department/{id}', [DepartmentController::class, 'destroy'])->name('department.destroy');
 
 
-    // :::::::: Start User Route ::::::::::::::
-
     Route::get('admin/users/profile/', function () {
         return View::make('admin/users/user_profile');
     });
@@ -66,6 +74,25 @@ Route::group(['middleware' => ['auth','is_admin']], function () {
     Route::resource('admin/users', UsersController::class, ['except' => ['show']]);
     Route::get('admin/users/activate/{id}/{param?}', [UsersController::class, 'active']);
 
-        // :::::::: End User Route ::::::::::::::
+    // :::::::: End User Route ::::::::::::::
 
+    //product start
+
+    Route::post('admin/brand/filter/', [BrandController::class, 'filter']);
+    Route::get('admin/brand', [BrandController::class, 'index'])->name('brand.index');
+    Route::get('admin/brand/create', [BrandController::class, 'create'])->name('brand.create');
+    Route::post('admin/brand', [BrandController::class, 'store'])->name('brand.store');
+    Route::get('admin/brand/{id}/edit', [BrandController::class, 'edit'])->name('brand.edit');
+    Route::patch('admin/brand/{id}', [BrandController::class, 'update'])->name('brand.update');
+    Route::delete('admin/brand/{id}', [BrandController::class, 'destroy'])->name('brand.destroy');
+
+    Route::post('admin/unit/filter/', [UnitController::class, 'filter']);
+    Route::get('admin/unit', [UnitController::class, 'index'])->name('unit.index');
+    Route::get('admin/unit/create', [UnitController::class, 'create'])->name('unit.create');
+    Route::post('admin/unit', [UnitController::class, 'store'])->name('unit.store');
+    Route::get('admin/unit/{id}/edit', [UnitController::class, 'edit'])->name('unit.edit');
+    Route::patch('admin/unit/{id}', [UnitController::class, 'update'])->name('unit.update');
+    Route::delete('admin/unit/{id}', [UnitController::class, 'destroy'])->name('unit.destroy');
+
+    //product end
 });
