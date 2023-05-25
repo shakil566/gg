@@ -16,7 +16,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ url('/dashboard/admin') }}">@lang('english.HOME')</a></li>
+                        <li class="breadcrumb-item"><a href="{{ url('/dashboard/admin') }}">@lang('english.DASHBOARD')</a></li>
                         <li class="breadcrumb-item active">@lang('english.USER')</li>
                     </ol>
                 </div>
@@ -73,12 +73,11 @@
                                             <img width="100" height="100" src="{{URL::to('/')}}/public/img/unknown.png" alt="{{ $value->first_name.' '.$value->last_name }}">
                                             @endif
                                         </td>
-
                                         <td>
                                             @if ($value->status == 'active')
-                                            <span class="label label-success">@lang('english.ACTIVE')</span>
+                                                <span class="badge badge-success">@lang('english.ACTIVE')</span>
                                             @else
-                                            <span class="label label-warning">@lang('english.INACTIVE')</span>
+                                                <span class="badge badge-danger">@lang('english.INACTIVE')</span>
                                             @endif
                                         </td>
 

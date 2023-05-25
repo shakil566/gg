@@ -62,14 +62,14 @@
                         <!-- small box -->
                         <div class="small-box bg-warning">
                             <div class="inner">
-                                <h3>44</h3>
+                                <h3>{{ $productCategoryCount ?? '' }}</h3>
 
-                                <p>User Registrations</p>
+                                <p>@lang('english.PRODUCT_CATEGORY')</p>
                             </div>
                             <div class="icon">
-                                <i class="ion ion-person-add"></i>
+                                <i class="fa fa-list-alt"></i>
                             </div>
-                            <a href="#" class="small-box-footer">@lang('english.MORE_INFO') <i
+                            <a href="{{ URL::to('/admin/productCategory') }}" class="small-box-footer">@lang('english.MORE_INFO') <i
                                     class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
@@ -78,14 +78,14 @@
                         <!-- small box -->
                         <div class="small-box bg-danger">
                             <div class="inner">
-                                <h3>65</h3>
+                                <h3>{{ $brandCount ?? '' }}</h3>
 
-                                <p>Unique Visitors</p>
+                                <p>@lang('english.BRAND')</p>
                             </div>
                             <div class="icon">
-                                <i class="ion ion-pie-graph"></i>
+                                <i class="fas fa-award"></i>
                             </div>
-                            <a href="#" class="small-box-footer">@lang('english.MORE_INFO') <i
+                            <a href="{{ URL::to('/admin/brand') }}" class="small-box-footer">@lang('english.MORE_INFO') <i
                                     class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>

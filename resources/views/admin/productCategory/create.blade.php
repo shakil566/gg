@@ -16,27 +16,33 @@
                         <!-- general form elements -->
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h3 class="card-title">@lang('english.UPDATE_UNIT')</h3>
+                                <h3 class="card-title">@lang('english.CREATE_NEW_PRODUCT_CATEGORY')</h3>
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            {{ Form::model($unit, array('route' => array('unit.update', $unit->id), 'method' => 'PATCH', 'class' => 'form-horizontal', 'id' => 'unitUpdate', 'files' => true,)) }}
+                            {{ Form::open(['role' => 'form', 'url' => 'admin/productCategory', 'class' => 'form-horizontal', 'id' => 'createproductCategory', 'files' => true,]) }}
 
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="desigName">@lang('english.TITLE')<span class="text-danger"> *</span></label>
-                                    {{ Form::text('title', Request::get('title'), ['id' => 'title', 'class' => 'form-control', 'placeholder' => 'Enter unit Title']) }}
-                                    <span class="help-block text-danger"> {{ $errors->first('title') }}</span>
-                                </div>
-                                <div class="form-group">
-                                    <label for="desigName">@lang('english.INFO')</label>
-                                    {{ Form::text('info', Request::get('info'), ['id' => 'info', 'class' => 'form-control', 'placeholder' => 'Enter unit info']) }}
-                                    <span class="help-block text-danger"> {{ $errors->first('info') }}</span>
+                                    <label for="name">@lang('english.NAME')<span class="text-danger"> *</span></label>
+                                    {{ Form::text('name', Request::get('name'), ['id' => 'name', 'class' => 'form-control', 'placeholder' => 'Enter product category name']) }}
+                                    <span class="help-block text-danger"> {{ $errors->first('name') }}</span>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="order">@lang('english.STATUS')</label>
-                                    {!! Form::select('order', $orderList, null, [
+                                    <label for="photo">@lang('english.PHOTO')</label><br>
+                                    {{ Form::file('photo', Request::old('photo'), ['class' => 'form-control', 'id' => 'photo', 'files' => 'true']) }}
+
+                                    <span class="help-block text-danger">{{ $errors->first('photo') }}</span>
+                                    <div class="clearfix margin-top-10">
+                                        <span class="label label-danger">{{ trans('english.NOTE') }}</span>
+                                        {{ trans('english.USER_AND_STUDENT_IMAGE_FOR_IMAGE_DESCRIPTION') }}
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="order">@lang('english.ORDER')</label>
+                                    {!! Form::select('order', $orderList, $lastOrderNumber, [
                                         'class' => 'form-control select2',
                                         'id' => 'order',
                                     ]) !!}
@@ -45,7 +51,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="statusId">@lang('english.STATUS')</label>
-                                    {!! Form::select('status', ['1' => __('english.ACTIVE'), '2' => __('english.INACTIVE')], Request::get('status'), [
+                                    {!! Form::select('status', ['1' => __('english.ACTIVE'), '2' => __('english.INACTIVE')], '1', [
                                         'class' => 'form-control select2',
                                         'id' => 'statusId',
                                     ]) !!}
@@ -55,7 +61,7 @@
                             <!-- /.card-body -->
 
                             <div class="card-footer">
-                                <a href="{{ URL::to('/admin/unit') }}" class="btn btn-default"><i class="fas fa-times"></i> @lang('english.CANCEL')</a>
+                                <a href="{{ URL::to('/admin/productCategory') }}" class="btn btn-default"><i class="fas fa-times"></i> @lang('english.CANCEL')</a>
                                 <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> @lang('english.SUBMIT')</button>
                             </div>
                             {{ Form::close() }}

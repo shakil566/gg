@@ -16,7 +16,7 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ url('/dashboard/admin') }}">@lang('english.HOME')</a></li>
+                            <li class="breadcrumb-item"><a href="{{ url('/dashboard/admin') }}">@lang('english.DASHBOARD')</a></li>
                             <li class="breadcrumb-item active">@lang('english.DESIGNATION')</li>
                         </ol>
                     </div>
@@ -112,5 +112,5 @@
 
     </div>
     <!-- END CONTENT BODY -->
-    
+
 @stop

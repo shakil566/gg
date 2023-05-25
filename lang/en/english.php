@@ -110,8 +110,18 @@ return [
     'UNIT_DETAILS' => 'Unit Details',
     'CREATE_NEW_UNIT' => 'Create New Unit',
     'UPDATE_UNIT' => 'Update Unit',
+    'PRODUCT_CATEGORY_DETAILS' => 'Product Category Details',
+    'CREATE_NEW_PRODUCT_CATEGORY' => 'Create New Product Category',
+    'UPDATE_PRODUCT_CATEGORY' => 'Update Product Category',
     'CODE' => 'Code',
     'INFO' => 'Info',
+    'SEND' => 'Send',
+    '' => '',
+    '' => '',
+    '' => '',
+    '' => '',
+    '' => '',
+    '' => '',
     '' => '',
 
 ];

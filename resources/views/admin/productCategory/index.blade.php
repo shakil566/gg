@@ -12,12 +12,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>@lang('english.UNIT')</h1>
+                        <h1>@lang('english.PRODUCT_CATEGORY')</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{ url('/dashboard/admin') }}">@lang('english.DASHBOARD')</a></li>
-                            <li class="breadcrumb-item active">@lang('english.UNIT')</li>
+                            <li class="breadcrumb-item active">@lang('english.PRODUCT_CATEGORY')</li>
                         </ol>
                     </div>
                 </div>
@@ -32,8 +32,8 @@
 
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">@lang('english.UNIT_DETAILS')</h3>
-                                <a href="{{ url('admin/unit/create') }}"
+                                <h3 class="card-title">@lang('english.PRODUCT_CATEGORY_DETAILS')</h3>
+                                <a href="{{ url('admin/productCategory/create') }}"
                                     class="btn btn-sm btn-info float-right">@lang('english.CREATE_NEW')</a>
                             </div>
                             <!-- /.card-header -->
@@ -42,8 +42,8 @@
                                     <thead>
                                         <tr class="text-center">
                                             <th>@lang('english.SL_NO')</th>
-                                            <th>@lang('english.TITLE')</th>
-                                            <th>@lang('english.INFO')</th>
+                                            <th>@lang('english.NAME')</th>
+                                            <th>@lang('english.PHOTO')</th>
                                             <th>@lang('english.ORDER')</th>
                                             <th>@lang('english.STATUS')</th>
                                             <th>@lang('english.ACTION')</th>
@@ -51,15 +51,21 @@
                                     </thead>
                                     <tbody>
 
-                                        @if (!empty($unitArr))
+                                        @if (!empty($productCategoryArr))
                                             <?php
                                             $sl = 0;
                                             ?>
-                                            @foreach ($unitArr as $value)
+                                            @foreach ($productCategoryArr as $value)
                                                 <tr class="text-center">
                                                     <td>{{ ++$sl }}</td>
-                                                    <td>{{ $value->title ?? '' }}
-                                                    <td>{{ $value->info ?? '' }}
+                                                    <td>{{ $value->name ?? '' }}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        @if(isset($value->photo))
+                                                        <img width="100" height="100" src="{{URL::to('/')}}/public/uploads/productCategory/{{$value->photo}}" alt="{{ $value->name}}">
+                                                        @else
+                                                        <img width="100" height="100" src="{{URL::to('/')}}/public/img/unknown.png" alt="{{ $value->name}}">
+                                                        @endif
                                                     </td>
                                                     <td>{{ $value->order ?? '' }}</td>
                                                     <td>
@@ -70,10 +76,10 @@
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        {{ Form::open(['url' => 'admin/unit/' . $value->id, 'id' => 'delete']) }}
+                                                        {{ Form::open(['url' => 'admin/productCategory/' . $value->id, 'id' => 'delete']) }}
                                                         {{ Form::hidden('_method', 'DELETE') }}
                                                         <a class='btn btn-primary btn-xs'
-                                                            href="{{ URL::to('admin/unit/' . $value->id . '/edit') }}"
+                                                            href="{{ URL::to('admin/productCategory/' . $value->id . '/edit') }}"
                                                             title="{{ trans('english.EDIT') }}">
                                                             <i class='fa fa-edit'></i>
                                                         </a>

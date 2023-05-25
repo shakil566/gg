@@ -50,8 +50,8 @@
                             <!-- /.card-body -->
 
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">@lang('english.SUBMIT')</button>
-                                <a href="{{ URL::to('/admin/designation') }}" class="btn btn-default">@lang('english.CANCEL')</a>
+                                <a href="{{ URL::to('/admin/designation') }}" class="btn btn-default"><i class="fas fa-times"></i> @lang('english.CANCEL')</a>
+                                <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> @lang('english.SUBMIT')</button>
                             </div>
                             {{ Form::close() }}
                         </div>

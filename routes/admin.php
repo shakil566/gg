@@ -3,6 +3,7 @@
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DesignationController;
+use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\SendMailController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserGroupController;
@@ -77,6 +78,14 @@ Route::group(['middleware' => ['auth', 'is_admin']], function () {
     // :::::::: End User Route ::::::::::::::
 
     //product start
+
+    Route::post('admin/productCategory/filter/', [ProductCategoryController::class, 'filter']);
+    Route::get('admin/productCategory', [ProductCategoryController::class, 'index'])->name('productCategory.index');
+    Route::get('admin/productCategory/create', [ProductCategoryController::class, 'create'])->name('productCategory.create');
+    Route::post('admin/productCategory', [ProductCategoryController::class, 'store'])->name('productCategory.store');
+    Route::get('admin/productCategory/{id}/edit', [ProductCategoryController::class, 'edit'])->name('productCategory.edit');
+    Route::patch('admin/productCategory/{id}', [ProductCategoryController::class, 'update'])->name('productCategory.update');
+    Route::delete('admin/productCategory/{id}', [ProductCategoryController::class, 'destroy'])->name('productCategory.destroy');
 
     Route::post('admin/brand/filter/', [BrandController::class, 'filter']);
     Route::get('admin/brand', [BrandController::class, 'index'])->name('brand.index');

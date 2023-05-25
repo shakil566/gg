@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
+use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -34,6 +36,8 @@ class HomeController extends Controller
 
     public function admin()
     {
-        return view('admin.dashboard');
+        $brandCount = Brand::where('status','1')->count();
+        $productCategoryCount = ProductCategory::where('status','1')->count();
+        return view('admin.dashboard', compact('brandCount', 'productCategoryCount'));
     }
 }

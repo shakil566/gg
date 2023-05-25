@@ -76,6 +76,7 @@
                                 <span class="input-group-addon">
                                     <i class="fa fa-key"></i>
                                 </span>
+                                <span class="help-block">{{ trans('english.COMPLEX_PASSWORD_INSTRUCTION') }}</span>
                                 <span class="help-block text-danger"> {{ $errors->first('password_confirmation') }}</span>
 
                             </div>
@@ -111,11 +112,11 @@
                             </div>
                         </div>
                         <!-- /.card-body -->
-
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">@lang('english.SUBMIT')</button>
-                            <a href="{{ URL::to('/admin/users') }}" class="btn btn-default">@lang('english.CANCEL')</a>
+                            <a href="{{ URL::to('/admin/users') }}" class="btn btn-default"><i class="fas fa-times"></i> @lang('english.CANCEL')</a>
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> @lang('english.SUBMIT')</button>
                         </div>
+
                         {{ Form::close() }}
                     </div>
                     <!-- /.card -->
