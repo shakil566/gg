@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS `jobs` (
   KEY `jobs_queue_index` (`queue`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table test.jobs: ~1 rows (approximately)
+-- Dumping data for table test.jobs: ~0 rows (approximately)
 DELETE FROM `jobs`;
 
 -- Dumping structure for table test.migrations
@@ -236,14 +236,16 @@ CREATE TABLE IF NOT EXISTS `users` (
   KEY `group_id` (`group_id`),
   KEY `rank_id` (`designation_id`) USING BTREE,
   KEY `appointment_id` (`department_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table test.users: ~3 rows (approximately)
+-- Dumping data for table test.users: ~5 rows (approximately)
 DELETE FROM `users`;
 INSERT INTO `users` (`id`, `group_id`, `designation_id`, `department_id`, `first_name`, `last_name`, `official_name`, `email`, `phone_no`, `username`, `password`, `photo`, `status`, `is_admin`, `recovery_attempt`, `recovery_link`, `remember_token`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
 	(1, 1, 1, 1, 'Shakil', 'Hossen', 'Shakil', 'admin@gmail.com', '0176546363', 'admin', '$2y$10$ckZrosUF5vilpF2kmySD0e0UKurRQTW7W/hRF7SRGLTbVG19mSY6S', '64651f6e04d4ashakil.jpg', 'active', '1', NULL, NULL, NULL, '2023-05-16 10:32:57', NULL, '2023-05-17 18:40:42', 1),
 	(6, 1, 1, 1, 'Muhtasim', 'Riyon', 'Riyon', 'shakils923@gmail.com', '016355267383', 'riyon', '$2y$10$/XLPjl782FDM14aeQbauNuQ0HIeLRHzwhcdOwX.OBi7iG8WAPLgEW', '64652725bbf47avatar5.png', 'active', '1', NULL, NULL, 'YBFI4f2LZVBuspL497Pobv4tbfgUolYGrbYHcH8iLsBzUukTrTyOdNnvTMCm', '2023-05-17 16:51:23', 1, '2023-05-25 13:54:28', 6),
-	(7, 1, 1, 1, 'Sajjad', 'Ashik', 'Sajjad', 'shakilhossen566@gmail.com', '0173645721', 'sajjad', '$2y$10$lu5vwkIm9OCxJyfitThLEO2hqI/bebYONGZIyJ8Zqxw57bBJK03Li', '6465270a025a0avatar5.png', 'inactive', '1', NULL, NULL, NULL, '2023-05-17 19:10:37', 1, '2023-05-25 08:39:49', 1);
+	(7, 1, 1, 1, 'Sajjad', 'Ashik', 'Sajjad', 'shakilhossen566@gmail.com', '0173645721', 'sajjad', '$2y$10$lu5vwkIm9OCxJyfitThLEO2hqI/bebYONGZIyJ8Zqxw57bBJK03Li', '6465270a025a0avatar5.png', 'inactive', '1', NULL, NULL, NULL, '2023-05-17 19:10:37', 1, '2023-05-25 08:39:49', 1),
+	(8, NULL, NULL, NULL, 'Rabbi', 'Rahman', NULL, 'rabbi@gmail.com', '0175632231', 'rabbi', '$2y$10$nRIzXLk1NRmeR2Jig/9dzOdTWdBEa16kjoqSChljKZOe/X/5cbJue', NULL, 'active', NULL, NULL, NULL, NULL, '2023-05-26 08:15:20', 1, '2023-05-26 08:15:20', 1),
+	(9, NULL, NULL, NULL, 'Shakil', 'Coc v1', NULL, 'shakilcocv1@gmail.com', '019738272', 'cocv1', '$2y$10$jf2t.aGVrLhJ8GIkAvawHejdZfl9b5B1f/Xb6dyUNadthpvPT9mTm', NULL, 'active', NULL, NULL, NULL, 'dUOVsOOXBj9QcfwR0OXOrx9Knykr8NcY9Gn8dHhucqr23SPL7ytUy2101BjN', '2023-05-26 08:18:23', 1, '2023-05-26 14:42:11', 9);
 
 -- Dumping structure for table test.user_group
 DROP TABLE IF EXISTS `user_group`;

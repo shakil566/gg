@@ -18,7 +18,7 @@ $action = Route::currentRouteAction();
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="{{ url('/dashboard/admin') }}" class="brand-link">
-        <img src="{{ asset('public/backend') }}/dist/img/AdminLogo.png" alt="Admin Logo"
+        <img src="{{ asset('public/') }}/img/logo.png" alt="Admin Logo"
             class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">@lang('english.SHOP_NAME')</span>
     </a>

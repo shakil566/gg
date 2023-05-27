@@ -49,7 +49,7 @@
     <!-- fullCalendar -->
     <link rel="stylesheet" href="{{ asset('public/backend') }}/plugins/fullcalendar/main.css">
 
-    <link rel="shortcut icon" type="image/icon" href="{{ asset('public') }}/img/shortcut_icon.png" />
+    <link rel="shortcut icon" type="image/icon" href="{{ asset('public/') }}/img/logo.png" />
 </head>
 
 <body>
