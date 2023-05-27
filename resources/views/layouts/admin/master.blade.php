@@ -48,6 +48,8 @@
     <link rel="stylesheet" href="{{ asset('public/backend') }}/plugins/summernote/summernote-bs4.min.css">
     <!-- fullCalendar -->
     <link rel="stylesheet" href="{{ asset('public/backend') }}/plugins/fullcalendar/main.css">
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="{{ asset('public/backend') }}/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
 
     <link rel="shortcut icon" type="image/icon" href="{{ asset('public/') }}/img/logo.png" />
 </head>
@@ -148,9 +150,15 @@
     <!-- fullCalendar 2.2.5 -->
     <script src="{{ asset('public/backend') }}/plugins/moment/moment.min.js"></script>
     <script src="{{ asset('public/backend') }}/plugins/fullcalendar/main.js"></script>
-
+    <!-- Bootstrap Switch -->
+    <script src="{{ asset('public/backend') }}/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+    
     <script type="text/javascript">
         $(function() {
+            //switch check
+            $("input[data-bootstrap-switch]").each(function() {
+                $(this).bootstrapSwitch('state', $(this).prop('checked'));
+            })
             //Initialize Select2 Elements
             $('.select2').select2()
 

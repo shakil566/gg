@@ -66,7 +66,7 @@
                                                         @if(isset($value->photo))
                                                         <img width="100" height="100" src="{{URL::to('/')}}/public/uploads/brand/{{$value->photo}}" alt="{{ $value->name}}">
                                                         @else
-                                                        <img width="100" height="100" src="{{URL::to('/')}}/public/img/unknown.png" alt="{{ $value->name}}">
+                                                        <img width="100" height="100" src="{{URL::to('/')}}/public/img/no_image.png" alt="{{ $value->name}}">
                                                         @endif
                                                     </td>
                                                     <td>{{ $value->order ?? '' }}</td>

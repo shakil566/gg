@@ -4,6 +4,8 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DesignationController;
 use App\Http\Controllers\ProductCategoryController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductTypeController;
 use App\Http\Controllers\SendMailController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserGroupController;
@@ -87,6 +89,14 @@ Route::group(['middleware' => ['auth', 'is_admin']], function () {
     Route::patch('admin/productCategory/{id}', [ProductCategoryController::class, 'update'])->name('productCategory.update');
     Route::delete('admin/productCategory/{id}', [ProductCategoryController::class, 'destroy'])->name('productCategory.destroy');
 
+    Route::post('admin/productType/filter/', [ProductTypeController::class, 'filter']);
+    Route::get('admin/productType', [ProductTypeController::class, 'index'])->name('productType.index');
+    Route::get('admin/productType/create', [ProductTypeController::class, 'create'])->name('productType.create');
+    Route::post('admin/productType', [ProductTypeController::class, 'store'])->name('productType.store');
+    Route::get('admin/productType/{id}/edit', [ProductTypeController::class, 'edit'])->name('productType.edit');
+    Route::patch('admin/productType/{id}', [ProductTypeController::class, 'update'])->name('productType.update');
+    Route::delete('admin/productType/{id}', [ProductTypeController::class, 'destroy'])->name('productType.destroy');
+
     Route::post('admin/brand/filter/', [BrandController::class, 'filter']);
     Route::get('admin/brand', [BrandController::class, 'index'])->name('brand.index');
     Route::get('admin/brand/create', [BrandController::class, 'create'])->name('brand.create');
@@ -102,6 +112,21 @@ Route::group(['middleware' => ['auth', 'is_admin']], function () {
     Route::get('admin/unit/{id}/edit', [UnitController::class, 'edit'])->name('unit.edit');
     Route::patch('admin/unit/{id}', [UnitController::class, 'update'])->name('unit.update');
     Route::delete('admin/unit/{id}', [UnitController::class, 'destroy'])->name('unit.destroy');
+
+
+    //product
+    Route::post('admin/product/filter/', [ProductController::class, 'filter']);
+    Route::get('admin/product', [ProductController::class, 'index'])->name('product.index');
+    Route::get('admin/product/create', [ProductController::class, 'create'])->name('product.create');
+    Route::post('admin/product', [ProductController::class, 'store'])->name('product.store');
+    Route::get('admin/product/{id}/edit', [ProductController::class, 'edit'])->name('product.edit');
+    Route::patch('admin/product/{id}', [ProductController::class, 'update'])->name('product.update');
+    Route::delete('admin/product/{id}', [ProductController::class, 'destroy'])->name('product.destroy');
+    Route::post('admin/product/setPublish', [ProductController::class, 'setPublish']);
+    Route::post('admin/product/getProductDetails', [ProductController::class, 'getProductDetails']);
+    //set product image
+    Route::get('admin/product/{id}/getProductImage', [ProductController::class, 'getProductImage']);
+    Route::post('admin/product/setProductImage', [ProductController::class, 'setProductImage']);
 
     //product end
 });

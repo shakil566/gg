@@ -12,12 +12,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>@lang('english.PRODUCT_CATEGORY')</h1>
+                        <h1>@lang('english.PRODUCT_TYPE')</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{ url('/dashboard/admin') }}">@lang('english.DASHBOARD')</a></li>
-                            <li class="breadcrumb-item active">@lang('english.PRODUCT_CATEGORY')</li>
+                            <li class="breadcrumb-item active">@lang('english.PRODUCT_TYPE')</li>
                         </ol>
                     </div>
                 </div>
@@ -32,8 +32,8 @@
 
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">@lang('english.PRODUCT_CATEGORY_DETAILS')</h3>
-                                <a href="{{ url('admin/productCategory/create') }}"
+                                <h3 class="card-title">@lang('english.PRODUCT_TYPE_DETAILS')</h3>
+                                <a href="{{ url('admin/productType/create') }}"
                                     class="btn btn-sm btn-info float-right">@lang('english.CREATE_NEW')</a>
                             </div>
                             <!-- /.card-header -->
@@ -51,18 +51,18 @@
                                     </thead>
                                     <tbody>
 
-                                        @if (!empty($productCategoryArr))
+                                        @if (!empty($productTypeArr))
                                             <?php
                                             $sl = 0;
                                             ?>
-                                            @foreach ($productCategoryArr as $value)
+                                            @foreach ($productTypeArr as $value)
                                                 <tr class="text-center">
                                                     <td>{{ ++$sl }}</td>
                                                     <td>{{ $value->name ?? '' }}
                                                     </td>
                                                     <td class="text-center">
                                                         @if(isset($value->photo))
-                                                        <img width="100" height="100" src="{{URL::to('/')}}/public/uploads/productCategory/{{$value->photo}}" alt="{{ $value->name}}">
+                                                        <img width="100" height="100" src="{{URL::to('/')}}/public/uploads/productType/{{$value->photo}}" alt="{{ $value->name}}">
                                                         @else
                                                         <img width="100" height="100" src="{{URL::to('/')}}/public/img/no_image.png" alt="{{ $value->name}}">
                                                         @endif
@@ -76,10 +76,10 @@
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        {{ Form::open(['url' => 'admin/productCategory/' . $value->id, 'id' => 'delete']) }}
+                                                        {{ Form::open(['url' => 'admin/productType/' . $value->id, 'id' => 'delete']) }}
                                                         {{ Form::hidden('_method', 'DELETE') }}
                                                         <a class='btn btn-primary btn-xs'
-                                                            href="{{ URL::to('admin/productCategory/' . $value->id . '/edit') }}"
+                                                            href="{{ URL::to('admin/productType/' . $value->id . '/edit') }}"
                                                             title="{{ trans('english.EDIT') }}">
                                                             <i class='fa fa-edit'></i>
                                                         </a>

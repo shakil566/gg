@@ -80,7 +80,7 @@ $action = Route::currentRouteAction();
 
 
 
-                <li class="nav-item parent menu-item-has-children <?php echo in_array($currentControllerName, ['product', 'productCategory', 'brand', 'unit']) ? 'act' : ''; ?>">
+                <li class="nav-item parent menu-item-has-children <?php echo in_array($currentControllerName, ['product', 'productCategory', 'productType', 'brand', 'unit']) ? 'act' : ''; ?>">
                     <a href="#" class="nav-link parent-link">
                         <i class="nav-icon fa fa-shopping-bag"></i>
                         <p>
@@ -88,11 +88,17 @@ $action = Route::currentRouteAction();
                             <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
-                    <ul class="nav nav-treeview admin-nav sub-menu <?php echo in_array($currentControllerName, ['product', 'productCategory', 'brand', 'unit']) ? 'visible' : ''; ?>">
+                    <ul class="nav nav-treeview admin-nav sub-menu <?php echo in_array($currentControllerName, ['product', 'productCategory', 'productType', 'brand', 'unit']) ? 'visible' : ''; ?>">
                         <li class="nav-item <?php echo $currentControllerName == 'productCategory' ? 'act' : ''; ?>">
                             <a href="{{ url('admin/productCategory') }}" class="nav-link">
-                                <i class="fa fa-list-alt"></i>
+                                <i class="fa fa-align-justify"></i>
                                 <p>@lang('english.PRODUCT_CATEGORY')</p>
+                            </a>
+                        </li>
+                        <li class="nav-item <?php echo $currentControllerName == 'productType' ? 'act' : ''; ?>">
+                            <a href="{{ url('admin/productType') }}" class="nav-link">
+                                <i class="fa fa-list-alt"></i>
+                                <p>@lang('english.PRODUCT_TYPE')</p>
                             </a>
                         </li>
                         <li class="nav-item <?php echo $currentControllerName == 'brand' ? 'act' : ''; ?>">
