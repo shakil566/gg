@@ -6,8 +6,8 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>@lang('english.SHOP_NAME')</title>
     <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    {{-- <meta name="viewport" content="width=device-width, initial-scale=1"> --}}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link href="{{ asset('public/frontend/css/custom.css') }}" rel="stylesheet">
     <link href="{{ asset('public/frontend/css/bootstrap5.css') }}" rel="stylesheet">

@@ -137,7 +137,28 @@ return [
     'SELECT_TYPE_OPT' => '--- Select Type ---',
     'DESCRIPTION' => 'Description',
     'SHORT_DESCRIPTION' => 'Short Description',
-    '' => '',
+    'CLOSE' => 'Close',
+    'CLOSE_THIS_POPUP' => 'Close this popup',
+    'PUBLISH' => 'Publish',
+    'UNPUBLISH' => 'Unpublish',
+    'BASIC_INFORMATION' => 'Basic Information',
+    'CLICK_HERE_TO_ADD_MORE_CONTACT_PERSON' => 'Click here to Add More Contact Person',
+    'CLICK_HERE_TO_DELETE_THIS_BLOCK' => 'Click here to Delete this Block',
+    'ADD_MORE_IMAGE' => 'Add More Image',
+    'CLICK_HERE_TO_ADD_MORE_IMAGE' => 'Click Here To Add More Image',
+    'CONTACT_IMAGE_FOR_IMAGE_DESCRIPTION' => 'Supported file format: jpeg, jpg, png. Maximum file size: 1MB. Best Fitted Dimension (150 X 120)',
+    'PHOTO_IS_REQUIRED_FOR_ROW_NO' => 'Photo is Required for Row No: ',
+
+    'REMOVE_IMAGES_PERMANENTLY' => 'Remove Image Permanently',
+    'NO_IMAGE_BLOCK_ADDED' => 'No Image block added or image block has been removed temporarily. Clicking <b>Remove Image Permanently</b> button in this situation, will erase all images permanently',
+    'SELECT_IMAGE' => 'Select image',
+
+    'REMOVE' => 'Remove',
+    'CHANGE' => 'Change',
+    'SET_PRODUCT_IMAGE' => 'Set Product Image',
+
+    'PRODUCT_IMAGE_SAVED_SUCCESSFULLY' => 'Product Image Saved successfully!',
+    'PRODUCT_IMAGE_COULD_NOT_BE_SAVED' => 'Product Image Could Not Be Saved!',
     '' => '',
 
 ];

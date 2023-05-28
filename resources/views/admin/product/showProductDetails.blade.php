@@ -1,10 +1,10 @@
 <div class="modal-content">
     <div class="modal-header clone-modal-header">
         <div class="col-md-7 text-right">
-            <h4 class="modal-title">@lang('label.PRODUCT_DETAILS')</h4>
+            <h4 class="modal-title">@lang('english.PRODUCT_DETAILS')</h4>
         </div>
         <div class="col-md-5">
-            <button type="button" data-dismiss="modal" data-placement="left" class="btn red pull-right tooltips" title="@lang('label.CLOSE_THIS_POPUP')">@lang('label.CLOSE')</button>
+            {{-- <button type="button" data-dismiss="modal" data-placement="right" class="btn btn-danger pull-right tooltips" title="@lang('english.CLOSE_THIS_POPUP')">@lang('english.CLOSE')</button> --}}
 
         </div>
     </div>
@@ -22,51 +22,54 @@
                     <div class="col-md-6 col-lg-6 col-sm-6">
                         <table class="table table-borderless">
                             <tr>
-                                <td class="bold"  width="50%">@lang('english.NAME')</td>
-                                <td width="50%">{!! !empty($targetArr->name)? $targetArr->name:'' !!}</td>
+                                <td class="bold" width="50%">@lang('english.NAME')</td>
+                                <td width="50%">{!! !empty($targetArr->name) ? $targetArr->name : '' !!}</td>
                             </tr>
                             <tr>
-                                <td class="bold"  width="50%">@lang('english.CODE')</td>
-                                <td width="50%">{!! !empty($targetArr->code)?$targetArr->code:'' !!}</td>
+                                <td class="bold" width="50%">@lang('english.PRODUCT_TYPE')</td>
+                                <td width="50%">{!! $targetArr->product_type ?? '' !!}</td>
                             </tr>
                             <tr>
-                                <td class="bold"  width="50%">@lang('english.BRAND')</td>
-                                <td width="50%">{!! !empty($targetArr->brand)?$targetArr->brand:'' !!}</td>
+                                <td class="bold" width="50%">@lang('english.CATEGORY')</td>
+                                <td width="50%">{!! $targetArr->product_category ?? '' !!}</td>
                             </tr>
+
                             <tr>
-                                <td class="bold"  width="50%">@lang('english.UNIT')</td>
-                                <td width="50%"><span class="label label-info">{!! !empty($targetArr->unit)?$targetArr->unit:'' !!}</span></td>
+                                <td class="bold" width="50%">@lang('english.BRAND')</td>
+                                <td width="50%">{!! $targetArr->brand ?? '' !!}</td>
                             </tr>
+
                         </table>
                     </div>
 
                     <div class="col-md-6 col-lg-6 col-sm-6">
                         <table class="table table-borderless">
                             <tr>
-                                <td class="bold"  width="50%">@lang('english.CATEGORY')</td>
-                                <td width="50%">{!! !empty($targetArr->category)?$targetArr->category:'' !!}</td>
+                                <td class="bold" width="50%">@lang('english.CODE')</td>
+                                <td width="50%">{!! !empty($targetArr->code) ? $targetArr->code : '' !!}</td>
                             </tr>
                             <tr>
-                                <td class="bold"  width="50%">@lang('english.PRODUCT_TYPE')</td>
-                                <td width="50%">{!! !empty($targetArr->type_id) && !empty($productTypeArr[$targetArr->type_id]) ? $productTypeArr[$targetArr->product_type_id] : '' !!}</td>
+                                <td class="bold" width="50%">@lang('english.UNIT')</td>
+                                <td width="50%">{!! $targetArr->product_unit ?? '' !!}</td>
                             </tr>
+
                             <tr>
-                                <td class="bold"  width="50%">@lang('english.STATUS')</td>
+                                <td class="bold" width="50%">@lang('english.STATUS')</td>
                                 <td width="50%">
-                                    @if($targetArr->status == '1')
-                                    <span class="label label-sm label-success">@lang('english.ACTIVE')</span>
+                                    @if ($targetArr->status == '1')
+                                        <span class="badge badge-success">@lang('english.ACTIVE')</span>
                                     @else
-                                    <span class="label label-sm label-warning">@lang('english.INACTIVE')</span>
+                                        <span class="badge badge-danger">@lang('english.INACTIVE')</span>
                                     @endif
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bold"  width="50%">@lang('label.PUBLISH')</td>
+                                <td class="bold" width="50%">@lang('english.PUBLISH')</td>
                                 <td width="50%">
-                                    @if($targetArr->publish == '1')
-                                    <span class="label label-sm label-info">@lang('english.PUBLISH')</span>
+                                    @if ($targetArr->publish == '1')
+                                        <span class="badge badge-success">@lang('english.PUBLISH')</span>
                                     @else
-                                    <span class="label label-sm label-danger">@lang('english.UNPUBLISH')</span>
+                                        <span class="badge badge-danger">@lang('english.UNPUBLISH')</span>
                                     @endif
                                 </td>
                             </tr>
@@ -80,13 +83,14 @@
 
     </div>
     <div class="modal-footer">
-        <button type="button" data-dismiss="modal" data-placement="top" class="btn dark btn-outline tooltips" title="@lang('label.CLOSE_THIS_POPUP')">@lang('label.CLOSE')</button>
+        <button type="button" data-dismiss="modal" data-placement="top" class="btn btn-danger btn-outline tooltips"
+            title="@lang('english.CLOSE_THIS_POPUP')">@lang('english.CLOSE')</button>
     </div>
 </div>
 
-<script src="{{asset('public/js/custom.js')}}" type="text/javascript"></script>
+<script src="{{ asset('public/js/custom.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
-    $(function () {
+    $(function() {
         $(".tooltips").tooltip();
     });
 </script>

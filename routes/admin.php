@@ -123,10 +123,11 @@ Route::group(['middleware' => ['auth', 'is_admin']], function () {
     Route::patch('admin/product/{id}', [ProductController::class, 'update'])->name('product.update');
     Route::delete('admin/product/{id}', [ProductController::class, 'destroy'])->name('product.destroy');
     Route::post('admin/product/setPublish', [ProductController::class, 'setPublish']);
-    Route::post('admin/product/getProductDetails', [ProductController::class, 'getProductDetails']);
+    Route::post('admin/product/getProductDetails/', [ProductController::class, 'getProductDetails'])->name('getProductDetails');
     //set product image
     Route::get('admin/product/{id}/getProductImage', [ProductController::class, 'getProductImage']);
     Route::post('admin/product/setProductImage', [ProductController::class, 'setProductImage']);
+    Route::post('admin/product/newProductImage', [ProductController::class, 'newProductImage'])->name('product.newProductImage');
 
     //product end
 });

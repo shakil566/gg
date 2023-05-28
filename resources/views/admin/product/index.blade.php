@@ -94,21 +94,25 @@
                                                     </td>
 
                                                     <td>
-                                                        <a class="btn btn-secondary btn-xs tooltips set-product-image" href="{{ URL::to('admin/product/' . $value->id . '/getProductImage') }}"  title="@lang('label.SET_PRODUCT_IMAGE')">
+                                                        <a class="btn btn-secondary btn-xs tooltips set-product-image" href="{{ URL::to('admin/product/' . $value->id . '/getProductImage') }}"  title="@lang('english.SET_PRODUCT_IMAGE')">
                                                             <i class="fa fa-image"></i>
                                                         </a>
-                                                        <button class="btn btn-info btn-xs tooltips details-btn" data-id="{!! $value->id !!}"  data-toggle="modal" title="@lang('label.PRODUCT_DETAILS')"  data-target="#productDetails" data-toggle="modal" data-id="{{$value->id}}">
+
+                                                        <button class="btn btn-info btn-xs tooltips details-btn" data-id="{!! $value->id !!}"  data-toggle="modal" title="@lang('english.PRODUCT_DETAILS')"  data-target="#productDetails" data-toggle="modal" data-id="{{$value->id}}">
                                                             <i class="fa fa-eye text-white"></i>
                                                         </button>
+
                                                         <a class='btn btn-primary btn-xs'
                                                             href="{{ URL::to('admin/product/' . $value->id . '/edit') }}"
                                                             title="{{ trans('english.EDIT') }}">
                                                             <i class='fa fa-edit'></i>
                                                         </a>
-                                                        {{ Form::open(['url' => 'admin/product/' . $value->id, 'id' => 'delete']) }}
+                                                        {{ Form::open(['url' => 'admin/product/' . $value->id]) }}
+
+                                                        @csrf
                                                         {{ Form::hidden('_method', 'DELETE') }}
 
-                                                        <button class="btn btn-danger btn-xs" type="submit"
+                                                        <button class="btn btn-danger btn-xs" type="submit" id="delete"
                                                             title="{{ trans('english.DELETE') }}" data-placement="top"
                                                             data-rel="tooltip" data-original-title="Delete">
                                                             <i class='fa fa-trash'></i>
@@ -168,68 +172,13 @@
 
 <!-- Modal end-->
 <script src="{{ asset('public/backend') }}/plugins/jquery/jquery.min.js"></script>
-<script type="text/javascript">
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-    </script>
-<script type="text/javascript">
 
-    $(document).on('switchChange.bootstrapSwitch', '.publish-switch', function () {
-        var productId = $(this).attr("data-id");
-        var publish = '0';
-        if ($(this).prop("checked") == true) {
-            publish = '1';
-        }
-        var options = {
-            closeButton: true,
-            debug: false,
-            positionClass: "toast-bottom-right",
-            onclick: null,
-        };
-        $.ajax({
-            url: "{{URL::to('admin/product/setPublish')}}",
-            type: "POST",
-            datatype: 'json',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: {
-                publish: publish,
-                product_id: productId,
-            },
-            beforeSend: function () {
-                App.blockUI({boxed: true});
-            },
-            success: function (res) {
-                toastr.success(res.message, res.heading, options);
-
-                App.unblockUI();
-            },
-            error: function (jqXhr, ajaxOptions, thrownError) {
-                if (jqXhr.status == 400) {
-                    var errorsHtml = '';
-                    var errors = jqXhr.responseJSON.message;
-                    $.each(errors, function (key, value) {
-                        errorsHtml += '<li>' + value + '</li>';
-                    });
-                    toastr.error(errorsHtml, jqXhr.responseJSON.heading, options);
-                } else if (jqXhr.status == 401) {
-                    toastr.error(jqXhr.responseJSON.message, '', options);
-                } else {
-                    toastr.error('Error', 'Something went wrong', options);
-                }
-                App.unblockUI();
-            }
-        });
-    });
+<script type="text/javascript">
 
      $(document).on('click', '.details-btn', function () {
 
         var productId = $(this).attr("data-id");
-        //alert(refNo);return false;
+        // alert(productId);return false;
         $.ajax({
             url: "{{URL::to('admin/product/getProductDetails')}}",
             type: 'POST',

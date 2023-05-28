@@ -299,21 +299,24 @@ class ProductController extends Controller
         $qpArr = $request->all();
         $data = [];
         $i = 0;
-        if (!empty($request->all_image)) {
-            foreach ($request->all_image as $key => $image) {
-                if ($request->hasFile('all_image.' . $key)) {
-                    $imgName = Auth::user()->id . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
-                    // $featuredImage = $request->file('all_image');
+        if (!empty($request->product_image)) {
+            foreach ($request->product_image as $key => $image) {
 
-                    $uploadSuccessImage = $image->move('public/uploads/product/', $imgName);
 
-                    $data[$i] = $imgName;
+                if ($request->hasFile('product_image.' . $key)) {
+                    $file = $request->file('product_image');
+                    $filename = uniqid() .'.'. $image->getClientOriginalExtension();
+                    $destinationPath = public_path() . '/uploads/product/';
+
+                    $uploadSuccess = $request->file('product_image.' . $key)->move($destinationPath, $filename);
+                    $data[$i] = $filename;
                     $i++;
                 }
+
             }
         }
-        if (!empty($request->prev_all_image)) {
-            foreach ($request->prev_all_image as $pKey => $pImage) {
+        if (!empty($request->prev_product_image)) {
+            foreach ($request->prev_product_image as $pKey => $pImage) {
                 $data[$i] = $pImage;
                 $i++;
             }

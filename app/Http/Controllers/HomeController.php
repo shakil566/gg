@@ -30,6 +30,7 @@ class HomeController extends Controller
             return redirect('dashboard/admin');
         } else {
             return view('frontend.index');
+            // return view('welcome');
         }
     }
 

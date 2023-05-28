@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {{-- <meta name="viewport" content="width=device-width, initial-scale=1"> --}}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@lang('english.SHOP_NAME')</title>
 
     <!-- Google Font: Source Sans Pro -->
@@ -152,7 +153,7 @@
     <script src="{{ asset('public/backend') }}/plugins/fullcalendar/main.js"></script>
     <!-- Bootstrap Switch -->
     <script src="{{ asset('public/backend') }}/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
-    
+
     <script type="text/javascript">
         $(function() {
             //switch check
