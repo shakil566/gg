@@ -448,7 +448,7 @@ CREATE TABLE IF NOT EXISTS `product` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT;
 
--- Dumping data for table test.product: ~2 rows (approximately)
+-- Dumping data for table test.product: ~1 rows (approximately)
 DELETE FROM `product`;
 INSERT INTO `product` (`id`, `name`, `code`, `type_id`, `category_id`, `brand_id`, `unit_id`, `short_description`, `description`, `status`, `publish`, `slug`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
 	(1, 'Asus Gaming Laptop 1', 'asus-gaming-laptop-1', 2, 2, 1, 1, 'This is a gaming laptop from Asus. Ram 8gb.', 'This is a gaming laptop from Asus.', '1', '0', 'asus-gaming-laptop-1-1', '2023-05-27 18:59:22', 1, '2023-05-27 19:06:56', 1);
@@ -657,7 +657,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `photo` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
   `status` enum('active','inactive') COLLATE utf8_unicode_ci NOT NULL,
-  `is_admin` enum('1','2') COLLATE utf8_unicode_ci DEFAULT NULL,
+  `is_admin` enum('0','1') COLLATE utf8_unicode_ci DEFAULT '0',
   `recovery_attempt` datetime DEFAULT NULL,
   `recovery_link` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL,
   `remember_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -670,16 +670,19 @@ CREATE TABLE IF NOT EXISTS `users` (
   KEY `group_id` (`group_id`),
   KEY `rank_id` (`designation_id`) USING BTREE,
   KEY `appointment_id` (`department_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table test.users: ~5 rows (approximately)
+-- Dumping data for table test.users: ~7 rows (approximately)
 DELETE FROM `users`;
 INSERT INTO `users` (`id`, `group_id`, `designation_id`, `department_id`, `first_name`, `last_name`, `official_name`, `email`, `phone_no`, `username`, `password`, `photo`, `status`, `is_admin`, `recovery_attempt`, `recovery_link`, `remember_token`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
 	(1, 1, 1, 1, 'Shakil', 'Hossen', 'Shakil', 'admin@gmail.com', '0176546363', 'admin', '$2y$10$ckZrosUF5vilpF2kmySD0e0UKurRQTW7W/hRF7SRGLTbVG19mSY6S', '64651f6e04d4ashakil.jpg', 'active', '1', NULL, NULL, NULL, '2023-05-16 10:32:57', NULL, '2023-05-17 18:40:42', 1),
 	(6, 1, 1, 1, 'Muhtasim', 'Riyon', 'Riyon', 'shakils923@gmail.com', '016355267383', 'riyon', '$2y$10$/XLPjl782FDM14aeQbauNuQ0HIeLRHzwhcdOwX.OBi7iG8WAPLgEW', '64652725bbf47avatar5.png', 'active', '1', NULL, NULL, 'YBFI4f2LZVBuspL497Pobv4tbfgUolYGrbYHcH8iLsBzUukTrTyOdNnvTMCm', '2023-05-17 16:51:23', 1, '2023-05-25 13:54:28', 6),
 	(7, 1, 1, 1, 'Sajjad', 'Ashik', 'Sajjad', 'shakilhossen566@gmail.com', '0173645721', 'sajjad', '$2y$10$lu5vwkIm9OCxJyfitThLEO2hqI/bebYONGZIyJ8Zqxw57bBJK03Li', '6465270a025a0avatar5.png', 'inactive', '1', NULL, NULL, NULL, '2023-05-17 19:10:37', 1, '2023-05-25 08:39:49', 1),
-	(8, NULL, NULL, NULL, 'Rabbi', 'Rahman', NULL, 'rabbi@gmail.com', '0175632231', 'rabbi', '$2y$10$nRIzXLk1NRmeR2Jig/9dzOdTWdBEa16kjoqSChljKZOe/X/5cbJue', NULL, 'active', NULL, NULL, NULL, NULL, '2023-05-26 08:15:20', 1, '2023-05-26 08:15:20', 1),
-	(9, NULL, NULL, NULL, 'Shakil', 'Coc v1', NULL, 'shakilcocv1@gmail.com', '019738272', 'cocv1', '$2y$10$jf2t.aGVrLhJ8GIkAvawHejdZfl9b5B1f/Xb6dyUNadthpvPT9mTm', NULL, 'active', NULL, NULL, NULL, 'dUOVsOOXBj9QcfwR0OXOrx9Knykr8NcY9Gn8dHhucqr23SPL7ytUy2101BjN', '2023-05-26 08:18:23', 1, '2023-05-26 14:42:11', 9);
+	(8, NULL, NULL, NULL, 'Rabbi', 'Rahman', NULL, 'rabbi@gmail.com', '0175632231', 'rabbi', '$2y$10$nRIzXLk1NRmeR2Jig/9dzOdTWdBEa16kjoqSChljKZOe/X/5cbJue', NULL, 'active', '0', NULL, NULL, NULL, '2023-05-26 08:15:20', 1, '2023-05-29 19:51:55', 1),
+	(9, NULL, NULL, NULL, 'Shakil', 'Coc v1', NULL, 'shakilcocv1@gmail.com', '019738272', 'cocv1', '$2y$10$jf2t.aGVrLhJ8GIkAvawHejdZfl9b5B1f/Xb6dyUNadthpvPT9mTm', NULL, 'active', '0', NULL, NULL, 'dUOVsOOXBj9QcfwR0OXOrx9Knykr8NcY9Gn8dHhucqr23SPL7ytUy2101BjN', '2023-05-26 08:18:23', 1, '2023-05-29 19:51:57', 9),
+	(10, NULL, NULL, NULL, 'Sajal', 'Rahman', NULL, 'sajal@gmail.com', '0193881231', 'sajal', '$2y$10$KoynXZXMANeSoA.k6HQH4uDsGsQ7MzO5UJPws/Z0i3dAFsE6QLdIy', NULL, 'active', '0', NULL, NULL, NULL, '2023-05-29 12:59:22', 1, '2023-05-29 19:52:00', 1),
+	(11, NULL, NULL, NULL, 'Lavinia', 'Lewis', NULL, 'favakobe@mailinator.com', '+1 (757) 604-9358', 'towyjajola', '$2y$10$IrbxlNI7Vc8CfPzoQK8hJupidj4DTUyCfZRkY.XkvPo0BC0mpQBBm', NULL, 'active', '0', NULL, NULL, NULL, '2023-05-29 13:48:39', 1, '2023-05-29 19:52:03', 1),
+	(12, NULL, NULL, NULL, 'Dorothy', 'Bradford', NULL, 'myrodi@mailinator.com', '+1 (777) 915-4219', 'sonuvam', '$2y$10$p6Oi..2BU0CuNa/OoAFfQeSETiNEudB84mafik9liYQaWtirVCanm', NULL, 'active', '0', NULL, NULL, NULL, '2023-05-29 13:52:27', 1, '2023-05-29 13:52:27', 1);
 
 -- Dumping structure for table test.user_group
 DROP TABLE IF EXISTS `user_group`;
