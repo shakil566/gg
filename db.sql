@@ -670,7 +670,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   KEY `group_id` (`group_id`),
   KEY `rank_id` (`designation_id`) USING BTREE,
   KEY `appointment_id` (`department_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Dumping data for table test.users: ~7 rows (approximately)
 DELETE FROM `users`;
@@ -680,9 +680,7 @@ INSERT INTO `users` (`id`, `group_id`, `designation_id`, `department_id`, `first
 	(7, 1, 1, 1, 'Sajjad', 'Ashik', 'Sajjad', 'shakilhossen566@gmail.com', '0173645721', 'sajjad', '$2y$10$lu5vwkIm9OCxJyfitThLEO2hqI/bebYONGZIyJ8Zqxw57bBJK03Li', '6465270a025a0avatar5.png', 'inactive', '1', NULL, NULL, NULL, '2023-05-17 19:10:37', 1, '2023-05-25 08:39:49', 1),
 	(8, NULL, NULL, NULL, 'Rabbi', 'Rahman', NULL, 'rabbi@gmail.com', '0175632231', 'rabbi', '$2y$10$nRIzXLk1NRmeR2Jig/9dzOdTWdBEa16kjoqSChljKZOe/X/5cbJue', NULL, 'active', '0', NULL, NULL, NULL, '2023-05-26 08:15:20', 1, '2023-05-29 19:51:55', 1),
 	(9, NULL, NULL, NULL, 'Shakil', 'Coc v1', NULL, 'shakilcocv1@gmail.com', '019738272', 'cocv1', '$2y$10$jf2t.aGVrLhJ8GIkAvawHejdZfl9b5B1f/Xb6dyUNadthpvPT9mTm', NULL, 'active', '0', NULL, NULL, 'dUOVsOOXBj9QcfwR0OXOrx9Knykr8NcY9Gn8dHhucqr23SPL7ytUy2101BjN', '2023-05-26 08:18:23', 1, '2023-05-29 19:51:57', 9),
-	(10, NULL, NULL, NULL, 'Sajal', 'Rahman', NULL, 'sajal@gmail.com', '0193881231', 'sajal', '$2y$10$KoynXZXMANeSoA.k6HQH4uDsGsQ7MzO5UJPws/Z0i3dAFsE6QLdIy', NULL, 'active', '0', NULL, NULL, NULL, '2023-05-29 12:59:22', 1, '2023-05-29 19:52:00', 1),
-	(11, NULL, NULL, NULL, 'Lavinia', 'Lewis', NULL, 'favakobe@mailinator.com', '+1 (757) 604-9358', 'towyjajola', '$2y$10$IrbxlNI7Vc8CfPzoQK8hJupidj4DTUyCfZRkY.XkvPo0BC0mpQBBm', NULL, 'active', '0', NULL, NULL, NULL, '2023-05-29 13:48:39', 1, '2023-05-29 19:52:03', 1),
-	(12, NULL, NULL, NULL, 'Dorothy', 'Bradford', NULL, 'myrodi@mailinator.com', '+1 (777) 915-4219', 'sonuvam', '$2y$10$p6Oi..2BU0CuNa/OoAFfQeSETiNEudB84mafik9liYQaWtirVCanm', NULL, 'active', '0', NULL, NULL, NULL, '2023-05-29 13:52:27', 1, '2023-05-29 13:52:27', 1);
+	(10, NULL, NULL, NULL, 'Sajal', 'Rahman', NULL, 'sajal@gmail.com', '0193881231', 'sajal', '$2y$10$KoynXZXMANeSoA.k6HQH4uDsGsQ7MzO5UJPws/Z0i3dAFsE6QLdIy', NULL, 'active', '0', NULL, NULL, NULL, '2023-05-29 12:59:22', 1, '2023-05-29 19:52:00', 1);
 
 -- Dumping structure for table test.user_group
 DROP TABLE IF EXISTS `user_group`;
