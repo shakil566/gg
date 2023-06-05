@@ -37,7 +37,7 @@ class CustomerController extends Controller
         $user->last_name = $request->last_name;
         $user->phone_no = $request->phone_no;
 
-        $user->photo = $filename;
+        $user->photo = $filename ?? null;
 
         $user->username = $request->username;
         $user->password = Hash::make($request->password);
@@ -88,7 +88,7 @@ class CustomerController extends Controller
             $user->first_name = $request->first_name;
             $user->last_name = $request->last_name;
             $user->phone_no = $request->phone_no;
-            $user->photo = $filename;
+            $user->photo = $filename ?? null;
             $user->username = $request->username;
             $user->password = Hash::make($request->password);
             $user->email = $request->email;
