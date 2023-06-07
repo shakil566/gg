@@ -33,7 +33,7 @@ class CustomerController extends Controller
     }
     public function saveCustomer(Request $request)
     {
-        // // return $request;
+        // return $request;
         // $authRes = Helper::getHeaderAuth($request['headers']);
         // if ($authRes['status'] == 419) {
         //     return response()->json(['result' => [], 'message' => $authRes['message'], 'status' => $authRes['status']]);
