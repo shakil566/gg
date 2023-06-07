@@ -148,17 +148,16 @@ return [
     'CLICK_HERE_TO_ADD_MORE_IMAGE' => 'Click Here To Add More Image',
     'CONTACT_IMAGE_FOR_IMAGE_DESCRIPTION' => 'Supported file format: jpeg, jpg, png. Maximum file size: 1MB. Best Fitted Dimension (150 X 120)',
     'PHOTO_IS_REQUIRED_FOR_ROW_NO' => 'Photo is Required for Row No: ',
-
     'REMOVE_IMAGES_PERMANENTLY' => 'Remove Image Permanently',
     'NO_IMAGE_BLOCK_ADDED' => 'No Image block added or image block has been removed temporarily. Clicking <b>Remove Image Permanently</b> button in this situation, will erase all images permanently',
     'SELECT_IMAGE' => 'Select image',
-
     'REMOVE' => 'Remove',
     'CHANGE' => 'Change',
     'SET_PRODUCT_IMAGE' => 'Set Product Image',
-
     'PRODUCT_IMAGE_SAVED_SUCCESSFULLY' => 'Product Image Saved successfully!',
     'PRODUCT_IMAGE_COULD_NOT_BE_SAVED' => 'Product Image Could Not Be Saved!',
+    'THIS_URL_IS_NOT_AUTHORIZED' => 'This URL is not authorized',
+    'THIS_URL_IS_NOT_REGISTERED' => 'This URL is not registered',
     '' => '',
 
 ];

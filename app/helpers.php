@@ -421,17 +421,17 @@ class Helper
     //send data to other site function end
 
 
-    //get data from api function start
+    //get data from api (client site hit this project) function start
     public static function getHeaderAuth($clientHeader)
     {
         $ownHeader = Self::getApiOwnHeader();
         $status = 200;
-        $message = '';
+        $message = 'Successfully Connected';
 
         if ($clientHeader['self_url'] != $ownHeader['client_url']) {
             $status = 419;
             $message = __('english.THIS_URL_IS_NOT_REGISTERED');
-        } elseif ($clientHeader['client_secret'] != $ownHeader['client_secret']) {
+        } elseif ($clientHeader['secret_key'] != $ownHeader['secret_key']) {
             $status = 419;
             $message = __('english.THIS_URL_IS_NOT_AUTHORIZED');
         }
@@ -446,10 +446,9 @@ class Helper
     {
         $header = [
             'type' => 'Application/Json',
-            'client_id' => '1',
             'self_url' => __('api.API_SELF_URL'),
             'client_url' => __('api.API_CLIENT_URL'),
-            'client_secret' => __('api.SECRET_KEY'),
+            'secret_key' => __('api.SECRET_KEY'),
         ];
         return $header;
     }

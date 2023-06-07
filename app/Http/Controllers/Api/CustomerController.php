@@ -9,52 +9,69 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use File;
+use Helper;
 
 class CustomerController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $user = User::where('is_admin', '<>', '1')->get();
+        // return $request['headers'];
+        $authRes = Helper::getHeaderAuth($request['headers']);
+        if ($authRes['status'] == 419) {
+            return response()->json(['result' => [], 'message' => $authRes['message'], 'status' => $authRes['status']]);
+        } else {
+            return response()->json(['customer' => $user, 'message' => $authRes['message'] . ' and All Customer', 'status' => $authRes['status']]);
+        }
 
-        return response()->json([
-            'status' => 200,
-            'customer' => $user,
-            'message' => 'All Customer',
-        ]);
+
+        // return response()->json([
+        //     'status' => 200,
+        //     'customer' => $user,
+        //     'message' => 'All Customer',
+        // ]);
     }
     public function saveCustomer(Request $request)
     {
-        //User photo upload
-        if ($request->file('photo')) {
-            $file = $request->file('photo');
-            $destinationPath = public_path() . '/uploads/user/';
-            $filename = uniqid() . '_' . $file->getClientOriginalName();
-            $uploadSuccess = $request->file('photo')->move($destinationPath, $filename);
-        }
+        // // return $request;
+        // $authRes = Helper::getHeaderAuth($request['headers']);
+        // if ($authRes['status'] == 419) {
+        //     return response()->json(['result' => [], 'message' => $authRes['message'], 'status' => $authRes['status']]);
+        // } else {
 
-        $user = new User;
-        $user->first_name = $request->first_name;
-        $user->last_name = $request->last_name;
-        $user->phone_no = $request->phone_no;
+            //User photo upload
+            if ($request->file('photo')) {
+                $file = $request->file('photo');
+                $destinationPath = public_path() . '/uploads/user/';
+                $filename = uniqid() . '_' . $file->getClientOriginalName();
+                $uploadSuccess = $request->file('photo')->move($destinationPath, $filename);
+            }
 
-        $user->photo = $filename ?? null;
+            $user = new User;
+            $user->first_name = $request->first_name;
+            $user->last_name = $request->last_name;
+            $user->phone_no = $request->phone_no;
 
-        $user->username = $request->username;
-        $user->password = Hash::make($request->password);
-        $user->email = $request->email;
+            $user->photo = $filename ?? null;
 
-        if ($user->save()) {
-            // Save Image in Storage folder
-            return response()->json([
-                'status' => 200,
-                'message' => 'Customer created successfully!',
-            ]);
-        } else {
-            return response()->json([
-                'status' => 402,
-                'message' => 'Customer not created!',
-            ]);
-        }
+            $user->username = $request->username;
+            $user->password = Hash::make($request->password);
+            $user->email = $request->email;
+
+            if ($user->save()) {
+                // Save Image in Storage folder
+                return response()->json([
+                    'status' => 200,
+                    // 'status' => $authRes['status'],
+                    'message' => 'Customer created successfully!',
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 402,
+                    'message' => 'Customer not created!',
+                ]);
+            }
+        // }
     }
     public function editCustomer(Request $request, $id)
     {
