@@ -48,7 +48,7 @@ class UsersController extends Controller
         $departmentIid = $request->department_id;
         $searchText = $request->search_text;
 
-        $usersArr = User::with(array('UserGroup'));
+        $usersArr = User::where('is_admin', '1');
 
 
         $usersArr = $usersArr->orderBy('group_id')->orderBy('username')->get();

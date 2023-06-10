@@ -49,23 +49,24 @@ CREATE TABLE IF NOT EXISTS `brand` (
   `name` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `code` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `photo` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `order` int(11) NOT NULL,
+  `order` int(11) DEFAULT NULL,
   `status` enum('1','2') COLLATE utf8_unicode_ci NOT NULL DEFAULT '1' COMMENT '1=active,2=inactive',
   `slug` varchar(300) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `created_by` int(11) NOT NULL,
   `updated_at` datetime NOT NULL,
   `updated_by` int(11) NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE KEY `tiltle` (`code`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT;
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT;
 
--- Dumping data for table test.brand: ~3 rows (approximately)
+-- Dumping data for table test.brand: ~6 rows (approximately)
 DELETE FROM `brand`;
 INSERT INTO `brand` (`id`, `name`, `code`, `photo`, `order`, `status`, `slug`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
 	(1, 'Asus', 'asus', '646f3d4da661a79183.jpg', 1, '1', 'asus-1', '2023-05-25 10:44:58', 1, '2023-05-25 10:49:49', 1),
 	(2, 'HP', 'hp', '646f3db8313a1hewlett-packard-logo-black-and-white.png', 2, '1', 'hp-2', '2023-05-25 10:51:36', 1, '2023-05-25 10:51:36', 1),
-	(3, 'Twelve', 'twelve', NULL, 3, '1', 'twelve-3', '2023-05-27 18:26:00', 1, '2023-05-27 18:26:00', 1);
+	(3, 'Twelve', 'twelve', NULL, 3, '1', 'twelve-3', '2023-05-27 18:26:00', 1, '2023-05-27 18:26:00', 1),
+	(6, 'Bell', 'bell', NULL, 4, '1', 'bell-6', '2023-06-10 08:42:52', 1, '2023-06-10 08:43:42', 1),
+	(7, 'Easy', 'easy', NULL, 5, '1', 'easy-7', '2023-06-10 08:42:52', 1, '2023-06-10 08:42:52', 1);
 
 -- Dumping structure for table test.company_information
 DROP TABLE IF EXISTS `company_information`;
@@ -109,8 +110,7 @@ CREATE TABLE IF NOT EXISTS `department` (
   `created_by` int(11) NOT NULL,
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `updated_by` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `tiltle` (`name`) USING BTREE
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT;
 
 -- Dumping data for table test.department: ~1 rows (approximately)
@@ -129,8 +129,7 @@ CREATE TABLE IF NOT EXISTS `designation` (
   `created_by` int(11) NOT NULL,
   `updated_at` datetime NOT NULL,
   `updated_by` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `tiltle` (`title`) USING BTREE
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT;
 
 -- Dumping data for table test.designation: ~1 rows (approximately)
@@ -290,7 +289,7 @@ CREATE TABLE IF NOT EXISTS `jobs` (
   `created_at` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `jobs_queue_index` (`queue`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table test.jobs: ~0 rows (approximately)
 DELETE FROM `jobs`;
@@ -632,8 +631,7 @@ CREATE TABLE IF NOT EXISTS `unit` (
   `created_by` int(11) NOT NULL,
   `updated_at` datetime NOT NULL,
   `updated_by` int(11) NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE KEY `tiltle` (`info`) USING BTREE
+  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT;
 
 -- Dumping data for table test.unit: ~1 rows (approximately)
@@ -672,7 +670,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   KEY `appointment_id` (`department_id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table test.users: ~7 rows (approximately)
+-- Dumping data for table test.users: ~6 rows (approximately)
 DELETE FROM `users`;
 INSERT INTO `users` (`id`, `group_id`, `designation_id`, `department_id`, `first_name`, `last_name`, `official_name`, `email`, `phone_no`, `username`, `password`, `photo`, `status`, `is_admin`, `recovery_attempt`, `recovery_link`, `remember_token`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
 	(1, 1, 1, 1, 'Shakil', 'Hossen', 'Shakil', 'admin@gmail.com', '0176546363', 'admin', '$2y$10$ckZrosUF5vilpF2kmySD0e0UKurRQTW7W/hRF7SRGLTbVG19mSY6S', '64651f6e04d4ashakil.jpg', 'active', '1', NULL, NULL, NULL, '2023-05-16 10:32:57', NULL, '2023-05-17 18:40:42', 1),

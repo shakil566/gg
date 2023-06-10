@@ -41,9 +41,9 @@
                                 <thead>
                                     <tr class="text-center">
                                         <th>@lang('english.SL_NO')</th>
-                                        <th>@lang('english.USER_GROUP')</th>
+                                        {{-- <th>@lang('english.USER_GROUP')</th>
                                         <th>@lang('english.DESIGNATION')</th>
-                                        <th>@lang('english.DEPARTMENT')</th>
+                                        <th>@lang('english.DEPARTMENT')</th> --}}
                                         <th class="username">@lang('english.USERNAME')</th>
                                         <th>@lang('english.EMAIL')</th>
                                         <th>@lang('english.NAME')</th>
@@ -60,9 +60,9 @@
                                     @foreach ($usersArr as $value)
                                     <tr class="text-center">
                                         <td>{{ ++$sl }}</td>
-                                        <td>{{$value->UserGroup->name}}</td>
+                                        {{-- <td>{{$value->UserGroup->name}}</td>
                                         <td>{{(!empty($value->designation->title) ? $value->designation->title : '')}}</td>
-                                        <td>{{$value->department->name ?? ''}}</td>
+                                        <td>{{$value->department->name ?? ''}}</td> --}}
                                         <td>{{ $value->username }}</td>
                                         <td>{{ $value->email }}</td>
                                         <td>{{ $value->first_name }} {{ $value->last_name }}</td>

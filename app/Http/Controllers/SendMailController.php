@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewProduct;
 use App\Http\Controllers\Controller;
 use App\Mail\SendMail;
 use Illuminate\Http\Request;
@@ -60,10 +61,15 @@ class SendMailController extends Controller
 
         try {
             $userArr = User::whereIn('id', $userAll)->select('id', 'first_name', 'last_name', 'email')->get();
+
             if (!empty($userArr)) {
                 foreach ($userArr as $user) {
                     $userName = $user->first_name . ' ' .  $user->last_name;
                     $userEmail = $user->email ?? '';
+
+                    //Send mail with event listener
+                    // $data = ['userEmail' => $userEmail ,'subject' => $subject, 'body' => $body, 'userName' => $userName,];
+                    // event(new NewProduct($userEmail, $subject, $body, $userName));
 
                     //send with Mail
                     Mail::to($userEmail)->send(new SendMail($subject, $body, $userName));

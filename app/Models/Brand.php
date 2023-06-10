@@ -17,19 +17,19 @@ class Brand extends Authenticatable
     {
         parent::boot();
         static::creating(function ($post) {
-            $post->created_by = Auth::user()->id;
-            $post->updated_by = Auth::user()->id;
+            $post->created_by = Auth::user()->id ?? 1;
+            $post->updated_by = Auth::user()->id ?? 1;
             $post->slug = Str::slug($post->name);
         });
 
         static::created(function ($post) {
-            $post->slug = Str::slug($post->name) . '-' . $post->id;
+            $post->slug = Str::slug($post->name) . '-' . $post->id ?? '';
             $post->save();
         });
 
         static::updating(function ($post) {
-            $post->updated_by = Auth::user()->id;
-            $post->slug = Str::slug($post->name) . '-' . $post->id;
+            $post->updated_by = Auth::user()->id ?? 1;
+            $post->slug = Str::slug($post->name) . '-' . $post->id ?? '';
         });
     }
 }
