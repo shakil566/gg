@@ -13,7 +13,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        //we can create a service and use it anywhere in our project
+        app()->bind('First_Service', function($app){
+            echo 'first service example';
+        });
+
+        // for access in anywhere app()->make('First_Service');
     }
 
     /**

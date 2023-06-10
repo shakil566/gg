@@ -60,7 +60,7 @@
                                                     <td>{{ ++$sl }}</td>
                                                     <td>{{ $value->title ?? '' }}
                                                     <td>{{ $value->info ?? '' }}
-                                                    </td>
+                                                    </td> 
                                                     <td>{{ $value->order ?? '' }}</td>
                                                     <td>
                                                         @if ($value->status == '1')

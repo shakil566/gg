@@ -22,6 +22,7 @@ Route::get('/admin', function () {
     return redirect('/admin/login');
 });
 Route::get('/dashboard', function () {
+    // Shakil::test(); //for custom Facades test
     return redirect('/admin/login');
 });
 

@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Facade;
 use Auth;
 use DB;
 use URL;
@@ -12,12 +13,13 @@ use Validator;
 use Response;
 use App\Models\Unit;
 
-class   UnitController extends Controller {
+class UnitController extends Controller {
     private $controller = "Unit";
     public function index(Request $request) {
-
          $unitArr = Unit::orderBy('order','asc')->get();
-
+         //testing for AppServiceProvider service
+         // return app()->make('jogfol');
+        //  return app()->make('First_Service');
         // load the view and pass the unit index
         return view('admin.unit.index')->with(compact('unitArr'));
     }
@@ -158,4 +160,3 @@ class   UnitController extends Controller {
         return Redirect::to('admin/unit?' . $url);
     }
 }
-?>
